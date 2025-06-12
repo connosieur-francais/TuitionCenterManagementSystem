@@ -5,7 +5,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginPageTest loginPage = new LoginPageTest();
+					LoginPage loginPage = new LoginPage();
 					loginPage.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
