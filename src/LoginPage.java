@@ -16,7 +16,6 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
-import javax.swing.JLayeredPane;
 
 public class LoginPage extends JFrame implements ActionListener {
 
@@ -100,6 +99,7 @@ public class LoginPage extends JFrame implements ActionListener {
 
 		showPasswordBtn = new JToggleButton("Show Password");
 		showPasswordBtn.setBounds(305, 165, 115, 15);
+		showPasswordBtn.setFocusable(false);
 		showPasswordBtn.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
