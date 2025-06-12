@@ -168,7 +168,7 @@ public class LoginPage extends JFrame implements ActionListener {
 		// Create a list to store the user data
 		List<User> users = userManager.getAllUsers();
 
-		// reset all the login attempts for the users
+		// reset all the login attempts for the users ( TO BE EDITED )
 		for (User user : users) {
 			userManager.resetLoginAttempts(user);
 		}
@@ -203,9 +203,11 @@ public class LoginPage extends JFrame implements ActionListener {
 						loginAttemptLabel.setBounds(70, 205, 200, 15);
 						loginAttemptLabel.setText("Login Attempts: Infinite");
 						loginAttemptLabel.setVisible(true);
+						attemptsLeftLabel.setVisible(false);
 					} else {
 						passwordErrorLabel.setVisible(true);
 						usernameErrorLabel.setVisible(false);
+						loginAttemptLabel.setText("Attempts left:");
 						loginAttemptLabel.setVisible(true);
 						attemptsLeftLabel.setVisible(true);
 						checkLoginAttempts(user);
