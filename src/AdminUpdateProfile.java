@@ -1,40 +1,69 @@
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class AdminUpdateProfile extends JFrame {
+public class AdminUpdateProfile extends JFrame implements ActionListener{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
+	private JFrame frame = new JFrame();
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AdminUpdateProfile frame = new AdminUpdateProfile();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private JPanel panel;
+	private JLabel updateProfileLabel;
+	private JButton previousPageBtn;
 	/**
 	 * Create the frame.
 	 */
 	public AdminUpdateProfile() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		frame.setResizable(false);
+		frame.setTitle("Update Admin Profile");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 700, 450);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 191, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
+		frame.setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(255, 218, 185));
+		panel.setBounds(10, 10, 666, 393);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		updateProfileLabel = new JLabel("Updating Account Details");
+		updateProfileLabel.setForeground(new Color(160, 82, 45));
+		updateProfileLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		updateProfileLabel.setFont(new Font("SansSerif", Font.BOLD, 32));
+		updateProfileLabel.setBounds(83, 10, 500, 50);
+		panel.add(updateProfileLabel);
+		
+		previousPageBtn = new JButton("<- Back to previous page");
+		previousPageBtn.setBackground(new Color(224, 255, 255));
+		previousPageBtn.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 12));
+		previousPageBtn.addActionListener(this);
+		previousPageBtn.setFocusable(false);
+		previousPageBtn.setBounds(456, 362, 200, 21);
+		panel.add(previousPageBtn);
+		
+		frame.setVisible(true);
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == previousPageBtn) {
+			new LoginPage();
+			frame.dispose();
+		}
+		
+	}
 }

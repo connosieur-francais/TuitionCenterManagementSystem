@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,14 +16,14 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	JFrame frame = new JFrame();
-	JPanel accountPanel, buttonHolder;
-	JLabel userIDLabel, userID, usernameLabel, username, welcomeLabel;
-	JButton manageTutorsBtn, manageReceptionistsBtn, viewMonthlyIncomeBtn, updateProfileBtn;
+	private JFrame frame = new JFrame();
+	private JPanel accountPanel, buttonHolder;
+	private JLabel userIDLabel, userID, usernameLabel, username, welcomeLabel;
+	private JButton manageTutorsBtn, manageReceptionistsBtn, viewMonthlyIncomeBtn, updateProfileBtn;
 	/**
 	 * Create the frame.
 	 */
-	public AdminPage() {
+	public AdminPage(User user) {
 		frame.setResizable(false);
 		frame.setTitle("Admin Panel");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,7 +45,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		userIDLabel.setBounds(10, 10, 70, 20);
 		accountPanel.add(userIDLabel);
 
-		userID = new JLabel("1");
+		userID = new JLabel("unknown");
 		userID.setFont(new Font("SansSerif", Font.BOLD, 16));
 		userID.setBounds(80, 10, 45, 20);
 		accountPanel.add(userID);
@@ -54,7 +55,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		usernameLabel.setBounds(10, 40, 100, 20);
 		accountPanel.add(usernameLabel);
 
-		username = new JLabel("bro");
+		username = new JLabel("unknown");
 		username.setFont(new Font("SansSerif", Font.BOLD, 16));
 		username.setBounds(99, 40, 100, 20);
 		accountPanel.add(username);
@@ -69,6 +70,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageTutorsBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
 		manageTutorsBtn.setFocusable(false);
 		manageTutorsBtn.setBackground(new Color(244, 164, 96));
+		manageTutorsBtn.addActionListener(this);
 		buttonHolder.add(manageTutorsBtn);
 
 		manageReceptionistsBtn = new JButton("Mange Receptionists");
@@ -76,6 +78,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageReceptionistsBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
 		manageReceptionistsBtn.setFocusable(false);
 		manageReceptionistsBtn.setBackground(new Color(244, 164, 96));
+		manageReceptionistsBtn.addActionListener(this);
 		buttonHolder.add(manageReceptionistsBtn);
 
 		viewMonthlyIncomeBtn = new JButton("View Monthly Income Report");
@@ -83,6 +86,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewMonthlyIncomeBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
 		viewMonthlyIncomeBtn.setFocusable(false);
 		viewMonthlyIncomeBtn.setBackground(new Color(244, 164, 96));
+		viewMonthlyIncomeBtn.addActionListener(this);
 		buttonHolder.add(viewMonthlyIncomeBtn);
 
 		updateProfileBtn = new JButton("Update Profile");
@@ -90,6 +94,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		updateProfileBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
 		updateProfileBtn.setFocusable(false);
 		updateProfileBtn.setBackground(new Color(244, 164, 96));
+		updateProfileBtn.addActionListener(this);
 		buttonHolder.add(updateProfileBtn);
 
 		welcomeLabel = new JLabel("Welcome to Admin Panel");
@@ -97,6 +102,10 @@ public class AdminPage extends JFrame implements ActionListener {
 		welcomeLabel.setBounds(196, 17, 460, 43);
 		accountPanel.add(welcomeLabel);
 		
+		String name = user.getUsername();
+		String user_id = String.valueOf(user.getID());
+		username.setText(name);
+		userID.setText(user_id);
 		
 		frame.setVisible(true);
 	}
@@ -113,7 +122,8 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		}
 		if (e.getSource() == updateProfileBtn) {
-
+			frame.dispose();
+			new AdminUpdateProfile();
 		}
 
 	}

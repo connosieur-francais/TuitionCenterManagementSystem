@@ -6,7 +6,6 @@ public class Main {
 			public void run() {
 				try {
 					LoginPage loginPage = new LoginPage();
-					loginPage.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

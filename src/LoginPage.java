@@ -23,6 +23,7 @@ public class LoginPage extends JFrame implements ActionListener {
 	UserManager userManager = new UserManager();
 
 	private static final long serialVersionUID = 1L;
+	private JFrame frame = new JFrame();
 	private JPanel contentPane;
 	private JTextField usernameTxtfield;
 	protected JPasswordField passwordField;
@@ -55,15 +56,15 @@ public class LoginPage extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public LoginPage() {
-		setTitle("Tuition Center Management System");
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 450);
+		frame.setTitle("Tuition Center Management System");
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 700, 450);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 191, 255));
 		contentPane.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 
-		setContentPane(contentPane);
+		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		panel = new JPanel();
@@ -161,6 +162,8 @@ public class LoginPage extends JFrame implements ActionListener {
 		loginDisabledLabel.setBounds(220, 185, 200, 15);
 		loginDisabledLabel.setVisible(false);
 		panel.add(loginDisabledLabel);
+		
+		frame.setVisible(true);
 
 		// Load CSV -------------------------------------
 		userManager.loadUsers(userFilePath);
@@ -265,8 +268,8 @@ public class LoginPage extends JFrame implements ActionListener {
 		switch (role) {
 		case "admin":
 			userManager.saveUsers(userFilePath); // save users before moving on
-			new AdminPage();
-			this.dispose();
+			new AdminPage(user);
+			frame.dispose();
 		case "receptionist":
 			// to-do
 		case "tutor":
