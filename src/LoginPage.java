@@ -18,7 +18,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.JLayeredPane;
 
-public class LoginPageTest extends JFrame implements ActionListener {
+public class LoginPage extends JFrame implements ActionListener {
 
 	String userFilePath = "src/users.csv";
 	UserManager userManager = new UserManager();
@@ -55,7 +55,7 @@ public class LoginPageTest extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public LoginPageTest() {
+	public LoginPage() {
 		setTitle("Tuition Center Management System");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
