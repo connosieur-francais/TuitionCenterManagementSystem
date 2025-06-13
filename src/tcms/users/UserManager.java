@@ -1,8 +1,6 @@
-package tcms.gui;
+package tcms.users;
 import java.io.*;
 import java.util.*;
-
-import tcms.users.User;
 
 public class UserManager {
 

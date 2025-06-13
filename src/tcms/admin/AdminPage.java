@@ -1,4 +1,4 @@
-package tcms.admins;
+package tcms.admin;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;

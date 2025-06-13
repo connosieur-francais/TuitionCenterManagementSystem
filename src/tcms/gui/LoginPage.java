@@ -18,8 +18,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
-import tcms.admins.AdminPage;
+import tcms.admin.AdminPage;
 import tcms.users.User;
+import tcms.users.UserManager;
 
 public class LoginPage extends JFrame implements ActionListener {
 
