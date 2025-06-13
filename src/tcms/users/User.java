@@ -1,3 +1,4 @@
+package tcms.users;
 
 public class User {
 	private static int user_ID;

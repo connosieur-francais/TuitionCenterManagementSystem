@@ -1,3 +1,4 @@
+package tcms.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,9 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+
+import tcms.admins.AdminPage;
+import tcms.users.User;
 
 public class LoginPage extends JFrame implements ActionListener {
 

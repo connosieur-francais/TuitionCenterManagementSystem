@@ -1,3 +1,4 @@
+package tcms.admins;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
 
 public class AdminUpdateProfile extends JFrame implements ActionListener{
 
@@ -19,6 +21,7 @@ public class AdminUpdateProfile extends JFrame implements ActionListener{
 	private JPanel panel;
 	private JLabel updateProfileLabel;
 	private JButton previousPageBtn;
+	private JTextField changeUsernameTextField;
 	/**
 	 * Create the frame.
 	 */
@@ -55,13 +58,23 @@ public class AdminUpdateProfile extends JFrame implements ActionListener{
 		previousPageBtn.setBounds(456, 362, 200, 21);
 		panel.add(previousPageBtn);
 		
+		JLabel changeUsernameLabel = new JLabel("Username");
+		changeUsernameLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+		changeUsernameLabel.setBounds(50, 70, 80, 30);
+		panel.add(changeUsernameLabel);
+		
+		changeUsernameTextField = new JTextField();
+		changeUsernameTextField.setBounds(140, 70, 460, 30);
+		panel.add(changeUsernameTextField);
+		changeUsernameTextField.setColumns(10);
+		
 		frame.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == previousPageBtn) {
-			new LoginPage();
+			new AdminPage(null);
 			frame.dispose();
 		}
 		
