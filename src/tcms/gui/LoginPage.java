@@ -1,4 +1,5 @@
 package tcms.gui;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -22,7 +23,7 @@ import tcms.admin.AdminPage;
 import tcms.users.User;
 import tcms.users.UserManager;
 
-public class LoginPage extends JFrame implements ActionListener {
+public class LoginPage extends JFrame implements ActionListener{
 
 	String userFilePath = "src/users.csv";
 	UserManager userManager = new UserManager();
@@ -32,7 +33,7 @@ public class LoginPage extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JTextField usernameTxtfield;
 	protected JPasswordField passwordField;
-	private JPanel panel;
+	private JPanel loginPanel, decoPanel;
 	private JLabel loginLabel, usernameLabel, passwordLabel;
 	private JToggleButton showPasswordBtn;
 	private JButton loginBtn, resetBtn;
@@ -41,66 +42,60 @@ public class LoginPage extends JFrame implements ActionListener {
 	private JLabel attemptsLeftLabel;
 	private JLabel loginDisabledLabel;
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					LoginPageTest frame = new LoginPageTest();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-//	
+	// Settings
+	Font titleFont = new Font("SansSerif", Font.BOLD, 32);
+	Font textFont = new Font("SansSerif", Font.BOLD, 14);
+	Color bgColor = new Color(7, 15, 43);
+	Color panelColor = new Color(27, 26, 85);
+	Color textColor = new Color(255,255,255);
+
 	/**
 	 * Create the frame.
 	 */
-	public LoginPage() {
+	public LoginPage()
+	{
 		frame.setTitle("Tuition Center Management System");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 700, 450);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 191, 255));
+		contentPane.setBackground(bgColor);
 		contentPane.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(100, 80, 500, 250);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		loginPanel = new JPanel();
+		loginPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		loginPanel.setBackground(panelColor);
+		loginPanel.setBounds(100, 80, 500, 250);
+		contentPane.add(loginPanel);
+		loginPanel.setLayout(null);
 
 		loginLabel = new JLabel("Account Login");
-		loginLabel.setBackground(new Color(255, 255, 255));
-		loginLabel.setForeground(new Color(25, 25, 112));
+		loginLabel.setForeground(new Color(146, 144, 195));
 		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		loginLabel.setFont(new Font("SansSerif", Font.BOLD, 32));
+		loginLabel.setFont(titleFont);
 		loginLabel.setBounds(100, 20, 300, 50);
-		panel.add(loginLabel);
+		loginPanel.add(loginLabel);
 
 		usernameLabel = new JLabel("Username");
+		usernameLabel.setForeground(new Color(255, 255, 255));
 		usernameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		usernameLabel.setFont(new Font("Sans Serif Collection", Font.PLAIN, 14));
+		usernameLabel.setFont(textFont);
 		usernameLabel.setBounds(70, 90, 75, 25);
-		panel.add(usernameLabel);
+		loginPanel.add(usernameLabel);
 
 		passwordLabel = new JLabel("Password");
+		passwordLabel.setForeground(new Color(255, 255, 255));
 		passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		passwordLabel.setFont(new Font("Sans Serif Collection", Font.PLAIN, 14));
+		passwordLabel.setFont(textFont);
 		passwordLabel.setBounds(70, 140, 75, 25);
-		panel.add(passwordLabel);
+		loginPanel.add(passwordLabel);
 
 		usernameTxtfield = new JTextField();
 		usernameTxtfield.setBounds(150, 90, 270, 25);
-		panel.add(usernameTxtfield);
+		loginPanel.add(usernameTxtfield);
 		usernameTxtfield.setColumns(10);
 
 		showPasswordBtn = new JToggleButton("Show Password");
@@ -116,58 +111,66 @@ public class LoginPage extends JFrame implements ActionListener {
 				}
 			}
 		});
-		panel.add(showPasswordBtn);
+		loginPanel.add(showPasswordBtn);
 
 		loginBtn = new JButton("Login");
 		loginBtn.setBounds(320, 200, 100, 25);
 		loginBtn.setFocusable(false);
 		loginBtn.addActionListener(this);
-		panel.add(loginBtn);
+		loginPanel.add(loginBtn);
 
 		resetBtn = new JButton("Reset");
 		resetBtn.setBounds(220, 200, 100, 25);
 		resetBtn.setFocusable(false);
 		resetBtn.addActionListener(this);
-		panel.add(resetBtn);
+		loginPanel.add(resetBtn);
 
 		passwordField = new JPasswordField();
 		passwordField.setBounds(150, 140, 270, 25);
 		passwordField.setEchoChar('*');
-		panel.add(passwordField);
+		loginPanel.add(passwordField);
 
 		usernameErrorLabel = new JLabel("* Username not registered");
 		usernameErrorLabel.setForeground(Color.RED);
 		usernameErrorLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		usernameErrorLabel.setBounds(150, 75, 200, 15);
 		usernameErrorLabel.setVisible(false); // Do not make it visible for now
-		panel.add(usernameErrorLabel);
+		loginPanel.add(usernameErrorLabel);
 
 		passwordErrorLabel = new JLabel("* Invalid password");
 		passwordErrorLabel.setForeground(Color.RED);
 		passwordErrorLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		passwordErrorLabel.setBounds(150, 125, 200, 15);
 		passwordErrorLabel.setVisible(false);
-		panel.add(passwordErrorLabel);
+		loginPanel.add(passwordErrorLabel);
 
 		loginAttemptLabel = new JLabel("Attempts left:");
+		loginAttemptLabel.setForeground(new Color(255, 255, 255));
 		loginAttemptLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
 		loginAttemptLabel.setBounds(70, 205, 80, 15);
 		loginAttemptLabel.setVisible(false); // Set invis until username is correct
-		panel.add(loginAttemptLabel);
+		loginPanel.add(loginAttemptLabel);
 
 		attemptsLeftLabel = new JLabel("");
+		attemptsLeftLabel.setForeground(new Color(255, 255, 255));
 		attemptsLeftLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
 		attemptsLeftLabel.setBounds(150, 205, 50, 15);
 		attemptsLeftLabel.setVisible(false);
-		panel.add(attemptsLeftLabel);
+		loginPanel.add(attemptsLeftLabel);
 
 		loginDisabledLabel = new JLabel("Login Disabled - contact admin to reset!");
 		loginDisabledLabel.setForeground(Color.RED);
 		loginDisabledLabel.setFont(new Font("SansSerif", Font.ITALIC, 10));
 		loginDisabledLabel.setBounds(220, 185, 200, 15);
 		loginDisabledLabel.setVisible(false);
-		panel.add(loginDisabledLabel);
+		loginPanel.add(loginDisabledLabel);
 		
+		decoPanel = new JPanel();
+		decoPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		decoPanel.setBackground(new Color(83, 92, 145));
+		decoPanel.setBounds(90, 70, 520, 270);
+		contentPane.add(decoPanel);
+
 		frame.setVisible(true);
 
 		// Load CSV -------------------------------------
