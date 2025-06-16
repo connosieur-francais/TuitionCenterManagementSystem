@@ -22,6 +22,7 @@ import javax.swing.border.SoftBevelBorder;
 import tcms.admin.AdminPage;
 import tcms.users.User;
 import tcms.users.UserManager;
+import javax.swing.ImageIcon;
 
 public class LoginPage extends JFrame implements ActionListener{
 
@@ -48,6 +49,7 @@ public class LoginPage extends JFrame implements ActionListener{
 	Color bgColor = new Color(7, 15, 43);
 	Color panelColor = new Color(27, 26, 85);
 	Color textColor = new Color(255,255,255);
+	private JLabel backgroundIconDeco;
 
 	/**
 	 * Create the frame.
@@ -170,6 +172,11 @@ public class LoginPage extends JFrame implements ActionListener{
 		decoPanel.setBackground(new Color(83, 92, 145));
 		decoPanel.setBounds(90, 70, 520, 270);
 		contentPane.add(decoPanel);
+		
+		backgroundIconDeco = new JLabel("New label");
+		backgroundIconDeco.setBounds(0, 0, 686, 413);
+		contentPane.add(backgroundIconDeco);
+		backgroundIconDeco.setIcon(new ImageIcon("src\\loginPageBackground.png"));
 
 		frame.setVisible(true);
 
