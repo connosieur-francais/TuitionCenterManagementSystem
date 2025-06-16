@@ -112,6 +112,17 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		if (e.getSource() == updateProfileBtn) {
+			//to do
+		}
+		if (e.getSource() == manageTutorsButton) {
+			//to do
+		}
+		if (e.getSource() == manageReceptionistsBtn) {
+			//to do
+		}
+		if (e.getSource() == viewIncomeBtn) {
+			//to do
+		}
 	}
 }

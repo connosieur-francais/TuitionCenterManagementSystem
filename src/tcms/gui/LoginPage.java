@@ -44,11 +44,11 @@ public class LoginPage extends JFrame implements ActionListener{
 	private JLabel loginDisabledLabel;
 
 	// Settings
-	Font titleFont = new Font("SansSerif", Font.BOLD, 32);
-	Font textFont = new Font("SansSerif", Font.BOLD, 14);
-	Color bgColor = new Color(7, 15, 43);
-	Color panelColor = new Color(27, 26, 85);
-	Color textColor = new Color(255,255,255);
+	private Font titleFont = new Font("SansSerif", Font.BOLD, 32);
+	private Font textFont = new Font("SansSerif", Font.BOLD, 15);
+	private Color bgColor = new Color(7, 15, 43);
+	private Color panelColor = new Color(27, 26, 85);
+	private Color buttonColor = new Color (146, 144, 195);
 	private JLabel backgroundIconDeco;
 
 	/**
@@ -83,16 +83,16 @@ public class LoginPage extends JFrame implements ActionListener{
 
 		usernameLabel = new JLabel("Username");
 		usernameLabel.setForeground(new Color(255, 255, 255));
-		usernameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		usernameLabel.setFont(textFont);
-		usernameLabel.setBounds(70, 90, 75, 25);
+		usernameLabel.setBounds(70, 90, 80, 25);
 		loginPanel.add(usernameLabel);
 
 		passwordLabel = new JLabel("Password");
 		passwordLabel.setForeground(new Color(255, 255, 255));
-		passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		passwordLabel.setFont(textFont);
-		passwordLabel.setBounds(70, 140, 75, 25);
+		passwordLabel.setBounds(70, 140, 80, 25);
 		loginPanel.add(passwordLabel);
 
 		usernameTxtfield = new JTextField();
@@ -101,7 +101,10 @@ public class LoginPage extends JFrame implements ActionListener{
 		usernameTxtfield.setColumns(10);
 
 		showPasswordBtn = new JToggleButton("Show Password");
-		showPasswordBtn.setBounds(305, 165, 115, 15);
+		showPasswordBtn.setBackground(buttonColor);
+		showPasswordBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		showPasswordBtn.setFont(new Font ("SansSerif",Font.BOLD, 10));
+		showPasswordBtn.setBounds(300, 165, 120, 15);
 		showPasswordBtn.setFocusable(false);
 		showPasswordBtn.addItemListener(new ItemListener() {
 			@Override
@@ -116,12 +119,16 @@ public class LoginPage extends JFrame implements ActionListener{
 		loginPanel.add(showPasswordBtn);
 
 		loginBtn = new JButton("Login");
+		loginBtn.setBackground(buttonColor);
+		loginBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		loginBtn.setBounds(320, 200, 100, 25);
 		loginBtn.setFocusable(false);
 		loginBtn.addActionListener(this);
 		loginPanel.add(loginBtn);
 
 		resetBtn = new JButton("Reset");
+		resetBtn.setBackground(buttonColor);
+		resetBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		resetBtn.setBounds(220, 200, 100, 25);
 		resetBtn.setFocusable(false);
 		resetBtn.addActionListener(this);
@@ -199,7 +206,9 @@ public class LoginPage extends JFrame implements ActionListener{
 			usernameTxtfield.setText("");
 			usernameErrorLabel.setVisible(false);
 			passwordErrorLabel.setVisible(false);
+			loginAttemptLabel.setVisible(false);
 			loginDisabledLabel.setVisible(false);
+			attemptsLeftLabel.setVisible(false);
 			loginBtn.setEnabled(true);
 			usernameTxtfield.grabFocus();
 		}
