@@ -2,33 +2,31 @@ package tcms.admin;
 
 public class Admin {
 	private static int idNumber = 1;
-	private String adminID;
+
+	private int adminID;
 	private int userID;
 	private String email;
 	private String address;
 
-	public Admin() {
-
+	public Admin(int adminID, int userID, String email, String address) {
+		setAdminID(adminID);
+		setUserID(userID);
+		setEmail(email);
+		setAddress(address);
 	}
-
-	public String getAdminID() {
+	
+	public int getAdminID() {
 		return adminID;
 	}
 
-	public static String advanceAdminID() {
-		String ID;
-		String prefix = "A";
-		int number = idNumber;
-
+	public static int advanceAdminID() {
+		int id = idNumber;
 		idNumber++;
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(prefix).append(String.valueOf(number));
-		ID = stringBuilder.toString();
-		return ID;
+		return id;
 
 	}
 
-	public void setAdminID(String adminID) {
+	public void setAdminID(int adminID) {
 		this.adminID = adminID;
 	}
 
@@ -54,5 +52,9 @@ public class Admin {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public String toCSV() {
+		return String.join(",", String.valueOf(this.adminID), String.valueOf(this.userID), this.email, this.address);
 	}
 }
