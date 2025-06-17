@@ -1,2 +1,2 @@
-student_id	user_id	name	email	contact_number	address	level	enrollment_date
-S1	2	Gracious	graciousrusike@gmail.com	122332242	"123, real address, apu, kuala lumpur"	5	12/7/2024
+student_id,user_id,email,contact_number,address,level,enrollment_date
+1,2,graciousrusike@gmail.com,123456789,apu,5,12/7/2024
