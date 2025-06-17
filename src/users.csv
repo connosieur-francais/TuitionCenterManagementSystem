@@ -1,6 +1,6 @@
 User_id,username,password,role,login_attempts,status
-1,Eason,123,admin,3,active
-2,Gracious,123,student,1,active
+1,Eason,123,admin,1,active
+2,Gracious,123,student,3,active
 3,Thomas,123,tutor,3,active
 4,Pizza,123,receptionist,3,active
 5,Adam,123,admin,3,active

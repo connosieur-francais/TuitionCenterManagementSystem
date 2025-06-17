@@ -24,7 +24,7 @@ import tcms.users.User;
 import tcms.users.UserManager;
 import javax.swing.ImageIcon;
 
-public class LoginPage extends JFrame implements ActionListener{
+public class LoginPage extends JFrame implements ActionListener {
 
 	String userFilePath = "src/users.csv";
 	UserManager userManager = new UserManager();
@@ -48,14 +48,13 @@ public class LoginPage extends JFrame implements ActionListener{
 	private Font textFont = new Font("SansSerif", Font.BOLD, 15);
 	private Color bgColor = new Color(7, 15, 43);
 	private Color panelColor = new Color(27, 26, 85);
-	private Color buttonColor = new Color (146, 144, 195);
+	private Color buttonColor = new Color(146, 144, 195);
 	private JLabel backgroundIconDeco;
 
 	/**
 	 * Create the frame.
 	 */
-	public LoginPage()
-	{
+	public LoginPage() {
 		frame.setTitle("Tuition Center Management System");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,7 +102,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		showPasswordBtn = new JToggleButton("Show Password");
 		showPasswordBtn.setBackground(buttonColor);
 		showPasswordBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		showPasswordBtn.setFont(new Font ("SansSerif",Font.BOLD, 10));
+		showPasswordBtn.setFont(new Font("SansSerif", Font.BOLD, 10));
 		showPasswordBtn.setBounds(300, 165, 120, 15);
 		showPasswordBtn.setFocusable(false);
 		showPasswordBtn.addItemListener(new ItemListener() {
@@ -173,13 +172,13 @@ public class LoginPage extends JFrame implements ActionListener{
 		loginDisabledLabel.setBounds(220, 185, 200, 15);
 		loginDisabledLabel.setVisible(false);
 		loginPanel.add(loginDisabledLabel);
-		
+
 		decoPanel = new JPanel();
 		decoPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		decoPanel.setBackground(new Color(83, 92, 145));
 		decoPanel.setBounds(90, 70, 520, 270);
 		contentPane.add(decoPanel);
-		
+
 		backgroundIconDeco = new JLabel("New label");
 		backgroundIconDeco.setBounds(0, 0, 686, 413);
 		contentPane.add(backgroundIconDeco);
@@ -217,35 +216,24 @@ public class LoginPage extends JFrame implements ActionListener{
 			String username = usernameTxtfield.getText();
 			String password = String.valueOf(passwordField.getPassword());
 
-			if (checkUsername(username)) { // Checks for username match in users.csv
-				User user = userManager.findUserByUsername(username); // if username exists; Create user here to check
-																		// for login attempts
-				if (checkPassword(username, password)) { // Check if password matches the set password.
-					selectRoleLoginPage(user); // Opens the respective user page given the role of the user
-				} else { // If password is false, show that password is false and decrement login
-							// attempts by 1
-					if (checkRole(user)) { // Admin - Infinite attempts. Other roles - only 3 attempts.
-						passwordErrorLabel.setVisible(true);
-						usernameErrorLabel.setVisible(false);
-						loginAttemptLabel.setBounds(70, 205, 200, 15);
-						loginAttemptLabel.setText("Login Attempts: Infinite");
-						loginAttemptLabel.setVisible(true);
-						attemptsLeftLabel.setVisible(false);
-					} else {
-						passwordErrorLabel.setVisible(true);
-						usernameErrorLabel.setVisible(false);
-						loginAttemptLabel.setText("Attempts left:");
-						loginAttemptLabel.setVisible(true);
-						attemptsLeftLabel.setVisible(true);
-						checkLoginAttempts(user);
-						passwordField.setText("");
-					}
-				}
-			} else {
+			if (!checkUsername(username)) {
 				usernameErrorLabel.setVisible(true);
 				passwordErrorLabel.setVisible(false);
 				passwordField.setText("");
-			}
+			} else {
+				User user = userManager.findUserByUsername(username);
+
+			if (!checkPassword(username, password)) {
+				passwordErrorLabel.setVisible(true);
+				usernameErrorLabel.setVisible(false);
+				loginAttemptLabel.setText("Attempts left:");
+				loginAttemptLabel.setVisible(true);
+				attemptsLeftLabel.setVisible(true);
+				checkLoginAttempts(user);
+				passwordField.setText("");
+			} else {
+				selectRoleLoginPage(user);
+			}}
 		}
 	}
 
@@ -275,15 +263,6 @@ public class LoginPage extends JFrame implements ActionListener{
 		} else {
 			userManager.decrementLoginAttempts(user);
 			attemptsLeftLabel.setText(String.valueOf(user.getLoginAttempts()));
-		}
-	}
-
-	private boolean checkRole(User user) { // This method checks if the username's role = Admin
-											// In which case the login attempts should be infinite
-		if (user.getRole().equalsIgnoreCase("admin")) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 

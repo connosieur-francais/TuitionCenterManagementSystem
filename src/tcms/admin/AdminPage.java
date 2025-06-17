@@ -2,8 +2,10 @@ package tcms.admin;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
+import javax.swing.JLayeredPane;
 
 public class AdminPage extends JFrame implements ActionListener {
 
@@ -40,12 +43,13 @@ public class AdminPage extends JFrame implements ActionListener {
 	
 	// UPDATE PROFILE PAGE ------------------------
 	private JPanel updateProfilePanel;
-	private JLabel profileSettingsLabel;
-	private JLabel usernameLabel;
-	private JLabel passwordLabel;
-	private JTextField usernameTxtfield;
+	private JLabel profileSettingsLabel, usernameLabel;
+	private JLabel passwordLabel, emailLabel;
+	private JTextField usernameTxtfield, emailTxtfield;
 	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
+	private JButton changeUsernameBtn, changePasswordBtn, changeEmailBtn;
+	private JToggleButton showPasswordToggleBtn;
+	private JLabel lblNewLabel;
 
 	public static void main(String[] args) {
 		new AdminPage(new User("eason", "admin", "active"));
@@ -122,7 +126,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewIncomeBtn.setFocusable(false);
 		headerPanel.add(viewIncomeBtn);
 
-		JPanel contentPanel = new JPanel();
+		JLayeredPane contentPanel = new JLayeredPane();
 		contentPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		contentPanel.setBackground(new Color(27, 26, 85));
 		contentPanel.setBounds(0, 80, 686, 335);
@@ -130,9 +134,10 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPanel.setLayout(null);
 
 		updateProfilePanel = new JPanel();
+		contentPanel.setLayer(updateProfilePanel, 1);
 		updateProfilePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		updateProfilePanel.setBackground(new Color(83, 92, 145));
-		updateProfilePanel.setBounds(10, 10, 666, 315);
+		updateProfilePanel.setBounds(10, 5, 666, 320);
 		updateProfilePanel.setVisible(false);
 		contentPanel.add(updateProfilePanel);
 		updateProfilePanel.setLayout(null);
@@ -169,40 +174,52 @@ public class AdminPage extends JFrame implements ActionListener {
 		passwordField.setBounds(80, 100, 200, 20);
 		updateProfilePanel.add(passwordField);
 
-		JButton changeUsernameBtn = new JButton("Change Username");
+		changeUsernameBtn = new JButton("Change Username");
 		changeUsernameBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changeUsernameBtn.setBounds(293, 50, 120, 20);
 		updateProfilePanel.add(changeUsernameBtn);
 
-		JButton changePasswordBtn = new JButton("Change Password");
+		changePasswordBtn = new JButton("Change Password");
 		changePasswordBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changePasswordBtn.setBounds(293, 100, 120, 20);
 		updateProfilePanel.add(changePasswordBtn);
 
-		JLabel emailLabel = new JLabel("E-mail");
+		emailLabel = new JLabel("E-mail");
 		emailLabel.setForeground(Color.WHITE);
 		emailLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
 		emailLabel.setBounds(10, 150, 70, 20);
 		updateProfilePanel.add(emailLabel);
 
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setEditable(false);
-		passwordField_1.setBounds(80, 150, 200, 20);
-		updateProfilePanel.add(passwordField_1);
-
-		JButton changeEmailBtn = new JButton("Change E-mail");
+		changeEmailBtn = new JButton("Change E-mail");
 		changeEmailBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changeEmailBtn.setBounds(293, 150, 120, 20);
 		updateProfilePanel.add(changeEmailBtn);
 
-		JToggleButton showPasswordToggleBtn = new JToggleButton("Show Password");
+		showPasswordToggleBtn = new JToggleButton("Show Password");
 		showPasswordToggleBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		showPasswordToggleBtn.setBounds(160, 120, 120, 15);
 		updateProfilePanel.add(showPasswordToggleBtn);
+		
+		emailTxtfield = new JTextField();
+		emailTxtfield.setEditable(false);
+		emailTxtfield.setColumns(10);
+		emailTxtfield.setBounds(80, 152, 200, 20);
+		updateProfilePanel.add(emailTxtfield);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\loginPageBackground.png"));
+		lblNewLabel.setBounds(0, 0, 686, 335);
+		contentPanel.add(lblNewLabel);
+		
+		JPanel manageReceptionistPanel = new JPanel();
+		contentPanel.setLayer(manageReceptionistPanel, 1);
+		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
+		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		manageReceptionistPanel.setBounds(10, 5, 666, 320);
+		contentPanel.add(manageReceptionistPanel);
+		manageReceptionistPanel.setLayout(null);
 
 		frame.setVisible(true);
-		
-		// Initialize an array for user details
 	}
 
 	@Override

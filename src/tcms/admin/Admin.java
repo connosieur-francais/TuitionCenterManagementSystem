@@ -15,6 +15,13 @@ public class Admin {
 		setAddress(address);
 	}
 	
+	public Admin(int userID) {
+		setAdminID(advanceAdminID());
+		setUserID(userID);
+		setEmail("Not set");
+		setAddress("Not set");
+	}
+	
 	public int getAdminID() {
 		return adminID;
 	}

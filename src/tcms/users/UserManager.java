@@ -52,6 +52,15 @@ public class UserManager {
 		return null;
 	}
 	
+	public User findUserByUserID(int id) {
+		for (User user : users) {
+			if (user.getID() == id) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
 	public void decrementLoginAttempts(User user) {
 		user.decreaseLoginAttempts();
 	}
