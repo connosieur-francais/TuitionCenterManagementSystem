@@ -10,8 +10,7 @@ public class UserManager {
 	public void loadUsers(String filename) {
 		users.clear();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(filename))) { // Creates a list of users by reading
-																					// from src/users.csv
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			String line;
 			boolean skipHeader = true;
 
@@ -21,13 +20,27 @@ public class UserManager {
 					continue;
 				}
 				String[] fields = line.split(",");
+				
 				if (fields.length >= 6) {
-					User user = new User(Integer.parseInt(fields[0]), fields[1], fields[2], fields[3],
-							Integer.parseInt(fields[4]), fields[5]);
+					int userID = Integer.parseInt(fields[0].trim());
+					String username = fields[1].trim();
+					String password = fields[2].trim();
+					String role = fields[3].trim();
+					int loginAttempts = Integer.parseInt(fields[4].trim());
+					String status = fields[5].trim();
+
+					User user = new User(userID, username, password, role, loginAttempts, status);
 					users.add(user);
+
+					System.out.println("Loaded user: " + user);
+				} else {
+					System.out.println("Invalid line (skipped): " + line);
 				}
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println("Failed to parse number in user CSV. Check the file for formatting issues.");
 			e.printStackTrace();
 		}
 	}

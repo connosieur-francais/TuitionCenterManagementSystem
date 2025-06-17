@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -47,14 +46,13 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JLabel passwordLabel, emailLabel;
 	private JTextField usernameTxtfield, emailTxtfield;
 	private JPasswordField passwordField;
-	private JButton changeUsernameBtn, changePasswordBtn, changeEmailBtn;
+	private JButton changeUsernameBtn, changePasswordBtn, changeEmailBtn, changeAddressBtn, saveChangesBtn;
 	private JToggleButton showPasswordToggleBtn;
 	private JLabel lblNewLabel;
 	private JTextField addressTxtfield;
 	
 	private String adminCSVFile = "src//admin.csv";
-	private String userCSVFile = "src//users.csv";
-	private JButton saveChangesBtn;
+	
 
 	/**
 	 * Create the frame.
@@ -63,8 +61,6 @@ public class AdminPage extends JFrame implements ActionListener {
 		 // Find the admin class
 		int user_id = user.getID();
 		AdminManager adminManager = new AdminManager();
-		UserManager userManager = new UserManager();
-		userManager.loadUsers(userCSVFile);
 		adminManager.loadAdmins(adminCSVFile);
 		Admin admin = adminManager.findAdminByUserID(user_id);
 		
@@ -178,6 +174,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		usernameTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		usernameTxtfield.setBackground(new Color(192, 192, 192));
 		usernameTxtfield.setEditable(false);
+		usernameTxtfield.setEnabled(false);
+		usernameTxtfield.setDisabledTextColor(Color.GRAY);
 		usernameTxtfield.setBounds(80, 50, 200, 20);
 		updateProfilePanel.add(usernameTxtfield);
 		usernameTxtfield.setColumns(10);
@@ -186,16 +184,20 @@ public class AdminPage extends JFrame implements ActionListener {
 		passwordField.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		passwordField.setBackground(new Color(192, 192, 192));
 		passwordField.setEditable(false);
+		passwordField.setEnabled(false);
+		passwordField.setDisabledTextColor(Color.GRAY);
 		passwordField.setEchoChar('*');
 		passwordField.setBounds(80, 100, 200, 20);
 		updateProfilePanel.add(passwordField);
 
 		changeUsernameBtn = new JButton("Change Username");
+		changeUsernameBtn.setFocusable(false);
 		changeUsernameBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changeUsernameBtn.setBounds(293, 50, 120, 20);
 		updateProfilePanel.add(changeUsernameBtn);
 
 		changePasswordBtn = new JButton("Change Password");
+		changePasswordBtn.setFocusable(false);
 		changePasswordBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changePasswordBtn.setBounds(293, 100, 120, 20);
 		updateProfilePanel.add(changePasswordBtn);
@@ -207,11 +209,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		updateProfilePanel.add(emailLabel);
 
 		changeEmailBtn = new JButton("Change E-mail");
+		changeEmailBtn.setFocusable(false);
 		changeEmailBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changeEmailBtn.setBounds(293, 150, 120, 20);
 		updateProfilePanel.add(changeEmailBtn);
 
 		showPasswordToggleBtn = new JToggleButton("Show Password");
+		showPasswordToggleBtn.setFocusable(false);
 		showPasswordToggleBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		showPasswordToggleBtn.setBounds(160, 120, 120, 15);
 		showPasswordToggleBtn.addItemListener(new ItemListener() {
@@ -230,6 +234,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		emailTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		emailTxtfield.setBackground(new Color(192, 192, 192));
 		emailTxtfield.setEditable(false);
+		emailTxtfield.setEnabled(false);
+		emailTxtfield.setDisabledTextColor(Color.GRAY);
 		emailTxtfield.setColumns(10);
 		emailTxtfield.setBounds(80, 150, 200, 20);
 		updateProfilePanel.add(emailTxtfield);
@@ -244,17 +250,20 @@ public class AdminPage extends JFrame implements ActionListener {
 		addressTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		addressTxtfield.setBackground(new Color(192, 192, 192));
 		addressTxtfield.setText("<dynamic>");
-		addressTxtfield.setEditable(false);
+		addressTxtfield.setEnabled(false);
+		addressTxtfield.setDisabledTextColor(Color.GRAY);
 		addressTxtfield.setColumns(10);
 		addressTxtfield.setBounds(80, 200, 200, 20);
 		updateProfilePanel.add(addressTxtfield);
 		
-		JButton changeAddressBtn = new JButton("Change Address");
+		changeAddressBtn = new JButton("Change Address");
+		changeAddressBtn.setFocusable(false);
 		changeAddressBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changeAddressBtn.setBounds(293, 200, 120, 20);
 		updateProfilePanel.add(changeAddressBtn);
 		
 		saveChangesBtn = new JButton("Save Changes");
+		saveChangesBtn.setFocusable(false);
 		saveChangesBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
 		saveChangesBtn.setBounds(506, 270, 150, 40);
 		updateProfilePanel.add(saveChangesBtn);

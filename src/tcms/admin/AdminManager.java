@@ -25,9 +25,16 @@ public class AdminManager {
 				}
 				String[] fields = line.split(",");
 				if (fields.length >= 4) {
-					Admin admin = new Admin(Integer.parseInt(fields[0]), Integer.parseInt(fields[1]), fields[2],
-							fields[3]);
+					int adminID = Integer.parseInt(fields[0].trim());
+					int userID = Integer.parseInt(fields[1].trim());
+					String email = fields[2].trim();
+					String address = fields[3].trim();
+					Admin admin = new Admin(adminID, userID, email, address);
 					admins.add(admin);
+					
+					// Debug print
+					System.out.println("Loaded admin: ID=" + fields[0] + ", UserID=" + fields[1] +
+			                   ", Email=" + fields[2] + ", Address=" + fields[3]);
 				}
 			}
 		} catch (IOException e) {
