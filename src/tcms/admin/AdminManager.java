@@ -7,9 +7,7 @@ import tcms.users.User;
 import tcms.users.UserManager;
 
 public class AdminManager {
-
 	UserManager userManager = new UserManager();
-
 	private List<Admin> admins = new ArrayList<>();
 
 	public void loadAdmins(String filename) {
@@ -26,7 +24,7 @@ public class AdminManager {
 					continue;
 				}
 				String[] fields = line.split(",");
-				if (fields.length >= 6) {
+				if (fields.length >= 4) {
 					Admin admin = new Admin(Integer.parseInt(fields[0]), Integer.parseInt(fields[1]), fields[2],
 							fields[3]);
 					admins.add(admin);
@@ -50,15 +48,24 @@ public class AdminManager {
 	}
 
 	public User findUserByAdminID(int adminID) {
+		int userID;
 		for (Admin admin : admins) {
-			if (admin.getAdminID() != adminID) {
-				return null;
-			} else {
-				int userID = admin.getUserID();
+			if (admin.getAdminID() == adminID) {
+				userID = admin.getUserID();
 				User user = userManager.findUserByUserID(userID);
 				return user;
 			}
 		}
+		return null;
+	}
+
+	public Admin findAdminByUserID(int userID) {
+		for (Admin admin : admins) {
+			if (admin.getUserID() == userID) {
+				return admin;
+			}
+		}
+		
 		return null;
 	}
 

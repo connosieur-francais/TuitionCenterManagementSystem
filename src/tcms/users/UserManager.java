@@ -1,4 +1,5 @@
 package tcms.users;
+
 import java.io.*;
 import java.util.*;
 
@@ -51,7 +52,7 @@ public class UserManager {
 		}
 		return null;
 	}
-	
+
 	public User findUserByUserID(int id) {
 		for (User user : users) {
 			if (user.getID() == id) {
@@ -60,15 +61,15 @@ public class UserManager {
 		}
 		return null;
 	}
-	
+
 	public void decrementLoginAttempts(User user) {
 		user.decreaseLoginAttempts();
 	}
-	
+
 	public void resetLoginAttempts(User user) {
 		user.setLoginAttempts(3);
 	}
-	
+
 	public List<User> getAllUsers() {
 		return users;
 	}

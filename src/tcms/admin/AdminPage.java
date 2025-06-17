@@ -2,28 +2,27 @@ package tcms.admin;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import tcms.users.User;
-import javax.swing.JScrollBar;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
-import javax.swing.JToggleButton;
-import javax.swing.JLayeredPane;
+import tcms.users.UserManager;
 
 public class AdminPage extends JFrame implements ActionListener {
 
@@ -34,6 +33,7 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JButton updateProfileBtn, manageTutorsButton;
 	private JButton manageReceptionistsBtn, viewIncomeBtn;
 	private JLabel atcBannerLabel;
+	private JLayeredPane contentPanel;
 	
 	
 	// HEADER LABEL SETTINGS
@@ -50,15 +50,24 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JButton changeUsernameBtn, changePasswordBtn, changeEmailBtn;
 	private JToggleButton showPasswordToggleBtn;
 	private JLabel lblNewLabel;
-
-	public static void main(String[] args) {
-		new AdminPage(new User("eason", "admin", "active"));
-	}
+	private JTextField addressTxtfield;
+	
+	private String adminCSVFile = "src//admin.csv";
+	private String userCSVFile = "src//users.csv";
+	private JButton saveChangesBtn;
 
 	/**
 	 * Create the frame.
 	 */
 	public AdminPage(User user) {
+		 // Find the admin class
+		int user_id = user.getID();
+		AdminManager adminManager = new AdminManager();
+		UserManager userManager = new UserManager();
+		userManager.loadUsers(userCSVFile);
+		adminManager.loadAdmins(adminCSVFile);
+		Admin admin = adminManager.findAdminByUserID(user_id);
+		
 		frame.setResizable(false);
 		frame.setTitle("Admin Panel");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -126,14 +135,16 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewIncomeBtn.setFocusable(false);
 		headerPanel.add(viewIncomeBtn);
 
-		JLayeredPane contentPanel = new JLayeredPane();
+		contentPanel = new JLayeredPane();
 		contentPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		contentPanel.setBackground(new Color(27, 26, 85));
 		contentPanel.setBounds(0, 80, 686, 335);
 		contentPane.add(contentPanel);
 		contentPanel.setLayout(null);
-
+		
+		// UPDATE PROFILE PANEL -----------------------------------------------------------------------
 		updateProfilePanel = new JPanel();
+		updateProfilePanel.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		contentPanel.setLayer(updateProfilePanel, 1);
 		updateProfilePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		updateProfilePanel.setBackground(new Color(83, 92, 145));
@@ -164,13 +175,18 @@ public class AdminPage extends JFrame implements ActionListener {
 		updateProfilePanel.add(passwordLabel);
 
 		usernameTxtfield = new JTextField();
+		usernameTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		usernameTxtfield.setBackground(new Color(192, 192, 192));
 		usernameTxtfield.setEditable(false);
 		usernameTxtfield.setBounds(80, 50, 200, 20);
 		updateProfilePanel.add(usernameTxtfield);
 		usernameTxtfield.setColumns(10);
 
 		passwordField = new JPasswordField();
+		passwordField.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		passwordField.setBackground(new Color(192, 192, 192));
 		passwordField.setEditable(false);
+		passwordField.setEchoChar('*');
 		passwordField.setBounds(80, 100, 200, 20);
 		updateProfilePanel.add(passwordField);
 
@@ -198,32 +214,74 @@ public class AdminPage extends JFrame implements ActionListener {
 		showPasswordToggleBtn = new JToggleButton("Show Password");
 		showPasswordToggleBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		showPasswordToggleBtn.setBounds(160, 120, 120, 15);
+		showPasswordToggleBtn.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					passwordField.setEchoChar((char) 0); // 0 Shows the characters
+				} else {
+					passwordField.setEchoChar('*');
+				}
+			}
+		});
 		updateProfilePanel.add(showPasswordToggleBtn);
 		
 		emailTxtfield = new JTextField();
+		emailTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		emailTxtfield.setBackground(new Color(192, 192, 192));
 		emailTxtfield.setEditable(false);
 		emailTxtfield.setColumns(10);
-		emailTxtfield.setBounds(80, 152, 200, 20);
+		emailTxtfield.setBounds(80, 150, 200, 20);
 		updateProfilePanel.add(emailTxtfield);
 		
+		JLabel addressLabel = new JLabel("Address");
+		addressLabel.setForeground(Color.WHITE);
+		addressLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
+		addressLabel.setBounds(10, 200, 70, 20);
+		updateProfilePanel.add(addressLabel);
+		
+		addressTxtfield = new JTextField();
+		addressTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		addressTxtfield.setBackground(new Color(192, 192, 192));
+		addressTxtfield.setText("<dynamic>");
+		addressTxtfield.setEditable(false);
+		addressTxtfield.setColumns(10);
+		addressTxtfield.setBounds(80, 200, 200, 20);
+		updateProfilePanel.add(addressTxtfield);
+		
+		JButton changeAddressBtn = new JButton("Change Address");
+		changeAddressBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		changeAddressBtn.setBounds(293, 200, 120, 20);
+		updateProfilePanel.add(changeAddressBtn);
+		
+		saveChangesBtn = new JButton("Save Changes");
+		saveChangesBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
+		saveChangesBtn.setBounds(506, 270, 150, 40);
+		updateProfilePanel.add(saveChangesBtn);
+		
+		updateProfilePanelInformation(user, admin); // Update the information in txtfields with logged in user's information
+		
 		lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\loginPageBackground.png"));
+		lblNewLabel.setIcon(new ImageIcon("src\\loginPageBackground.png"));
 		lblNewLabel.setBounds(0, 0, 686, 335);
 		contentPanel.add(lblNewLabel);
 		
+		// MANAGE RECEPTIONISTS PANEL ---------------------------------------------------------------------
 		JPanel manageReceptionistPanel = new JPanel();
 		contentPanel.setLayer(manageReceptionistPanel, 1);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
-		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		manageReceptionistPanel.setBounds(10, 5, 666, 320);
 		contentPanel.add(manageReceptionistPanel);
 		manageReceptionistPanel.setLayout(null);
-
+		
 		frame.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		// HEADER PANEL --------------------------------
 		if (e.getSource() == updateProfileBtn) {
 			updateProfilePanel.setVisible(true);
 		}
@@ -236,5 +294,19 @@ public class AdminPage extends JFrame implements ActionListener {
 		if (e.getSource() == viewIncomeBtn) {
 			// to do
 		}
+		
+		// UPDATE PROFILE PANEL ----------------------------------
+	}
+	
+	private void updateProfilePanelInformation(User user, Admin admin) {
+		String username = user.getUsername();
+		String password = user.getPassword();
+		String email = admin.getEmail();
+		String address = admin.getAddress();
+		
+		usernameTxtfield.setText(username);
+		passwordField.setText(password);
+		emailTxtfield.setText(email);
+		addressTxtfield.setText(address);
 	}
 }
