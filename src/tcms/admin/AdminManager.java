@@ -45,6 +45,7 @@ public class AdminManager {
 	public void saveAdmins(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 			bw.write("admin_id,user_id,email,address\n");
+			updateAdminsInCSV();
 			for (Admin admin : admins) {
 				bw.write(admin.toCSV());
 				bw.newLine();
@@ -77,25 +78,31 @@ public class AdminManager {
 	}
 
 	public void updateAdminsInCSV() {
-		List<User> users = userManager.getAllUsers(); // Initialize users list
+		userManager.loadUsers("src//users.csv");
+		List<User> users = userManager.getAllUsers();
+		System.out.println("updateAdminsInCSV: Updating admins in admin.csv");
+		System.out.println("Total users: " + users.size());
 
 		for (User user : users) {
-			// Check if the user's role is Admin
 			if (user.getRole().equalsIgnoreCase("admin")) {
+				System.out.println("Checking admin candidate: " + user.getUsername());
 				boolean exists = false;
 
-				// Check if an admin with the same user ID already exists
 				for (Admin admin : admins) {
 					if (user.getID() == admin.getUserID()) {
 						exists = true;
 						break;
 					}
 				}
-				// If not found, create a new Admin and add to CSV
+
 				if (!exists) {
+					System.out.println("Adding new admin: " + user.getUsername());
 					Admin newAdmin = new Admin(user.getID());
-					newAdmin.toCSV();
-					admins.add(newAdmin); // add to current list of admins
+					admins.add(newAdmin);
+					saveAdmins("src/admin.csv");
+					System.out.println("Admin added to CSV: " + newAdmin.getUserID());
+				} else {
+					System.out.println("Admin already exists: " + user.getUsername());
 				}
 			}
 		}

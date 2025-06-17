@@ -21,7 +21,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import tcms.users.User;
-import tcms.users.UserManager;
 
 public class AdminPage extends JFrame implements ActionListener {
 
@@ -43,13 +42,16 @@ public class AdminPage extends JFrame implements ActionListener {
 	// UPDATE PROFILE PAGE ------------------------
 	private JPanel updateProfilePanel;
 	private JLabel profileSettingsLabel, usernameLabel;
-	private JLabel passwordLabel, emailLabel;
+	private JLabel passwordLabel, emailLabel, addressLabel;
 	private JTextField usernameTxtfield, emailTxtfield;
 	private JPasswordField passwordField;
 	private JButton changeUsernameBtn, changePasswordBtn, changeEmailBtn, changeAddressBtn, saveChangesBtn;
 	private JToggleButton showPasswordToggleBtn;
 	private JLabel lblNewLabel;
 	private JTextField addressTxtfield;
+	
+	// MANAGE RECEPTIONISTS PAGE ------------------------------------------------------
+	private JPanel manageReceptionistPanel;
 	
 	private String adminCSVFile = "src//admin.csv";
 	
@@ -58,10 +60,11 @@ public class AdminPage extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public AdminPage(User user) {
-		 // Find the admin class
+		// Upon starting this page, load all admins and check if all admin accounts exist
 		int user_id = user.getID();
 		AdminManager adminManager = new AdminManager();
 		adminManager.loadAdmins(adminCSVFile);
+		adminManager.saveAdmins(adminCSVFile);
 		Admin admin = adminManager.findAdminByUserID(user_id);
 		
 		frame.setResizable(false);
@@ -191,14 +194,19 @@ public class AdminPage extends JFrame implements ActionListener {
 		updateProfilePanel.add(passwordField);
 
 		changeUsernameBtn = new JButton("Change Username");
-		changeUsernameBtn.setFocusable(false);
+		changeUsernameBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		changeUsernameBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		changeUsernameBtn.setBackground(new Color(235, 235, 235));
+		changeUsernameBtn.setFocusable(false);
 		changeUsernameBtn.setBounds(293, 50, 120, 20);
+		changeUsernameBtn.addActionListener(this);
 		updateProfilePanel.add(changeUsernameBtn);
 
 		changePasswordBtn = new JButton("Change Password");
-		changePasswordBtn.setFocusable(false);
+		changePasswordBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		changePasswordBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		changePasswordBtn.setBackground(new Color(235, 235, 235));
+		changePasswordBtn.setFocusable(false);
 		changePasswordBtn.setBounds(293, 100, 120, 20);
 		updateProfilePanel.add(changePasswordBtn);
 
@@ -209,14 +217,18 @@ public class AdminPage extends JFrame implements ActionListener {
 		updateProfilePanel.add(emailLabel);
 
 		changeEmailBtn = new JButton("Change E-mail");
+		changeEmailBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		changeEmailBtn.setFocusable(false);
+		changeEmailBtn.setBackground(new Color(235, 235, 235));
 		changeEmailBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changeEmailBtn.setBounds(293, 150, 120, 20);
 		updateProfilePanel.add(changeEmailBtn);
 
 		showPasswordToggleBtn = new JToggleButton("Show Password");
-		showPasswordToggleBtn.setFocusable(false);
+		showPasswordToggleBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		showPasswordToggleBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		showPasswordToggleBtn.setBackground(new Color(235, 235, 235));
+		showPasswordToggleBtn.setFocusable(false);
 		showPasswordToggleBtn.setBounds(160, 120, 120, 15);
 		showPasswordToggleBtn.addItemListener(new ItemListener() {
 			@Override
@@ -240,7 +252,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		emailTxtfield.setBounds(80, 150, 200, 20);
 		updateProfilePanel.add(emailTxtfield);
 		
-		JLabel addressLabel = new JLabel("Address");
+		addressLabel = new JLabel("Address");
 		addressLabel.setForeground(Color.WHITE);
 		addressLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
 		addressLabel.setBounds(10, 200, 70, 20);
@@ -257,12 +269,16 @@ public class AdminPage extends JFrame implements ActionListener {
 		updateProfilePanel.add(addressTxtfield);
 		
 		changeAddressBtn = new JButton("Change Address");
+		changeAddressBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		changeAddressBtn.setBackground(new Color(235, 235, 235));
 		changeAddressBtn.setFocusable(false);
 		changeAddressBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changeAddressBtn.setBounds(293, 200, 120, 20);
 		updateProfilePanel.add(changeAddressBtn);
 		
 		saveChangesBtn = new JButton("Save Changes");
+		saveChangesBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		saveChangesBtn.setBackground(new Color(235, 235, 235));
 		saveChangesBtn.setFocusable(false);
 		saveChangesBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
 		saveChangesBtn.setBounds(506, 270, 150, 40);
@@ -276,7 +292,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPanel.add(lblNewLabel);
 		
 		// MANAGE RECEPTIONISTS PANEL ---------------------------------------------------------------------
-		JPanel manageReceptionistPanel = new JPanel();
+		manageReceptionistPanel = new JPanel();
 		contentPanel.setLayer(manageReceptionistPanel, 1);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
 		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -293,15 +309,27 @@ public class AdminPage extends JFrame implements ActionListener {
 		// HEADER PANEL --------------------------------
 		if (e.getSource() == updateProfileBtn) {
 			updateProfilePanel.setVisible(true);
+			updateProfileBtn.setEnabled(false);
+			manageTutorsButton.setEnabled(true);
+			System.out.println("Opened Update Profile Panel");
 		}
 		if (e.getSource() == manageTutorsButton) {
 			updateProfilePanel.setVisible(false);
+			updateProfileBtn.setEnabled(true);
+			manageTutorsButton.setEnabled(false);
+			System.out.println("Opened Manage Tutors Panel");
 		}
 		if (e.getSource() == manageReceptionistsBtn) {
-			// to do
+			updateProfilePanel.setVisible(false);
+			manageReceptionistPanel.setVisible(true);
+			System.out.println("Opened Manage Receptionists Panel");
 		}
 		if (e.getSource() == viewIncomeBtn) {
-			// to do
+			System.out.println("Opened View Income Panel");
+		}
+		if (e.getSource() == changeUsernameBtn) {
+			usernameTxtfield.setEnabled(true);
+			System.out.println("Button pressed: Change username");
 		}
 		
 		// UPDATE PROFILE PANEL ----------------------------------
