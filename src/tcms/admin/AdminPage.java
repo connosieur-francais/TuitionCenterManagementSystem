@@ -63,7 +63,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		// Upon starting this page, load all admins and check if all admin accounts exist
 		int user_id = user.getID();
 		AdminManager adminManager = new AdminManager();
-		adminManager.loadAdmins(adminCSVFile);
+		adminManager.loadAdmins();
 		adminManager.saveAdmins(adminCSVFile);
 		Admin admin = adminManager.findAdminByUserID(user_id);
 		

@@ -1,8 +1,6 @@
 package tcms.admin;
 
 public class Admin {
-	private static int idNumber = 1;
-
 	private int adminID;
 	private int userID;
 	private String email;
@@ -15,8 +13,8 @@ public class Admin {
 		setAddress(address);
 	}
 	
-	public Admin(int userID) {
-		setAdminID(advanceAdminID());
+	public Admin(int adminID, int userID) {
+		setAdminID(adminID);
 		setUserID(userID);
 		setEmail("Not set");
 		setAddress("Not set");
@@ -24,13 +22,6 @@ public class Admin {
 	
 	public int getAdminID() {
 		return adminID;
-	}
-
-	public static int advanceAdminID() {
-		int id = idNumber;
-		idNumber++;
-		return id;
-
 	}
 
 	public void setAdminID(int adminID) {
