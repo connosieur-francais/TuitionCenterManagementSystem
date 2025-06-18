@@ -21,6 +21,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import tcms.users.User;
+import javax.swing.JTable;
 
 public class AdminPage extends JFrame implements ActionListener {
 
@@ -144,7 +145,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		// UPDATE PROFILE PANEL -----------------------------------------------------------------------
 		updateProfilePanel = new JPanel();
 		updateProfilePanel.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		contentPanel.setLayer(updateProfilePanel, 1);
+		contentPanel.setLayer(updateProfilePanel, 0);
 		updateProfilePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		updateProfilePanel.setBackground(new Color(83, 92, 145));
 		updateProfilePanel.setBounds(10, 5, 666, 320);
@@ -206,6 +207,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changePasswordBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		changePasswordBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changePasswordBtn.setBackground(new Color(235, 235, 235));
+		changePasswordBtn.addActionListener(this);
 		changePasswordBtn.setFocusable(false);
 		changePasswordBtn.setBounds(293, 100, 120, 20);
 		updateProfilePanel.add(changePasswordBtn);
@@ -218,9 +220,10 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		changeEmailBtn = new JButton("Change E-mail");
 		changeEmailBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		changeEmailBtn.setFocusable(false);
 		changeEmailBtn.setBackground(new Color(235, 235, 235));
 		changeEmailBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		changeEmailBtn.addActionListener(this);
+		changeEmailBtn.setFocusable(false);
 		changeEmailBtn.setBounds(293, 150, 120, 20);
 		updateProfilePanel.add(changeEmailBtn);
 
@@ -271,16 +274,18 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeAddressBtn = new JButton("Change Address");
 		changeAddressBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		changeAddressBtn.setBackground(new Color(235, 235, 235));
-		changeAddressBtn.setFocusable(false);
 		changeAddressBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		changeAddressBtn.addActionListener(this);
+		changeAddressBtn.setFocusable(false);
 		changeAddressBtn.setBounds(293, 200, 120, 20);
 		updateProfilePanel.add(changeAddressBtn);
 		
 		saveChangesBtn = new JButton("Save Changes");
 		saveChangesBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		saveChangesBtn.setBackground(new Color(235, 235, 235));
-		saveChangesBtn.setFocusable(false);
 		saveChangesBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
+		saveChangesBtn.addActionListener(this);
+		saveChangesBtn.setFocusable(false);
 		saveChangesBtn.setBounds(506, 270, 150, 40);
 		updateProfilePanel.add(saveChangesBtn);
 		
@@ -293,7 +298,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		
 		// MANAGE RECEPTIONISTS PANEL ---------------------------------------------------------------------
 		manageReceptionistPanel = new JPanel();
-		contentPanel.setLayer(manageReceptionistPanel, 1);
+		contentPanel.setLayer(manageReceptionistPanel, 0);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
 		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		manageReceptionistPanel.setBounds(10, 5, 666, 320);

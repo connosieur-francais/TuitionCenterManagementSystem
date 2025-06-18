@@ -6,6 +6,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					@SuppressWarnings("unused")
 					LoginPage loginPage = new LoginPage();
 				} catch (Exception e) {
 					e.printStackTrace();
