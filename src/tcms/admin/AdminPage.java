@@ -408,14 +408,18 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	public void updateUserDetails(Admin admin, User user, String newUsername, String newPassword, String newEmail,
 			String newAddress) { // to be used by save changes button
-		userManager.renameUser(user.getID(), newUsername);
+
+		if (!userManager.renameUser(user.getID(), newUsername)) {
+			JOptionPane.showMessageDialog(this, "Username failed to update.", "Username Already Exists",
+					JOptionPane.ERROR_MESSAGE);
+			usernameTxtfield.setText(user.getUsername());
+		}
 		user.setPassword(newPassword);
 		admin.setEmail(newEmail);
 		admin.setAddress(newAddress);
 		userManager.saveUsers(userCSVFile);
 		adminManager.saveAdmins(adminCSVFile);
 
-		System.out.println(user.getUsername());
 		System.out.println("Updated User Details For AdminID = " + admin.getAdminID());
 	}
 

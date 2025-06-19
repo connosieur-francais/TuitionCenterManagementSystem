@@ -107,37 +107,26 @@ public class UserManager {
 	
 	public boolean renameUser(int userID, String newUsername) {
 	    User user = userMap.get(userID);
-
 	    if (user == null) {
 	        System.out.println("renameUser: User ID not found: " + userID);
 	        return false;
 	    }
-
-	    String oldUsernameKey = user.getUsername().toLowerCase();
-	    String newUsernameKey = newUsername.toLowerCase();
-
+	    String oldUsernameKey = user.getUsername();
+	    String newUsernameKey = newUsername;
 	    // Optional: prevent duplicate usernames
 	    if (usernameMap.containsKey(newUsernameKey)) {
 	        System.out.println("renameUser: Username already exists: " + newUsername);
 	        return false;
 	    }
-
-	    // Remove old username mapping
+	    // Update maps and object
 	    usernameMap.remove(oldUsernameKey);
-
-	    // Update the username
 	    user.setUsername(newUsername);
-
-	    // Add new username mapping
 	    usernameMap.put(newUsernameKey, user);
-
-	    // Save changes to file
+	    // Save changes
 	    saveUsers("src/users.csv");
-
-	    System.out.println("renameUser: Username updated from " + oldUsernameKey + " to " + newUsernameKey);
+	    System.out.println("renameUser: Username updated from '" + oldUsernameKey + "' to '" + newUsernameKey + "'");
 	    return true;
 	}
-
 
 	public User findUserByUsername(String username) {
 		return usernameMap.get(username);
