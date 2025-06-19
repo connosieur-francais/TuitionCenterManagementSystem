@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,11 +22,17 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import tcms.users.User;
+import tcms.users.UserManager;
 
 public class AdminPage extends JFrame implements ActionListener {
-	
+
+	private AdminManager adminManager = new AdminManager();
+	private UserManager userManager = new UserManager();
+
 	private Admin admin;
 	private User user;
+	private String adminCSVFile = "src//admin.csv";
+	private String userCSVFile = "src//users.csv";
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame();
@@ -37,13 +42,12 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JButton manageReceptionistsBtn, viewIncomeBtn;
 	private JLabel atcBannerLabel;
 	private JLayeredPane contentPanel;
-	
-	
+
 	// HEADER LABEL SETTINGS
 	private Color buttonColor = new Color(83, 92, 145);
 	private Color buttonTxtColor = Color.white;
 	private Font buttonFont = new Font("SansSerif", Font.BOLD, 12);
-	
+
 	// UPDATE PROFILE PAGE ------------------------
 	private JPanel updateProfilePanel;
 	private JLabel profileSettingsLabel, usernameLabel;
@@ -54,27 +58,27 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JToggleButton showPasswordToggleBtn;
 	private JLabel lblNewLabel;
 	private JTextField addressTxtfield;
-	
-	// MANAGE RECEPTIONISTS PAGE ------------------------------------------------------
+
+	// MANAGE RECEPTIONISTS PAGE
+	// ------------------------------------------------------
 	private JPanel manageReceptionistPanel;
-	
-	private String adminCSVFile = "src//admin.csv";
-	
 
 	/**
 	 * Create the frame.
 	 */
 	public AdminPage(User u) {
-		
+
 		user = u;
-		// Upon starting this page, load all admins and check if all admin accounts exist
+		// Upon starting this page, load all admins and check if all admin accounts
+		// exist
 		int user_id = user.getID();
-		AdminManager adminManager = new AdminManager();
-		adminManager.loadAdmins(); // Loads and checks if admin accounts are created for all the admins.
+		adminManager.loadAdmins(adminCSVFile); // Loads admin accounts
+		userManager.loadUsers(userCSVFile); // Load user accounts (connected to admin)
+		adminManager.updateAdminsInCSV(); // Checks if all admin accounts are created properly.
 		adminManager.saveAdmins(adminCSVFile);
-		
+
 		admin = adminManager.findAdminByUserID(user_id);
-		
+
 		frame.setResizable(false);
 		frame.setTitle("Admin Panel");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -148,8 +152,9 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPanel.setBounds(0, 80, 686, 335);
 		contentPane.add(contentPanel);
 		contentPanel.setLayout(null);
-		
-		// UPDATE PROFILE PANEL -----------------------------------------------------------------------
+
+		// UPDATE PROFILE PANEL
+		// -----------------------------------------------------------------------
 		updateProfilePanel = new JPanel();
 		updateProfilePanel.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		contentPanel.setLayer(updateProfilePanel, 0);
@@ -249,7 +254,7 @@ public class AdminPage extends JFrame implements ActionListener {
 			}
 		});
 		updateProfilePanel.add(showPasswordToggleBtn);
-		
+
 		emailTxtfield = new JTextField();
 		emailTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		emailTxtfield.setBackground(new Color(192, 192, 192));
@@ -258,13 +263,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		emailTxtfield.setColumns(10);
 		emailTxtfield.setBounds(80, 150, 200, 20);
 		updateProfilePanel.add(emailTxtfield);
-		
+
 		addressLabel = new JLabel("Address");
 		addressLabel.setForeground(Color.WHITE);
 		addressLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
 		addressLabel.setBounds(10, 200, 70, 20);
 		updateProfilePanel.add(addressLabel);
-		
+
 		addressTxtfield = new JTextField();
 		addressTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		addressTxtfield.setBackground(new Color(192, 192, 192));
@@ -274,7 +279,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		addressTxtfield.setColumns(10);
 		addressTxtfield.setBounds(80, 200, 200, 20);
 		updateProfilePanel.add(addressTxtfield);
-		
+
 		changeAddressBtn = new JButton("Change Address");
 		changeAddressBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		changeAddressBtn.setBackground(new Color(235, 235, 235));
@@ -283,7 +288,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeAddressBtn.setFocusable(false);
 		changeAddressBtn.setBounds(293, 200, 120, 20);
 		updateProfilePanel.add(changeAddressBtn);
-		
+
 		saveChangesBtn = new JButton("Save Changes");
 		saveChangesBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		saveChangesBtn.setBackground(new Color(235, 235, 235));
@@ -292,15 +297,17 @@ public class AdminPage extends JFrame implements ActionListener {
 		saveChangesBtn.setFocusable(false);
 		saveChangesBtn.setBounds(506, 270, 150, 40);
 		updateProfilePanel.add(saveChangesBtn);
-		
-		updateProfilePanelInformation(user, admin); // Update the information in txtfields with logged in user's information
-		
+
+		updateProfilePanelInformation(user, admin); // Update the information in txtfields with logged in user's
+													// information
+
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("src\\loginPageBackground.png"));
 		lblNewLabel.setBounds(0, 0, 686, 335);
 		contentPanel.add(lblNewLabel);
-		
-		// MANAGE RECEPTIONISTS PANEL ---------------------------------------------------------------------
+
+		// MANAGE RECEPTIONISTS PANEL
+		// ---------------------------------------------------------------------
 		manageReceptionistPanel = new JPanel();
 		contentPanel.setLayer(manageReceptionistPanel, 0);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
@@ -308,13 +315,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageReceptionistPanel.setBounds(10, 5, 666, 320);
 		contentPanel.add(manageReceptionistPanel);
 		manageReceptionistPanel.setLayout(null);
-		
+
 		frame.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		// HEADER PANEL --------------------------------
 		if (e.getSource() == updateProfileBtn) {
 			updateProfilePanel.setVisible(true);
@@ -336,7 +343,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		if (e.getSource() == viewIncomeBtn) {
 			System.out.println("Opened View Income Panel");
 		}
-		
+
 		// UPDATE PROFILE PANEL ----------------------------------
 		if (e.getSource() == changeUsernameBtn) {
 			usernameTxtfield.setEnabled(true);
@@ -345,83 +352,79 @@ public class AdminPage extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == changePasswordBtn) {
 			passwordField.setEnabled(true);
+			changePasswordBtn.setEnabled(false);
 			System.out.println("Button pressed: Change password");
 		}
 		if (e.getSource() == changeEmailBtn) {
 			emailTxtfield.setEnabled(true);
-		System.out.println("Button pressed: Change e-mail");
+			changeEmailBtn.setEnabled(false);
+			System.out.println("Button pressed: Change e-mail");
 		}
 		if (e.getSource() == changeAddressBtn) {
 			addressTxtfield.setEnabled(true);
+			changeAddressBtn.setEnabled(false);
 		}
 		if (e.getSource() == saveChangesBtn) {
 			String newUsername = usernameTxtfield.getText();
 			String newPassword = String.valueOf(passwordField.getPassword());
 			String newEmail = emailTxtfield.getText();
 			String newAddress = addressTxtfield.getText();
-			
-			// Basic Validation
+
+			// Basic Validation (Checks for empty fields)
 			if (newUsername.isEmpty() || newPassword.isEmpty() || newEmail.isEmpty() || newAddress.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "All fields must be filled in.", "Input Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "All fields must be filled in.", "Input Error",
+						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			
-			if (!isValidEmail(newEmail)) {
-				JOptionPane.showMessageDialog(this, "Please enter a valid email.", "Input error", JOptionPane.ERROR_MESSAGE);
+
+			if (!adminManager.isValidEmail(newEmail)) { // If email invalid, display error message
+				JOptionPane.showMessageDialog(this, "Please enter a valid email.", "Input error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
 			}
-			
-			updateUsername(admin, user, newUsername);
-			updatePassword(admin, user, newPassword);
-			
-			
+
+			updateUserDetails(admin, user, newUsername, newPassword, newEmail, newAddress);
+
+			JOptionPane.showMessageDialog(this, "Saved profile settings");
+			resetUpdateProfilePage();
+
+			return;
 		}
 	}
-	public boolean isValidEmail(String email) {
-		// Check for null or empty string after trimming whitespace
-		if (email == null || email.trim().isEmpty()) {
-			return false;
-		}
 
-		// Find the position of '@' and the last '.'
-		int positionOfAt = email.indexOf('@');
-		int positionOfLastDot = email.lastIndexOf('.');
+	public void resetUpdateProfilePage() {
+		// Enable all the buttons
+		changeUsernameBtn.setEnabled(true);
+		changePasswordBtn.setEnabled(true);
+		changeEmailBtn.setEnabled(true);
+		changeAddressBtn.setEnabled(true);
 
-		// Conditions for a valid email:
-		// 1. '@' must exist and not be the first character
-		// 2. '.' must come after '@'
-		// 3. '.' must not be the last character
-		boolean hasValidAt = positionOfAt > 0;
-		boolean hasDotAfterAt = positionOfLastDot > positionOfAt + 1;
-		boolean dotNotAtEnd = positionOfLastDot < email.length() - 1;
-
-		return hasValidAt && hasDotAfterAt && dotNotAtEnd;
+		// Disable all the text fields
+		usernameTxtfield.setEnabled(false);
+		passwordField.setEnabled(false);
+		emailTxtfield.setEnabled(false);
+		addressTxtfield.setEnabled(false);
 	}
-	
-	public void updateUsername(Admin admin, User user, String newUsername) { // to be used by save changes button
-		user.setUsername(newUsername);
-		System.out.println("Updated username : AdminID = " + admin.getAdminID());
-	}
-	public void updatePassword(Admin admin, User user, String newPassword) {
+
+	public void updateUserDetails(Admin admin, User user, String newUsername, String newPassword, String newEmail,
+			String newAddress) { // to be used by save changes button
+		userManager.renameUser(user.getID(), newUsername);
 		user.setPassword(newPassword);
-		System.out.println("Updated username : AdminID = " + admin.getAdminID());
-	}
-	
-	public void updateEmail(Admin admin, User user, String newEmail) {
 		admin.setEmail(newEmail);
-		System.out.println("Updated email : AdminID = " + admin.getAdminID());
-	}
-	
-	public void updateAddress(Admin admin, User user, String newAddress) {
 		admin.setAddress(newAddress);
-		System.out.println("Updated address : AdminID = " + admin.getAdminID());
+		userManager.saveUsers(userCSVFile);
+		adminManager.saveAdmins(adminCSVFile);
+
+		System.out.println(user.getUsername());
+		System.out.println("Updated User Details For AdminID = " + admin.getAdminID());
 	}
-	
+
 	private void updateProfilePanelInformation(User user, Admin admin) {
 		String username = user.getUsername();
 		String password = user.getPassword();
 		String email = admin.getEmail();
 		String address = admin.getAddress();
-		
+
 		usernameTxtfield.setText(username);
 		passwordField.setText(password);
 		emailTxtfield.setText(email);

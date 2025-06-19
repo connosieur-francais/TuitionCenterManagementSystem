@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.*;
 
 public class UserManager {
-
+	
+	private Map<Integer, User> userMap = new HashMap<>();
+	private Map<String, User> usernameMap = new HashMap<>();
 	private List<User> users = new ArrayList<>();
 
 	public void loadUsers(String filename) {
@@ -31,6 +33,8 @@ public class UserManager {
 
 					User user = new User(userID, username, password, role, loginAttempts, status);
 					users.add(user);
+					userMap.put(userID, user); // Add to map | userID : User object
+					usernameMap.put(username, user); // Add to map | username : User object
 
 					System.out.println("Loaded user: " + user);
 				} else {
@@ -56,23 +60,92 @@ public class UserManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void refreshUsersList(String filename) {
+	    // Reload the users from file to ensure the list is up to date
+	    List<User> latestUsers = new ArrayList<>();
 
-	public User findUserByUsername(String username) {
-		for (User user : users) {
-			if (user.getUsername().equalsIgnoreCase(username)) {
-				return user;
-			}
-		}
-		return null;
+	    try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+	        String line;
+	        boolean skipHeader = true;
+
+	        while ((line = br.readLine()) != null) {
+	            if (skipHeader) {
+	                skipHeader = false;
+	                continue;
+	            }
+
+	            String[] fields = line.split(",");
+	            if (fields.length >= 6) {
+	                int userID = Integer.parseInt(fields[0].trim());
+	                String username = fields[1].trim();
+	                String password = fields[2].trim();
+	                String role = fields[3].trim();
+	                int loginAttempts = Integer.parseInt(fields[4].trim());
+	                String status = fields[5].trim();
+
+	                User user = new User(userID, username, password, role, loginAttempts, status);
+	                latestUsers.add(user);
+	                
+	            }
+	        }
+
+	        // Replace current users list with refreshed list
+	        users.clear();
+	        users.addAll(latestUsers);
+
+	        System.out.println("User list refreshed from: " + filename);
+	        System.out.println("Total users: " + users.size());
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } catch (NumberFormatException e) {
+	        System.out.println("Failed to parse number in user CSV. Check the file for formatting issues.");
+	        e.printStackTrace();
+	    }
+	}
+	
+	public boolean renameUser(int userID, String newUsername) {
+	    User user = userMap.get(userID);
+
+	    if (user == null) {
+	        System.out.println("renameUser: User ID not found: " + userID);
+	        return false;
+	    }
+
+	    String oldUsernameKey = user.getUsername().toLowerCase();
+	    String newUsernameKey = newUsername.toLowerCase();
+
+	    // Optional: prevent duplicate usernames
+	    if (usernameMap.containsKey(newUsernameKey)) {
+	        System.out.println("renameUser: Username already exists: " + newUsername);
+	        return false;
+	    }
+
+	    // Remove old username mapping
+	    usernameMap.remove(oldUsernameKey);
+
+	    // Update the username
+	    user.setUsername(newUsername);
+
+	    // Add new username mapping
+	    usernameMap.put(newUsernameKey, user);
+
+	    // Save changes to file
+	    saveUsers("src/users.csv");
+
+	    System.out.println("renameUser: Username updated from " + oldUsernameKey + " to " + newUsernameKey);
+	    return true;
 	}
 
+
+	public User findUserByUsername(String username) {
+		return usernameMap.get(username);
+	}
+	
+
 	public User findUserByUserID(int id) {
-		for (User user : users) {
-			if (user.getID() == id) {
-				return user;
-			}
-		}
-		return null;
+	    return userMap.get(id); // fast lookup
 	}
 
 	public void decrementLoginAttempts(User user) {
@@ -81,6 +154,14 @@ public class UserManager {
 
 	public void resetLoginAttempts(User user) {
 		user.setLoginAttempts(3);
+	}
+	
+	public Map<String, User> getUsernameMap() {
+		return usernameMap;
+	}
+	
+	public Map<Integer, User> getUserMap() {
+		return userMap;
 	}
 
 	public List<User> getAllUsers() {
