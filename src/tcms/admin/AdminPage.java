@@ -6,12 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -21,9 +23,11 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
 import tcms.users.User;
-import javax.swing.JTable;
 
 public class AdminPage extends JFrame implements ActionListener {
+	
+	private Admin admin;
+	private User user;
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame();
@@ -60,13 +64,16 @@ public class AdminPage extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public AdminPage(User user) {
+	public AdminPage(User u) {
+		
+		user = u;
 		// Upon starting this page, load all admins and check if all admin accounts exist
 		int user_id = user.getID();
 		AdminManager adminManager = new AdminManager();
-		adminManager.loadAdmins();
+		adminManager.loadAdmins(); // Loads and checks if admin accounts are created for all the admins.
 		adminManager.saveAdmins(adminCSVFile);
-		Admin admin = adminManager.findAdminByUserID(user_id);
+		
+		admin = adminManager.findAdminByUserID(user_id);
 		
 		frame.setResizable(false);
 		frame.setTitle("Admin Panel");
@@ -333,6 +340,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		// UPDATE PROFILE PANEL ----------------------------------
 		if (e.getSource() == changeUsernameBtn) {
 			usernameTxtfield.setEnabled(true);
+			changeUsernameBtn.setEnabled(false);
 			System.out.println("Button pressed: Change username");
 		}
 		if (e.getSource() == changePasswordBtn) {
@@ -347,8 +355,65 @@ public class AdminPage extends JFrame implements ActionListener {
 			addressTxtfield.setEnabled(true);
 		}
 		if (e.getSource() == saveChangesBtn) {
-			// to-do
+			String newUsername = usernameTxtfield.getText();
+			String newPassword = String.valueOf(passwordField.getPassword());
+			String newEmail = emailTxtfield.getText();
+			String newAddress = addressTxtfield.getText();
+			
+			// Basic Validation
+			if (newUsername.isEmpty() || newPassword.isEmpty() || newEmail.isEmpty() || newAddress.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "All fields must be filled in.", "Input Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if (!isValidEmail(newEmail)) {
+				JOptionPane.showMessageDialog(this, "Please enter a valid email.", "Input error", JOptionPane.ERROR_MESSAGE);
+			}
+			
+			updateUsername(admin, user, newUsername);
+			updatePassword(admin, user, newPassword);
+			
+			
 		}
+	}
+	public boolean isValidEmail(String email) {
+		// Check for null or empty string after trimming whitespace
+		if (email == null || email.trim().isEmpty()) {
+			return false;
+		}
+
+		// Find the position of '@' and the last '.'
+		int positionOfAt = email.indexOf('@');
+		int positionOfLastDot = email.lastIndexOf('.');
+
+		// Conditions for a valid email:
+		// 1. '@' must exist and not be the first character
+		// 2. '.' must come after '@'
+		// 3. '.' must not be the last character
+		boolean hasValidAt = positionOfAt > 0;
+		boolean hasDotAfterAt = positionOfLastDot > positionOfAt + 1;
+		boolean dotNotAtEnd = positionOfLastDot < email.length() - 1;
+
+		return hasValidAt && hasDotAfterAt && dotNotAtEnd;
+	}
+	
+	public void updateUsername(Admin admin, User user, String newUsername) { // to be used by save changes button
+		user.setUsername(newUsername);
+		System.out.println("Updated username : AdminID = " + admin.getAdminID());
+	}
+	public void updatePassword(Admin admin, User user, String newPassword) {
+		user.setPassword(newPassword);
+		System.out.println("Updated username : AdminID = " + admin.getAdminID());
+	}
+	
+	public void updateEmail(Admin admin, User user, String newEmail) {
+		admin.setEmail(newEmail);
+		System.out.println("Updated email : AdminID = " + admin.getAdminID());
+	}
+	
+	public void updateAddress(Admin admin, User user, String newAddress) {
+		admin.setAddress(newAddress);
+		System.out.println("Updated address : AdminID = " + admin.getAdminID());
 	}
 	
 	private void updateProfilePanelInformation(User user, Admin admin) {
