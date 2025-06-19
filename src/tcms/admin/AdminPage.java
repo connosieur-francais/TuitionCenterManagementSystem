@@ -177,7 +177,6 @@ public class AdminPage extends JFrame implements ActionListener {
 		usernameTxtfield = new JTextField();
 		usernameTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		usernameTxtfield.setBackground(new Color(192, 192, 192));
-		usernameTxtfield.setEditable(false);
 		usernameTxtfield.setEnabled(false);
 		usernameTxtfield.setDisabledTextColor(Color.GRAY);
 		usernameTxtfield.setBounds(80, 50, 200, 20);
@@ -187,7 +186,6 @@ public class AdminPage extends JFrame implements ActionListener {
 		passwordField = new JPasswordField();
 		passwordField.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		passwordField.setBackground(new Color(192, 192, 192));
-		passwordField.setEditable(false);
 		passwordField.setEnabled(false);
 		passwordField.setDisabledTextColor(Color.GRAY);
 		passwordField.setEchoChar('*');
@@ -248,7 +246,6 @@ public class AdminPage extends JFrame implements ActionListener {
 		emailTxtfield = new JTextField();
 		emailTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		emailTxtfield.setBackground(new Color(192, 192, 192));
-		emailTxtfield.setEditable(false);
 		emailTxtfield.setEnabled(false);
 		emailTxtfield.setDisabledTextColor(Color.GRAY);
 		emailTxtfield.setColumns(10);
@@ -332,12 +329,26 @@ public class AdminPage extends JFrame implements ActionListener {
 		if (e.getSource() == viewIncomeBtn) {
 			System.out.println("Opened View Income Panel");
 		}
+		
+		// UPDATE PROFILE PANEL ----------------------------------
 		if (e.getSource() == changeUsernameBtn) {
 			usernameTxtfield.setEnabled(true);
 			System.out.println("Button pressed: Change username");
 		}
-		
-		// UPDATE PROFILE PANEL ----------------------------------
+		if (e.getSource() == changePasswordBtn) {
+			passwordField.setEnabled(true);
+			System.out.println("Button pressed: Change password");
+		}
+		if (e.getSource() == changeEmailBtn) {
+			emailTxtfield.setEnabled(true);
+		System.out.println("Button pressed: Change e-mail");
+		}
+		if (e.getSource() == changeAddressBtn) {
+			addressTxtfield.setEnabled(true);
+		}
+		if (e.getSource() == saveChangesBtn) {
+			// to-do
+		}
 	}
 	
 	private void updateProfilePanelInformation(User user, Admin admin) {
