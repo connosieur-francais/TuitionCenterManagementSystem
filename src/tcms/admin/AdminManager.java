@@ -15,7 +15,7 @@ public class AdminManager {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) { // Creates a list of users by
 																							// reading
-			// from src/admin.csv
+			// from src/admins.csv
 			String line;
 			boolean skipHeader = true;
 
@@ -67,7 +67,7 @@ public class AdminManager {
 	    }
 	    // Save only if there was a change
 	    if (updated) {
-	        saveAdmins("src/admin.csv");
+	        saveAdmins("src/admins.csv");
 	    }
 	}
 
@@ -106,9 +106,9 @@ public class AdminManager {
 	}
 
 	public void updateAdminsInCSV() {
-	    userManager.loadUsers("src/users.csv");
+	    userManager.loadUsers("src//users.csv");
 	    List<User> users = userManager.getAllUsers();
-	    System.out.println("updateAdminsInCSV: Updating admins in admin.csv");
+	    System.out.println("updateAdminsInCSV: Updating admins in admins.csv");
 	    System.out.println("Total users: " + users.size());
 
 	    boolean updated = false;
@@ -154,7 +154,7 @@ public class AdminManager {
 
 	    // Save only if changes were made
 	    if (updated) {
-	        saveAdmins("src/admin.csv");
+	        saveAdmins("src//admins.csv");
 	    }
 	}
 

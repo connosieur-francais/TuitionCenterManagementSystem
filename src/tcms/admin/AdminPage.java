@@ -31,7 +31,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	private Admin admin;
 	private User user;
-	private String adminCSVFile = "src//admin.csv";
+	private String adminCSVFile = "src//admins.csv";
 	private String userCSVFile = "src//users.csv";
 
 	private static final long serialVersionUID = 1L;
@@ -309,7 +309,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		// MANAGE RECEPTIONISTS PANEL
 		// ---------------------------------------------------------------------
 		manageReceptionistPanel = new JPanel();
-		contentPanel.setLayer(manageReceptionistPanel, 0);
+		contentPanel.setLayer(manageReceptionistPanel, 1);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
 		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		manageReceptionistPanel.setBounds(10, 5, 666, 320);
