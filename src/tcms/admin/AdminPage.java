@@ -58,10 +58,14 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JToggleButton showPasswordToggleBtn;
 	private JLabel lblNewLabel;
 	private JTextField addressTxtfield;
-
-	// MANAGE RECEPTIONISTS PAGE
-	// ------------------------------------------------------
+	
+	// MANAGE RECEPTIONISTS PAGE ------------------------------
 	private JPanel manageReceptionistPanel;
+	private JLabel ManageReceptionistsLabel;
+
+	// VIEW MONTHLY INCOME PAGE -------------------------------
+	private JPanel viewMonthlyIncomePanel;
+	private JLabel viewMonthlyIncomeLabel;
 
 	/**
 	 * Create the frame.
@@ -311,10 +315,30 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageReceptionistPanel = new JPanel();
 		contentPanel.setLayer(manageReceptionistPanel, 1);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
+		manageReceptionistPanel.setVisible(false);
 		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		manageReceptionistPanel.setBounds(10, 5, 666, 320);
 		contentPanel.add(manageReceptionistPanel);
 		manageReceptionistPanel.setLayout(null);
+
+		ManageReceptionistsLabel = new JLabel("Manage Receptionists");
+		ManageReceptionistsLabel.setForeground(new Color(255, 255, 255));
+		ManageReceptionistsLabel.setFont(new Font("Tahoma", Font.BOLD, 21));
+		ManageReceptionistsLabel.setBounds(10, 10, 286, 41);
+		manageReceptionistPanel.add(ManageReceptionistsLabel);
+
+		viewMonthlyIncomePanel = new JPanel();
+		viewMonthlyIncomePanel.setBackground(new Color(83, 92, 145));
+		contentPanel.setLayer(viewMonthlyIncomePanel, 3);
+		viewMonthlyIncomePanel.setBounds(10, 5, 666, 320);
+		contentPanel.add(viewMonthlyIncomePanel);
+		viewMonthlyIncomePanel.setLayout(null);
+
+		viewMonthlyIncomeLabel = new JLabel("View Monthly Income Report");
+		viewMonthlyIncomeLabel.setForeground(new Color(255, 255, 255));
+		viewMonthlyIncomeLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+		viewMonthlyIncomeLabel.setBounds(10, 10, 220, 40);
+		viewMonthlyIncomePanel.add(viewMonthlyIncomeLabel);
 
 		frame.setVisible(true);
 	}
@@ -326,6 +350,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		if (e.getSource() == updateProfileBtn) {
 			updateProfilePanel.setVisible(true);
 			updateProfileBtn.setEnabled(false);
+			contentPanel.setLayer(updateProfilePanel, 1);
+			contentPanel.setLayer(manageReceptionistPanel, 0);
 			manageTutorsButton.setEnabled(true);
 			System.out.println("Opened Update Profile Panel");
 		}
@@ -338,6 +364,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		if (e.getSource() == manageReceptionistsBtn) {
 			updateProfilePanel.setVisible(false);
 			manageReceptionistPanel.setVisible(true);
+			contentPanel.setLayer(manageReceptionistPanel, 1);
+			contentPanel.setLayer(updateProfilePanel, 0);
 			System.out.println("Opened Manage Receptionists Panel");
 		}
 		if (e.getSource() == viewIncomeBtn) {
