@@ -6,9 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Calendar;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -58,7 +61,10 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JToggleButton showPasswordToggleBtn;
 	private JLabel lblNewLabel;
 	private JTextField addressTxtfield;
-	
+
+	// MANAGE TUTORS PAGE ------------------------------------
+	private JPanel manageTutorsPanel;
+
 	// MANAGE RECEPTIONISTS PAGE ------------------------------
 	private JPanel manageReceptionistPanel;
 	private JLabel ManageReceptionistsLabel;
@@ -66,6 +72,8 @@ public class AdminPage extends JFrame implements ActionListener {
 	// VIEW MONTHLY INCOME PAGE -------------------------------
 	private JPanel viewMonthlyIncomePanel;
 	private JLabel viewMonthlyIncomeLabel;
+	private JComboBox<String> yearSelector;
+	private JComboBox<String> monthSelector;
 
 	/**
 	 * Create the frame.
@@ -328,17 +336,52 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageReceptionistPanel.add(ManageReceptionistsLabel);
 
 		viewMonthlyIncomePanel = new JPanel();
+		viewMonthlyIncomePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		viewMonthlyIncomePanel.setBackground(new Color(83, 92, 145));
-		contentPanel.setLayer(viewMonthlyIncomePanel, 3);
-		viewMonthlyIncomePanel.setBounds(10, 5, 666, 320);
-		contentPanel.add(viewMonthlyIncomePanel);
+		viewMonthlyIncomePanel.setVisible(false);
 		viewMonthlyIncomePanel.setLayout(null);
+		viewMonthlyIncomePanel.setBounds(10, 5, 666, 320);
+		contentPanel.setLayer(viewMonthlyIncomePanel, 3);
+		contentPanel.add(viewMonthlyIncomePanel);
 
 		viewMonthlyIncomeLabel = new JLabel("View Monthly Income Report");
 		viewMonthlyIncomeLabel.setForeground(new Color(255, 255, 255));
 		viewMonthlyIncomeLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-		viewMonthlyIncomeLabel.setBounds(10, 10, 220, 40);
+		viewMonthlyIncomeLabel.setBounds(10, 5, 220, 40);
 		viewMonthlyIncomePanel.add(viewMonthlyIncomeLabel);
+
+		monthSelector = new JComboBox<String>();
+		monthSelector.setMaximumRowCount(12);
+		monthSelector.setModel(new DefaultComboBoxModel<String>(new String[] { "Select Month *", "January", "February",
+				"March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
+		monthSelector.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		monthSelector.setBounds(20, 55, 200, 20);
+		viewMonthlyIncomePanel.add(monthSelector);
+
+		yearSelector = new JComboBox<String>();
+		yearSelector.setModel(new DefaultComboBoxModel<String>(new String[] { "Select Year *" }));
+		yearSelector.setMaximumRowCount(12);
+		yearSelector.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		yearSelector.setBounds(230, 56, 200, 20);
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		System.out.print(currentYear);
+		for (int i = 1950; i <= currentYear; i++) {
+			yearSelector.addItem(String.valueOf(i));
+		}
+		viewMonthlyIncomePanel.add(yearSelector);
+
+		JButton generateReportBtn = new JButton("Generate Report");
+		generateReportBtn.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		generateReportBtn.setBounds(480, 120, 160, 80);
+		viewMonthlyIncomePanel.add(generateReportBtn);
+
+		manageTutorsPanel = new JPanel();
+		manageTutorsPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		manageTutorsPanel.setBackground(new Color(83, 92, 145));
+		manageTutorsPanel.setVisible(false);
+		manageTutorsPanel.setBounds(10, 5, 666, 320);
+		contentPanel.add(manageTutorsPanel);
+		manageTutorsPanel.setLayout(null);
 
 		frame.setVisible(true);
 	}
@@ -349,26 +392,75 @@ public class AdminPage extends JFrame implements ActionListener {
 		// HEADER PANEL --------------------------------
 		if (e.getSource() == updateProfileBtn) {
 			updateProfilePanel.setVisible(true);
-			updateProfileBtn.setEnabled(false);
+			manageTutorsPanel.setVisible(false);
+			manageReceptionistPanel.setVisible(false);
+			viewMonthlyIncomePanel.setVisible(false);
+
 			contentPanel.setLayer(updateProfilePanel, 1);
 			contentPanel.setLayer(manageReceptionistPanel, 0);
+			contentPanel.setLayer(viewMonthlyIncomePanel, 0);
+			contentPanel.setLayer(manageTutorsPanel, 0);
+
+			updateProfileBtn.setEnabled(false);
 			manageTutorsButton.setEnabled(true);
+			manageReceptionistsBtn.setEnabled(true);
+			viewIncomeBtn.setEnabled(true);
+
 			System.out.println("Opened Update Profile Panel");
 		}
 		if (e.getSource() == manageTutorsButton) {
+			manageTutorsPanel.setVisible(true);
 			updateProfilePanel.setVisible(false);
-			updateProfileBtn.setEnabled(true);
+			manageReceptionistPanel.setVisible(false);
+			viewMonthlyIncomePanel.setVisible(false);
+
+			contentPanel.setLayer(manageTutorsPanel, 1);
+			contentPanel.setLayer(updateProfilePanel, 0);
+			contentPanel.setLayer(manageReceptionistPanel, 0);
+			contentPanel.setLayer(viewMonthlyIncomePanel, 0);
+
 			manageTutorsButton.setEnabled(false);
+			updateProfileBtn.setEnabled(true);
+			manageReceptionistsBtn.setEnabled(true);
+			viewIncomeBtn.setEnabled(true);
+
 			System.out.println("Opened Manage Tutors Panel");
 		}
 		if (e.getSource() == manageReceptionistsBtn) {
-			updateProfilePanel.setVisible(false);
 			manageReceptionistPanel.setVisible(true);
+			viewMonthlyIncomePanel.setVisible(false);
+			updateProfilePanel.setVisible(false);
+			manageTutorsPanel.setVisible(false);
+
 			contentPanel.setLayer(manageReceptionistPanel, 1);
 			contentPanel.setLayer(updateProfilePanel, 0);
+			contentPanel.setLayer(viewMonthlyIncomePanel, 0);
+			contentPanel.setLayer(manageTutorsPanel, 0);
+
+			manageReceptionistsBtn.setEnabled(false);
+			updateProfileBtn.setEnabled(true);
+			manageTutorsButton.setEnabled(true);
+			viewIncomeBtn.setEnabled(true);
+
 			System.out.println("Opened Manage Receptionists Panel");
 		}
 		if (e.getSource() == viewIncomeBtn) {
+			viewMonthlyIncomePanel.setVisible(true);
+			manageReceptionistPanel.setVisible(false);
+			updateProfilePanel.setVisible(false);
+			manageTutorsPanel.setVisible(false);
+
+			viewIncomeBtn.setEnabled(false);
+			contentPanel.setLayer(viewMonthlyIncomePanel, 1);
+			contentPanel.setLayer(updateProfilePanel, 0);
+			contentPanel.setLayer(manageReceptionistPanel, 0);
+			contentPanel.setLayer(manageTutorsPanel, 0);
+
+			viewIncomeBtn.setEnabled(false);
+			updateProfileBtn.setEnabled(true);
+			manageTutorsButton.setEnabled(true);
+			manageReceptionistsBtn.setEnabled(true);
+
 			System.out.println("Opened View Income Panel");
 		}
 
