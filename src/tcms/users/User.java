@@ -1,13 +1,16 @@
 package tcms.users;
 
+import java.util.Map;
+
 public class User {
-	private static int user_ID;
 	private int userID;
 	private String username;
 	private String password;
 	private String role; // Admin, Receptionist, Tutor, Student
 	private int loginAttempts;
 	private String accountStatus; // active, locked
+	
+	private UserManager um = new UserManager(); // For next user id checking
 
 	public User(int id, String username, String password, String role, int loginAttempts, String accountStatus) {
 		setID(id);
@@ -19,20 +22,21 @@ public class User {
 	}
 
 	public User(String username, String password, String role) { // Create new user
-		setID(advanceID());
+		setID(nextAvailableID());
 		setUsername(username);
 		setPassword(password);
 		setRole(role);
 		setLoginAttempts(0);
 		setAccountStatus("active");
 	}
-
-	public static int advanceID() {
-		int id = user_ID;
-		user_ID++;
-		return id;
+	
+	private int nextAvailableID() {
+		um.loadUsers("src//users.csv");
+		Map<Integer, User> userMap = um.getUserMap();
+		int nextID = userMap.size() + 1;
+		return nextID;
 	}
-
+	
 	public void setID(int id) {
 		this.userID = id;
 	}
