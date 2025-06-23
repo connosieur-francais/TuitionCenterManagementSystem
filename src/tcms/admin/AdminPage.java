@@ -74,6 +74,7 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JLabel viewMonthlyIncomeLabel;
 	private JComboBox<String> yearSelector;
 	private JComboBox<String> monthSelector;
+	private JButton generateReportBtn;
 
 	/**
 	 * Create the frame.
@@ -319,7 +320,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPanel.add(lblNewLabel);
 
 		// MANAGE RECEPTIONISTS PANEL
-		// ---------------------------------------------------------------------
+
 		manageReceptionistPanel = new JPanel();
 		contentPanel.setLayer(manageReceptionistPanel, 1);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
@@ -331,9 +332,11 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		ManageReceptionistsLabel = new JLabel("Manage Receptionists");
 		ManageReceptionistsLabel.setForeground(new Color(255, 255, 255));
-		ManageReceptionistsLabel.setFont(new Font("Tahoma", Font.BOLD, 21));
+		ManageReceptionistsLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
 		ManageReceptionistsLabel.setBounds(10, 10, 286, 41);
 		manageReceptionistPanel.add(ManageReceptionistsLabel);
+
+		// VIEW MONTHLY INCOME PANEL ------------------------------------------
 
 		viewMonthlyIncomePanel = new JPanel();
 		viewMonthlyIncomePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -364,14 +367,16 @@ public class AdminPage extends JFrame implements ActionListener {
 		yearSelector.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		yearSelector.setBounds(230, 56, 200, 20);
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		System.out.print(currentYear);
+		System.out.println("Year Selector: Current Year = 2025");
 		for (int i = 1950; i <= currentYear; i++) {
 			yearSelector.addItem(String.valueOf(i));
 		}
 		viewMonthlyIncomePanel.add(yearSelector);
 
-		JButton generateReportBtn = new JButton("Generate Report");
+		generateReportBtn = new JButton("Generate Report");
 		generateReportBtn.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		generateReportBtn.addActionListener(this);
+		generateReportBtn.setFocusable(false);
 		generateReportBtn.setBounds(480, 120, 160, 80);
 		viewMonthlyIncomePanel.add(generateReportBtn);
 
@@ -510,6 +515,14 @@ public class AdminPage extends JFrame implements ActionListener {
 
 			return;
 		}
+		if (e.getSource() == generateReportBtn) {
+			String year = (String) yearSelector.getSelectedItem();
+			String month = (String) monthSelector.getSelectedItem();
+			
+			System.out.println("GenerateMonthlyIncomeReport: Selected year = " +year);
+			System.out.println("GenerateMonthlyIncomeReport: Selected month = " +month);
+		}
+
 	}
 
 	public void resetUpdateProfilePage() {
