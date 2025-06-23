@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 public class generateReport extends JFrame implements ActionListener {
 
@@ -71,6 +72,7 @@ public class generateReport extends JFrame implements ActionListener {
 		contentPane.add(rightBorder, BorderLayout.EAST);
 
 		incomeStatementPanel = new JPanel();
+		incomeStatementPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		incomeStatementPanel.setBackground(new Color(255, 255, 255));
 		contentPane.add(incomeStatementPanel, BorderLayout.CENTER);
 		incomeStatementPanel.setLayout(null);
