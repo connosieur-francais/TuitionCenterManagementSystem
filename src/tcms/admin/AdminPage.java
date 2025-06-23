@@ -355,14 +355,13 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		monthSelector = new JComboBox<String>();
 		monthSelector.setMaximumRowCount(12);
-		monthSelector.setModel(new DefaultComboBoxModel<String>(new String[] { "Select Month *", "January", "February",
-				"March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
+		monthSelector.setModel(new DefaultComboBoxModel<String>(new String[] {"- Select Month -", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}));
 		monthSelector.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		monthSelector.setBounds(20, 55, 200, 20);
 		viewMonthlyIncomePanel.add(monthSelector);
 
 		yearSelector = new JComboBox<String>();
-		yearSelector.setModel(new DefaultComboBoxModel<String>(new String[] { "Select Year *" }));
+		yearSelector.setModel(new DefaultComboBoxModel<String>(new String[] { "- Select Year -" }));
 		yearSelector.setMaximumRowCount(12);
 		yearSelector.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		yearSelector.setBounds(230, 56, 200, 20);
@@ -519,8 +518,15 @@ public class AdminPage extends JFrame implements ActionListener {
 			String year = (String) yearSelector.getSelectedItem();
 			String month = (String) monthSelector.getSelectedItem();
 			
+			if (year.contains("-") || month.contains("-")) { // Simple validation check if the user didnt select any option
+				JOptionPane.showMessageDialog(this, "You must select a month and year!","Selection Error", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			
 			System.out.println("GenerateMonthlyIncomeReport: Selected year = " +year);
 			System.out.println("GenerateMonthlyIncomeReport: Selected month = " +month);
+			
+			new generateReport(month, year);
 		}
 
 	}
