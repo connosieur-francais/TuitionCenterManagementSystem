@@ -7,7 +7,9 @@ import java.util.List;
 import tcms.users.UserManager;
 
 public class ReceptionistManager {
-	UserManager userManager = new UserManager();
+	
+	private int fieldLength = 5;
+	private UserManager userManager = new UserManager();
 	private List<Receptionist> receptionists = new ArrayList<>();
 	
 	public void loadReceptionists(String filename) {
@@ -25,7 +27,9 @@ public class ReceptionistManager {
 				}
 				String[] fields = line.split(",");
 				
-				if (fields.length >=)
+				if (fields.length >= fieldLength) {
+					
+				}
 			}
 		}
 	}

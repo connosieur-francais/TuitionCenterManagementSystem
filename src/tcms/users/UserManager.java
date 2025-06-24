@@ -5,6 +5,7 @@ import java.util.*;
 
 public class UserManager {
 	
+	private int fieldLength = 6; // If CSV file changes, change this number
 	private Map<Integer, User> userMap = new HashMap<>();
 	private Map<String, User> usernameMap = new HashMap<>();
 	private List<User> users = new ArrayList<>();
@@ -23,7 +24,7 @@ public class UserManager {
 				}
 				String[] fields = line.split(",");
 				
-				if (fields.length >= 6) {
+				if (fields.length >= fieldLength) {
 					int userID = Integer.parseInt(fields[0].trim());
 					String username = fields[1].trim();
 					String password = fields[2].trim();

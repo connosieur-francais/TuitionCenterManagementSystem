@@ -7,7 +7,9 @@ import tcms.users.User;
 import tcms.users.UserManager;
 
 public class AdminManager {
-	UserManager userManager = new UserManager();
+	
+	private int fieldLength = 4; // If CSV file fields change, change this number
+	private UserManager userManager = new UserManager();
 	private List<Admin> admins = new ArrayList<>();
 
 	public void loadAdmins(String filename) {
@@ -25,7 +27,7 @@ public class AdminManager {
 					continue;
 				}
 				String[] fields = line.split(",");
-				if (fields.length >= 4) {
+				if (fields.length >= fieldLength) {
 					int adminID = Integer.parseInt(fields[0].trim());
 					int userID = Integer.parseInt(fields[1].trim());
 					String email = fields[2].trim();
