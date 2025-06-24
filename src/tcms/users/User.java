@@ -21,7 +21,7 @@ public class User {
 		setAccountStatus(accountStatus);
 	}
 
-	public User(String username, String password, String role) { // Create new user
+	public User(String username, String password, String role) { // Create new user ( With no set information)
 		setID(nextAvailableID());
 		setUsername(username);
 		setPassword(password);
@@ -30,7 +30,7 @@ public class User {
 		setAccountStatus("active");
 	}
 	
-	private int nextAvailableID() {
+	private int nextAvailableID() { // SPECIAL METHOD ( NOT TO BE USED BY OTHER CLASSES! )
 		um.loadUsers("src//users.csv");
 		Map<Integer, User> userMap = um.getUserMap();
 		int nextID = userMap.size() + 1;
