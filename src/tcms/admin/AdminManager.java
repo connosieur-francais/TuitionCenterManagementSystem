@@ -8,8 +8,10 @@ import tcms.users.UserManager;
 
 public class AdminManager {
 
-	private int fieldLength = 4; // If CSV file fields change, change this number
+	private int fieldLength = 5; // If CSV file fields change, change this number
 	private UserManager userManager = new UserManager();
+	private Map<Integer, Admin> userIDMap = new HashMap<>();
+	private Map<Integer, Admin> adminIDMap = new HashMap<>();
 	private List<Admin> admins = new ArrayList<>();
 
 	public void loadAdmins(String filename) {
@@ -30,9 +32,10 @@ public class AdminManager {
 				if (fields.length >= fieldLength) {
 					int adminID = Integer.parseInt(fields[0].trim());
 					int userID = Integer.parseInt(fields[1].trim());
-					String email = fields[2].trim();
-					String address = fields[3].trim();
-					Admin admin = new Admin(adminID, userID, email, address);
+					String contact = fields[2].trim();
+					String email = fields[3].trim();
+					String address = fields[4].trim();
+					Admin admin = new Admin(adminID, userID, contact, email, address);
 					admins.add(admin);
 
 					// Debug print

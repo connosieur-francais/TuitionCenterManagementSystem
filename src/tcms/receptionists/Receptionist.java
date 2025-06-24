@@ -19,9 +19,9 @@ public class Receptionist {
 	public Receptionist(int receptionistID, int userID) {
 		setReceptionistID(receptionistID);
 		setUserID(userID);
-		setContact("unknown");
-		setEmail("unknown");
-		setAddress("unknown");
+		setContact("Not set");
+		setEmail("Not set");
+		setAddress("Not set");
 	}
 
 	// Methods

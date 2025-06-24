@@ -123,8 +123,8 @@ public class ReceptionistManager {
 	}
 
 	public static boolean isValidContact(String contact) {
-		String malaysianRegex = "^01[0-46-9]-\\d{3}-\\d{4}$";
-		return Pattern.matches(malaysianRegex, contact);
+		String contactRegex = "^01[0-46-9]-\\d{3}-\\d{4}$";
+		return Pattern.matches(contactRegex, contact);
 	}
 
 }

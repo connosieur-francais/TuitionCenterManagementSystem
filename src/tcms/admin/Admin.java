@@ -3,12 +3,14 @@ package tcms.admin;
 public class Admin {
 	private int adminID;
 	private int userID;
+	private String contact;
 	private String email;
 	private String address;
 
-	public Admin(int adminID, int userID, String email, String address) {
+	public Admin(int adminID, int userID, String contact, String email, String address) {
 		setAdminID(adminID);
 		setUserID(userID);
+		setContact(contact);
 		setEmail(email);
 		setAddress(address);
 	}
@@ -16,6 +18,7 @@ public class Admin {
 	public Admin(int adminID, int userID) {
 		setAdminID(adminID);
 		setUserID(userID);
+		setContact("Not set");
 		setEmail("Not set");
 		setAddress("Not set");
 	}
@@ -34,6 +37,14 @@ public class Admin {
 
 	public void setUserID(int userID) {
 		this.userID = userID;
+	}
+	
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 
 	public String getEmail() {
