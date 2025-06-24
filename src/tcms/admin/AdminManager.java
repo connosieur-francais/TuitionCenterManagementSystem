@@ -91,25 +91,24 @@ public class AdminManager {
 	}
 
 	public User findUserByAdminID(int adminID) {
-		int userID;
-		for (Admin admin : admins) {
-			if (admin.getAdminID() == adminID) {
-				userID = admin.getUserID();
-				User user = userManager.findUserByUserID(userID);
-				return user;
-			}
+
+		if (adminIDAdminMap.get(adminID) != null) {
+			Admin admin = adminIDAdminMap.get(adminID);
+			int userID = admin.getUserID();
+			return userManager.findUserByUserID(userID);
+		} else {
+			System.out.println("findUserByAdminID: Failed to locate user");
+			return null;
 		}
-		return null;
 	}
 
 	public Admin findAdminByUserID(int userID) {
-		for (Admin admin : admins) {
-			if (admin.getUserID() == userID) {
-				return admin;
-			}
+		if (userIDAdminMap.get(userID) != null) {
+			return userIDAdminMap.get(userID);
+		} else {
+			System.out.println("findAdminByUserID: Failed to locate admin");
+			return null;
 		}
-
-		return null;
 	}
 
 	public void updateAdminsInCSV() {
