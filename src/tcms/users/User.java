@@ -26,7 +26,7 @@ public class User {
 		setUsername(username);
 		setPassword(password);
 		setRole(role);
-		setLoginAttempts(0);
+		setLoginAttempts(3);
 		setAccountStatus("active");
 	}
 	

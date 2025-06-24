@@ -7,7 +7,7 @@ import tcms.users.User;
 import tcms.users.UserManager;
 
 public class AdminManager {
-	
+
 	private int fieldLength = 4; // If CSV file fields change, change this number
 	private UserManager userManager = new UserManager();
 	private List<Admin> admins = new ArrayList<>();
@@ -16,7 +16,7 @@ public class AdminManager {
 		admins.clear();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) { // Creates a list of users by
-																							// reading
+																					// reading
 			// from src/admins.csv
 			String line;
 			boolean skipHeader = true;
@@ -43,34 +43,34 @@ public class AdminManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void refreshAdminList() {
-	    // Reload users
-	    userManager.loadUsers("src/users.csv");
-	    List<User> users = userManager.getAllUsers();
+		// Reload users
+		userManager.loadUsers("src/users.csv");
+		List<User> users = userManager.getAllUsers();
 
-	    // Map current admin userIDs for faster lookup
-	    Set<Integer> existingAdminUserIDs = new HashSet<>();
-	    for (Admin admin : admins) {
-	        existingAdminUserIDs.add(admin.getUserID());
-	    }
+		// Map current admin userIDs for faster lookup
+		Set<Integer> existingAdminUserIDs = new HashSet<>();
+		for (Admin admin : admins) {
+			existingAdminUserIDs.add(admin.getUserID());
+		}
 
-	    boolean updated = false;
+		boolean updated = false;
 
-	    // Add new admins from users.csv if they don't already exist
-	    for (User user : users) {
-	        if (user.getRole().equalsIgnoreCase("admin") && !existingAdminUserIDs.contains(user.getID())) {
-	            int newAdminID = nextAvailableAdminID();
-	            Admin newAdmin = new Admin(newAdminID, user.getID());
-	            admins.add(newAdmin);
-	            System.out.println("Added new admin from refresh: " + user.getUsername());
-	            updated = true;
-	        }
-	    }
-	    // Save only if there was a change
-	    if (updated) {
-	        saveAdmins("src/admins.csv");
-	    }
+		// Add new admins from users.csv if they don't already exist
+		for (User user : users) {
+			if (user.getRole().equalsIgnoreCase("admin") && !existingAdminUserIDs.contains(user.getID())) {
+				int newAdminID = nextAvailableAdminID();
+				Admin newAdmin = new Admin(newAdminID, user.getID());
+				admins.add(newAdmin);
+				System.out.println("Added new admin from refresh: " + user.getUsername());
+				updated = true;
+			}
+		}
+		// Save only if there was a change
+		if (updated) {
+			saveAdmins("src/admins.csv");
+		}
 	}
 
 	public void saveAdmins(String filename) {
@@ -108,63 +108,63 @@ public class AdminManager {
 	}
 
 	public void updateAdminsInCSV() {
-	    userManager.loadUsers("src//users.csv");
-	    List<User> users = userManager.getAllUsers();
-	    System.out.println("updateAdminsInCSV: Updating admins in admins.csv");
-	    System.out.println("Total users: " + users.size());
+		userManager.loadUsers("src//users.csv");
+		List<User> users = userManager.getAllUsers();
+		System.out.println("updateAdminsInCSV: Updating admins in admins.csv");
+		System.out.println("Total users: " + users.size());
 
-	    boolean updated = false;
+		boolean updated = false;
 
-	    // Add new admin entries for users with role 'admin' that don't already exist
-	    for (User user : users) {
-	        if (user.getRole().equalsIgnoreCase("admin")) {
-	            System.out.println("Checking admin candidate: " + user.getUsername());
-	            boolean exists = false;
+		// Add new admin entries for users with role 'admin' that don't already exist
+		for (User user : users) {
+			if (user.getRole().equalsIgnoreCase("admin")) {
+				System.out.println("Checking admin candidate: " + user.getUsername());
+				boolean exists = false;
 
-	            for (Admin admin : admins) {
-	                if (user.getID() == admin.getUserID()) {
-	                    exists = true;
-	                    break;
-	                }
-	            }
+				for (Admin admin : admins) {
+					if (user.getID() == admin.getUserID()) {
+						exists = true;
+						break;
+					}
+				}
 
-	            if (!exists) {
-	                System.out.println("Account doesn't exist. Adding account: " + user.getUsername());
-	                int newAdminID = nextAvailableAdminID();
-	                Admin newAdmin = new Admin(newAdminID, user.getID());
-	                admins.add(newAdmin);
-	                System.out.println("Admin added: UserID = " + newAdmin.getUserID());
-	                updated = true;
-	            } else {
-	                System.out.println("Admin account exists: " + user.getUsername());
-	            }
-	        }
-	    }
+				if (!exists) {
+					System.out.println("Account doesn't exist. Adding account: " + user.getUsername());
+					int newAdminID = nextAvailableAdminID();
+					Admin newAdmin = new Admin(newAdminID, user.getID());
+					admins.add(newAdmin);
+					System.out.println("Admin added: UserID = " + newAdmin.getUserID());
+					updated = true;
+				} else {
+					System.out.println("Admin account exists: " + user.getUsername());
+				}
+			}
+		}
 
-	    // Remove admins who are no longer admins in users.csv
-	    Iterator<Admin> iterator = admins.iterator();
-	    while (iterator.hasNext()) {
-	        Admin admin = iterator.next();
-	        User user = userManager.findUserByUserID(admin.getUserID());
+		// Remove admins who are no longer admins in users.csv
+		Iterator<Admin> iterator = admins.iterator();
+		while (iterator.hasNext()) {
+			Admin admin = iterator.next();
+			User user = userManager.findUserByUserID(admin.getUserID());
 
-	        if (user == null || !user.getRole().equalsIgnoreCase("admin")) {
-	            System.out.println("Removed admin (no longer admin role): UserID = " + admin.getUserID());
-	            iterator.remove();
-	            updated = true;
-	        }
-	    }
+			if (user == null || !user.getRole().equalsIgnoreCase("admin")) {
+				System.out.println("Removed admin (no longer admin role): UserID = " + admin.getUserID());
+				iterator.remove();
+				updated = true;
+			}
+		}
 
-	    // Save only if changes were made
-	    if (updated) {
-	        saveAdmins("src//admins.csv");
-	    }
+		// Save only if changes were made
+		if (updated) {
+			saveAdmins("src//admins.csv");
+		}
 	}
 
 	public int nextAvailableAdminID() {
 		int nextID = admins.stream().mapToInt(Admin::getAdminID).max().orElse(0) + 1;
 		return nextID;
 	}
-	
+
 	public boolean isValidEmail(String email) {
 		// Check for null or empty string after trimming whitespace
 		if (email == null || email.trim().isEmpty()) {

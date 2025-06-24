@@ -15,6 +15,14 @@ public class Receptionist {
 		setEmail(email);
 		setAddress(address);
 	}
+	
+	public Receptionist(int receptionistID, int userID) {
+		setReceptionistID(receptionistID);
+		setUserID(userID);
+		setContact("unknown");
+		setEmail("unknown");
+		setAddress("unknown");
+	}
 
 	// Methods
 	public int getReceptionistID() {
