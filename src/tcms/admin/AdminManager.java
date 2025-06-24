@@ -10,8 +10,8 @@ public class AdminManager {
 
 	private int fieldLength = 5; // If CSV file fields change, change this number
 	private UserManager userManager = new UserManager();
-	private Map<Integer, Admin> userIDMap = new HashMap<>();
-	private Map<Integer, Admin> adminIDMap = new HashMap<>();
+	private Map<Integer, Admin> userIDAdminMap = new HashMap<>();
+	private Map<Integer, Admin> adminIDAdminMap = new HashMap<>();
 	private List<Admin> admins = new ArrayList<>();
 
 	public void loadAdmins(String filename) {
@@ -37,6 +37,8 @@ public class AdminManager {
 					String address = fields[4].trim();
 					Admin admin = new Admin(adminID, userID, contact, email, address);
 					admins.add(admin);
+					userIDAdminMap.put(userID, admin);
+					adminIDAdminMap.put(adminID, admin);
 
 					// Debug print
 					System.out.println("Loaded admin: " + admin);
