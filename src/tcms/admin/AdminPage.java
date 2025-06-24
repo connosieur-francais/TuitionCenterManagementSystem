@@ -526,7 +526,7 @@ public class AdminPage extends JFrame implements ActionListener {
 			System.out.println("GenerateMonthlyIncomeReport: Selected year = " +year);
 			System.out.println("GenerateMonthlyIncomeReport: Selected month = " +month);
 			
-			new generateReport(month, year);
+			new AdminPageGenerateReport(month, year);
 		}
 
 	}

@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-public class generateReport extends JFrame implements ActionListener {
+public class AdminPageGenerateReport extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -43,7 +43,7 @@ public class generateReport extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public generateReport(String month, String year) {
+	public AdminPageGenerateReport(String month, String year) {
 
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100, 900, 700);
