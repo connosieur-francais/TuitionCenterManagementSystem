@@ -64,6 +64,6 @@ public class Admin {
 	}
 	
 	public String toCSV() {
-		return String.join(",", String.valueOf(this.adminID), String.valueOf(this.userID), this.email, this.address);
+		return String.join(",", String.valueOf(this.adminID), String.valueOf(this.userID), this.contact, this.email, this.address);
 	}
 }
