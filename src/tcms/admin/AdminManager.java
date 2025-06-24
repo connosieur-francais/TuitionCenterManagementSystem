@@ -80,7 +80,7 @@ public class AdminManager {
 
 	public void saveAdmins(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("admin_id,user_id,email,address\n");
+			bw.write("admin_id,user_id,contact,email,address\n");
 			for (Admin admin : admins) {
 				bw.write(admin.toCSV());
 				bw.newLine();
