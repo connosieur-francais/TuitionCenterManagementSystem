@@ -130,12 +130,22 @@ public class UserManager {
 	}
 
 	public User findUserByUsername(String username) {
-		return usernameMap.get(username);
+		if (usernameMap.get(username) != null) {
+			return usernameMap.get(username);
+		} else {
+			System.out.println("findUserByUsername: Failed to locate user");
+			return null;
+		}
 	}
 	
 
 	public User findUserByUserID(int id) {
-	    return userMap.get(id); // fast lookup
+		if (userMap.get(id) != null) {
+			return userMap.get(id); // fast lookup			
+		} else {
+			System.out.println("findUserByUserID: Failed to locate user");
+			return null;
+		}
 	}
 
 	public void decrementLoginAttempts(User user) {
