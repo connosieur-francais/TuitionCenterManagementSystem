@@ -190,6 +190,14 @@ public class AdminManager {
 		return hasValidAt && hasDotAfterAt && dotNotAtEnd;
 	}
 
+	public Map<Integer, Admin> getUserIDAdminMap() {
+		return userIDAdminMap;
+	}
+
+	public Map<Integer, Admin> getAdminIDAdminMap() {
+		return adminIDAdminMap;
+	}
+
 	public List<Admin> getAllAdmins() {
 		return admins;
 	}
