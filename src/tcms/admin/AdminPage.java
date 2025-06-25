@@ -579,7 +579,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		addressTxtfield.setEnabled(false);
 	}
 
-	public void updateUserDetails(Admin admin, User user, String newUsername, String newContact, String newPassword, String newEmail,
+	public void updateUserDetails(Admin admin, User user, String newUsername, String newPassword,  String newContact, String newEmail,
 			String newAddress) { // to be used by save changes button
 
 		if (!userManager.renameUser(user.getID(), newUsername)) {
