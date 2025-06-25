@@ -171,7 +171,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		// -----------------------------------------------------------------------
 		updateProfilePanel = new JPanel();
 		updateProfilePanel.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		contentPanel.setLayer(updateProfilePanel, 5);
+		contentPanel.setLayer(updateProfilePanel, 0);
 		updateProfilePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		updateProfilePanel.setBackground(new Color(83, 92, 145));
 		updateProfilePanel.setBounds(10, 5, 666, 320);
@@ -348,7 +348,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		// MANAGE RECEPTIONISTS PANEL
 
 		manageReceptionistPanel = new JPanel();
-		contentPanel.setLayer(manageReceptionistPanel, 1);
+		contentPanel.setLayer(manageReceptionistPanel, 3);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
 		manageReceptionistPanel.setVisible(false);
 		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -370,7 +370,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewMonthlyIncomePanel.setVisible(false);
 		viewMonthlyIncomePanel.setLayout(null);
 		viewMonthlyIncomePanel.setBounds(10, 5, 666, 320);
-		contentPanel.setLayer(viewMonthlyIncomePanel, 3);
+		contentPanel.setLayer(viewMonthlyIncomePanel, 2);
 		contentPanel.add(viewMonthlyIncomePanel);
 
 		viewMonthlyIncomeLabel = new JLabel("View Monthly Income Report");
