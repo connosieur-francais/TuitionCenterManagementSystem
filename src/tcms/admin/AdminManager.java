@@ -49,35 +49,6 @@ public class AdminManager {
 		}
 	}
 
-	public void refreshAdminList() {
-		// Reload users
-		userManager.loadUsers("src/users.csv");
-		List<User> users = userManager.getAllUsers();
-
-		// Map current admin userIDs for faster lookup
-		Set<Integer> existingAdminUserIDs = new HashSet<>();
-		for (Admin admin : admins) {
-			existingAdminUserIDs.add(admin.getUserID());
-		}
-
-		boolean updated = false;
-
-		// Add new admins from users.csv if they don't already exist
-		for (User user : users) {
-			if (user.getRole().equalsIgnoreCase("admin") && !existingAdminUserIDs.contains(user.getID())) {
-				int newAdminID = nextAvailableAdminID();
-				Admin newAdmin = new Admin(newAdminID, user.getID());
-				admins.add(newAdmin);
-				System.out.println("Added new admin from refresh: " + user.getUsername());
-				updated = true;
-			}
-		}
-		// Save only if there was a change
-		if (updated) {
-			saveAdmins("src/admins.csv");
-		}
-	}
-
 	public void saveAdmins(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 			bw.write("admin_id,user_id,contact,email,address\n");
@@ -114,32 +85,27 @@ public class AdminManager {
 	}
 
 	public void updateAdminsInCSV() {
-		userManager.loadUsers("src//users.csv");
+		userManager.loadUsers("src/users.csv");
 		List<User> users = userManager.getAllUsers();
 		System.out.println("updateAdminsInCSV: Updating admins in admins.csv");
 		System.out.println("Total users: " + users.size());
 
+		// Map current admin userIDs for faster lookup
+		Set<Integer> existingAdminUserIDs = new HashSet<>();
+		for (Admin admin : admins) {
+			existingAdminUserIDs.add(admin.getUserID());
+		}
+
 		boolean updated = false;
 
-		// Add new admin entries for users with role 'admin' that don't already exist
+		// Add new admins from users.csv
 		for (User user : users) {
 			if (user.getRole().equalsIgnoreCase("admin")) {
-				System.out.println("Checking admin candidate: " + user.getUsername());
-				boolean exists = false;
-
-				for (Admin admin : admins) {
-					if (user.getID() == admin.getUserID()) {
-						exists = true;
-						break;
-					}
-				}
-
-				if (!exists) {
+				if (!existingAdminUserIDs.contains(user.getID())) {
 					System.out.println("Account doesn't exist. Adding account: " + user.getUsername());
 					int newAdminID = nextAvailableAdminID();
 					Admin newAdmin = new Admin(newAdminID, user.getID());
 					admins.add(newAdmin);
-					System.out.println("Admin added: UserID = " + newAdmin.getUserID());
 					updated = true;
 				} else {
 					System.out.println("Admin account exists: " + user.getUsername());
@@ -151,10 +117,11 @@ public class AdminManager {
 		Iterator<Admin> iterator = admins.iterator();
 		while (iterator.hasNext()) {
 			Admin admin = iterator.next();
-			User user = userManager.findUserByUserID(admin.getUserID());
+			User user = userManager.findUserByUserID(admin.getUserID()); // Use consistent lookup
 
 			if (user == null || !user.getRole().equalsIgnoreCase("admin")) {
-				System.out.println("Removed admin (no longer admin role): UserID = " + admin.getUserID());
+				String username = (user == null) ? "Unknown/Deleted User" : user.getUsername();
+				System.out.println("Removing admin (no longer has admin role): " + username);
 				iterator.remove();
 				updated = true;
 			}
@@ -162,7 +129,7 @@ public class AdminManager {
 
 		// Save only if changes were made
 		if (updated) {
-			saveAdmins("src//admins.csv");
+			saveAdmins("src/admins.csv");
 		}
 	}
 

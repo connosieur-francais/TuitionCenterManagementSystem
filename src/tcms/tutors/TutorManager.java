@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -51,6 +52,7 @@ public class TutorManager {
 					int assignedSubject3 = Integer.parseInt(fields[8].trim());
 					Tutor tutor = new Tutor(tutorID, userID, contact, email, address, assignedLevel, assignedSubject1,
 							assignedSubject2, assignedSubject3);
+					tutors.add(tutor);
 					userIDTutorMap.put(userID, tutor);
 					tutorIDTutorMap.put(tutorID, tutor);
 
@@ -63,38 +65,10 @@ public class TutorManager {
 		}
 	}
 
-	public void refreshTutorsList() {
-		// Reload users
-		userManager.loadUsers("src/users.csv");
-		List<User> users = userManager.getAllUsers();
-
-		// Map current tutor userIDs for faster lookup
-		Set<Integer> existingTutorUserIDs = new HashSet<>();
-		for (Tutor tutor : tutors) {
-			existingTutorUserIDs.add(tutor.getUserID());
-		}
-		
-		boolean updated = false;
-
-		for (User user : users) {
-			if (user.getRole().equalsIgnoreCase("tutors") && !existingTutorUserIDs.contains(user.getID())) {
-				int newTutorID = nextAvailableTutorID(); // to do 1;
-				Tutor newTutor = new Tutor(newTutorID, user.getID());
-				tutors.add(newTutor);
-				System.out.println("Added new tutor from refresh: " + user.getUsername());
-				updated = true;
-			}
-		}
-		
-		if (updated) {
-			saveTutors("src//tutors.csv");
-		}
-
-	}
-	
 	public void saveTutors(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("tutor_id,user_id,contact,email,address,assigned_level,assigned_subjectID_1,assigned_subjectID_2,assigned_subjectID_3");
+			bw.write(
+					"tutor_id,user_id,contact,email,address,assigned_level,assigned_subjectID_1,assigned_subjectID_2,assigned_subjectID_3");
 			for (Tutor tutor : tutors) {
 				bw.write(tutor.toCSV());
 				bw.newLine();
@@ -103,20 +77,82 @@ public class TutorManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public User findUserByTutorID(int tutorID) {
 		if (tutorIDTutorMap.get(tutorID) != null) {
 			Tutor tutor = tutorIDTutorMap.get(tutorID);
 			int userID = tutor.getUserID();
 			User user = userManager.findUserByUserID(userID);
-			System.out.println("findUserByTutorID: Successfully located user" + user.getUsername());
+			System.out.println("findUserByTutorID: Successfully located user =" + user.getUsername());
 			return user;
 		} else {
 			System.out.println("findUserByTutorID: Failed to locate user");
 			return null;
 		}
 	}
-	
+
+	public Tutor findTutorByUserID(int userID) {
+		if (userIDTutorMap.get(userID) != null) {
+			Tutor tutor = userIDTutorMap.get(userID);
+			System.out.println("findTutorByUserID: Found tutor with ID =" + tutor.getTutorID());
+			return tutor;
+		} else {
+			System.out.println("findTutorByUserID: Failed to locate tutor");
+			return null;
+		}
+	}
+
+	public void updateTutorsInCSV() {
+		userManager.loadUsers("src/users.csv");
+		List<User> users = userManager.getAllUsers();
+		System.out.println("updateTutorsInCSV: Updating tutors in tutors.csv");
+		System.out.println("Total users: " + users.size());
+
+		// Map current tutor userIDs for faster lookup
+		Set<Integer> existingTutorUserIDs = new HashSet<>();
+		for (Tutor tutor : tutors) {
+			existingTutorUserIDs.add(tutor.getUserID());
+		}
+
+		boolean updated = false;
+
+		// Add new tutors from users.csv
+		for (User user : users) {
+			if (user.getRole().equalsIgnoreCase("tutor")) {
+				if (!existingTutorUserIDs.contains(user.getID())) {
+					System.out.println("Account doesn't exist. Adding account: " + user.getUsername());
+					int newTutorID = nextAvailableTutorID();
+					Tutor newTutor = new Tutor(newTutorID, user.getID());
+					tutors.add(newTutor);
+					userIDTutorMap.put(user.getID(), newTutor);
+					tutorIDTutorMap.put(newTutorID, newTutor);
+					updated = true;
+				} else {
+					System.out.println("Tutor account exists: " + user.getUsername());
+				}
+			}
+		}
+
+		// Remove tutors who are no longer tutors in users.csv
+		Iterator<Tutor> iterator = tutors.iterator();
+		while (iterator.hasNext()) {
+			Tutor tutor = iterator.next();
+			User user = userManager.findUserByUserID(tutor.getUserID()); // Ensure this method exists
+
+			if (user == null || !user.getRole().equalsIgnoreCase("tutor")) {
+				String username = (user == null) ? "Unknown/Deleted User" : user.getUsername();
+				System.out.println("Removing tutor (no longer has tutor role): " + username);
+				iterator.remove();
+				updated = true;
+			}
+		}
+
+		// Save only if changes were made
+		if (updated) {
+			saveTutors("src/tutors.csv");
+		}
+	}
+
 	public int nextAvailableTutorID() {
 		int nextID = tutors.stream().mapToInt(Tutor::getTutorID).max().orElse(0) + 1;
 		return nextID;
