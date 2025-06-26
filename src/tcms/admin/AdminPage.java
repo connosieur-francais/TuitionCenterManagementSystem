@@ -29,6 +29,9 @@ import tcms.users.UserManager;
 
 public class AdminPage extends JFrame implements ActionListener {
 
+	private String atcBannerImg = "src/tcms/resources/atcBanner.png";
+	private String backgroundImg = "src/tcms/resources/loginPageBackground.png";
+
 	private AdminManager adminManager = new AdminManager();
 	private UserManager userManager = new UserManager();
 
@@ -57,7 +60,8 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JLabel passwordLabel, emailLabel, addressLabel, contactLabel;
 	private JTextField usernameTxtfield, emailTxtfield;
 	private JPasswordField passwordField;
-	private JButton changeUsernameBtn, changePasswordBtn, changeEmailBtn, changeAddressBtn, saveChangesBtn, changeContactBtn;
+	private JButton changeUsernameBtn, changePasswordBtn, changeEmailBtn, changeAddressBtn, saveChangesBtn,
+			changeContactBtn;
 	private JToggleButton showPasswordToggleBtn;
 	private JLabel background;
 	private JTextField addressTxtfield;
@@ -111,8 +115,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		headerPanel.setLayout(null);
 
 		atcBannerLabel = new JLabel("");
-		atcBannerLabel.setIcon(
-				new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\atcBanner.png"));
+		atcBannerLabel.setIcon(new ImageIcon(atcBannerImg));
 		atcBannerLabel.setBounds(0, 0, 150, 75);
 		headerPanel.add(atcBannerLabel);
 
@@ -311,13 +314,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		saveChangesBtn.setFocusable(false);
 		saveChangesBtn.setBounds(506, 270, 150, 40);
 		updateProfilePanel.add(saveChangesBtn);
-		
+
 		contactLabel = new JLabel("Contact");
 		contactLabel.setForeground(Color.WHITE);
 		contactLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
 		contactLabel.setBounds(10, 150, 70, 20);
 		updateProfilePanel.add(contactLabel);
-		
+
 		contactTxtfield = new JTextField();
 		contactTxtfield.setText("<dynamic>");
 		contactTxtfield.setEnabled(false);
@@ -327,7 +330,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		contactTxtfield.setBackground(Color.LIGHT_GRAY);
 		contactTxtfield.setBounds(80, 150, 200, 20);
 		updateProfilePanel.add(contactTxtfield);
-		
+
 		changeContactBtn = new JButton("Change Contact");
 		changeContactBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		changeContactBtn.setFocusable(false);
@@ -341,7 +344,7 @@ public class AdminPage extends JFrame implements ActionListener {
 													// information
 
 		background = new JLabel("");
-		background.setIcon(new ImageIcon("src\\loginPageBackground.png"));
+		background.setIcon(new ImageIcon(backgroundImg));
 		background.setBounds(0, 0, 686, 335);
 		contentPanel.add(background);
 
@@ -381,7 +384,9 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		monthSelector = new JComboBox<String>();
 		monthSelector.setMaximumRowCount(12);
-		monthSelector.setModel(new DefaultComboBoxModel<String>(new String[] {"- Select Month -", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}));
+		monthSelector.setModel(
+				new DefaultComboBoxModel<String>(new String[] { "- Select Month -", "January", "February", "March",
+						"April", "May", "June", "July", "August", "September", "October", "November", "December" }));
 		monthSelector.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		monthSelector.setBounds(20, 55, 200, 20);
 		viewMonthlyIncomePanel.add(monthSelector);
@@ -539,7 +544,7 @@ public class AdminPage extends JFrame implements ActionListener {
 				return;
 			}
 
-			updateUserDetails(admin, user, newUsername, newPassword, newContact,  newEmail, newAddress);
+			updateUserDetails(admin, user, newUsername, newPassword, newContact, newEmail, newAddress);
 
 			JOptionPane.showMessageDialog(this, "Saved profile settings");
 			resetUpdateProfilePage();
@@ -549,15 +554,17 @@ public class AdminPage extends JFrame implements ActionListener {
 		if (e.getSource() == generateReportBtn) {
 			String year = (String) yearSelector.getSelectedItem();
 			String month = (String) monthSelector.getSelectedItem();
-			
-			if (year.contains("-") || month.contains("-")) { // Simple validation check if the user didnt select any option
-				JOptionPane.showMessageDialog(this, "You must select a month and year!","Selection Error", JOptionPane.INFORMATION_MESSAGE);
+
+			if (year.contains("-") || month.contains("-")) { // Simple validation check if the user didnt select any
+																// option
+				JOptionPane.showMessageDialog(this, "You must select a month and year!", "Selection Error",
+						JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
-			
-			System.out.println("GenerateMonthlyIncomeReport: Selected year = " +year);
-			System.out.println("GenerateMonthlyIncomeReport: Selected month = " +month);
-			
+
+			System.out.println("GenerateMonthlyIncomeReport: Selected year = " + year);
+			System.out.println("GenerateMonthlyIncomeReport: Selected month = " + month);
+
 			new AdminPageGenerateReport(month, year);
 		}
 
@@ -579,8 +586,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		addressTxtfield.setEnabled(false);
 	}
 
-	public void updateUserDetails(Admin admin, User user, String newUsername, String newPassword,  String newContact, String newEmail,
-			String newAddress) { // to be used by save changes button
+	public void updateUserDetails(Admin admin, User user, String newUsername, String newPassword, String newContact,
+			String newEmail, String newAddress) { // to be used by save changes button
 
 		if (!userManager.renameUser(user.getID(), newUsername)) {
 			JOptionPane.showMessageDialog(this, "Username failed to update.", "Username Already Exists",

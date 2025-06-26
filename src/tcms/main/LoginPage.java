@@ -30,12 +30,17 @@ import tcms.users.UserManager;
 
 public class LoginPage extends JFrame implements ActionListener {
 
-	String userFilePath = "src/users.csv";
-	UserManager userManager = new UserManager();
-	AdminManager adminManager = new AdminManager();
-	ReceptionistManager receptionistManager = new ReceptionistManager();
-	TutorManager tutorManager = new TutorManager();
-	StudentManager studentManager = new StudentManager();
+	private String userFilePath = "src/users.csv";
+	private String tutorFilePath = "src/tutors.csv";
+	private String studentFilePath = "src/students.csv";
+	private String adminFilePath = "src/admins.csv";
+	private String receptionistFilePath = "src/receptionists.csv";
+	private String loginBackground = "src/tcms/resources/loginPageBackground.png";
+	private UserManager userManager = new UserManager();
+	private AdminManager adminManager = new AdminManager();
+	private ReceptionistManager receptionistManager = new ReceptionistManager();
+	private TutorManager tutorManager = new TutorManager();
+	private StudentManager studentManager = new StudentManager();
 	
 
 	private static final long serialVersionUID = 1L;
@@ -191,16 +196,16 @@ public class LoginPage extends JFrame implements ActionListener {
 		backgroundIconDeco = new JLabel("New label");
 		backgroundIconDeco.setBounds(0, 0, 686, 413);
 		contentPane.add(backgroundIconDeco);
-		backgroundIconDeco.setIcon(new ImageIcon("src//loginPageBackground.png"));
+		backgroundIconDeco.setIcon(new ImageIcon(loginBackground));
 
 		frame.setVisible(true);
 
 		// Load CSV information -------------------------------------
 		userManager.loadUsers(userFilePath);
-		adminManager.loadAdmins("src/admins.csv");
-		tutorManager.loadTutors("src/tutors.csv");
-		studentManager.loadStudents("src/students.csv");
-		receptionistManager.loadReceptionists("src/receptionists.csv");
+		adminManager.loadAdmins(adminFilePath);
+		tutorManager.loadTutors(tutorFilePath);
+		studentManager.loadStudents(studentFilePath);
+		receptionistManager.loadReceptionists(receptionistFilePath);
 		
 		adminManager.updateAdminsInCSV();
 		tutorManager.updateTutorsInCSV();
