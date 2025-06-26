@@ -95,7 +95,9 @@ public class AdminManager {
 		if (adminIDAdminMap.get(adminID) != null) {
 			Admin admin = adminIDAdminMap.get(adminID);
 			int userID = admin.getUserID();
-			return userManager.findUserByUserID(userID);
+			User user = userManager.findUserByUserID(userID);
+			System.out.println("findUserByAdminID: Successfully located user = " + user.getUsername());
+			return user;
 		} else {
 			System.out.println("findUserByAdminID: Failed to locate user");
 			return null;
