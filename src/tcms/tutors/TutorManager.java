@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -149,13 +150,23 @@ public class TutorManager {
 
 		// Save only if changes were made
 		if (updated) {
+			// Sort tutors list by tutorID
+			tutors.sort(Comparator.comparingInt(Tutor::getTutorID));
 			saveTutors("src/tutors.csv");
 		}
 	}
 
 	public int nextAvailableTutorID() {
-		int nextID = tutors.stream().mapToInt(Tutor::getTutorID).max().orElse(0) + 1;
-		return nextID;
+		Set<Integer> usedIDs = new HashSet<>();
+		for (Tutor tutor : tutors) {
+			usedIDs.add(tutor.getTutorID());
+		}
+		
+		int id = 1;
+		while (usedIDs.contains(id)) {
+			id++;
+		}
+		return id;
 	}
 
 	public boolean isValidEmail(String email) {

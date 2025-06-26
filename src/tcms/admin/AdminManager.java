@@ -1,7 +1,18 @@
 package tcms.admin;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import tcms.users.User;
 import tcms.users.UserManager;
@@ -129,14 +140,8 @@ public class AdminManager {
 
 		// Save only if changes were made
 		if (updated) {
-			// Optional: sort by userID or username
-			admins.sort(Comparator.comparingInt(Admin::getUserID));
-
-			// Reassign sequential admin IDs
-			for (int i = 0; i < admins.size(); i++) {
-				admins.get(i).setAdminID(i + 1); // IDs start at 1
-			}
-
+			// sort admins list by adminID
+			admins.sort(Comparator.comparingInt(Admin::getAdminID));
 			saveAdmins("src/admins.csv");
 		}
 	}
