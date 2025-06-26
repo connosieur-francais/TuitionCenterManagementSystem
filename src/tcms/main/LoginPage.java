@@ -1,4 +1,4 @@
-package tcms.gui;
+package tcms.main;
 
 import java.awt.Color;
 import java.awt.Font;
