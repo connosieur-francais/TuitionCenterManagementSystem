@@ -8,6 +8,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,15 +20,22 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
+import tcms.admin.AdminManager;
 import tcms.admin.AdminPage;
+import tcms.receptionists.ReceptionistManager;
+import tcms.tutors.TutorManager;
 import tcms.users.User;
 import tcms.users.UserManager;
-import javax.swing.ImageIcon;
 
 public class LoginPage extends JFrame implements ActionListener {
 
 	String userFilePath = "src/users.csv";
 	UserManager userManager = new UserManager();
+	AdminManager adminManager = new AdminManager();
+	ReceptionistManager receptionistManager = new ReceptionistManager();
+	TutorManager tutorManager = new TutorManager();
+	// StudentManager studentManager = new StudentManager();
+	
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame();
@@ -182,12 +190,20 @@ public class LoginPage extends JFrame implements ActionListener {
 		backgroundIconDeco = new JLabel("New label");
 		backgroundIconDeco.setBounds(0, 0, 686, 413);
 		contentPane.add(backgroundIconDeco);
-		backgroundIconDeco.setIcon(new ImageIcon("src\\loginPageBackground.png"));
+		backgroundIconDeco.setIcon(new ImageIcon("src//loginPageBackground.png"));
 
 		frame.setVisible(true);
 
-		// Load CSV -------------------------------------
+		// Load CSV information -------------------------------------
 		userManager.loadUsers(userFilePath);
+		adminManager.loadAdmins("src/admins.csv");
+		tutorManager.loadTutors("src/tutors.csv");
+		receptionistManager.loadReceptionists("src/receptionists.csv");
+		
+		adminManager.updateAdminsInCSV();
+		tutorManager.updateTutorsInCSV();
+		receptionistManager.updateReceptionistInCSV();
+		
 
 		// Create a list to store the user data
 		List<User> users = userManager.getAllUsers();

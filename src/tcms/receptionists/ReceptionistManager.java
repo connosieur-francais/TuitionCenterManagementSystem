@@ -6,7 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -53,40 +55,9 @@ public class ReceptionistManager {
 		}
 	}
 
-	public void refreshReceptionistList() {
-		// Reload Users
-		userManager.loadUsers("src//users.csv");
-		List<User> users = userManager.getAllUsers();
-
-		// Map current receptionist userIDs for faster lookup
-		Set<Integer> existingReceptionistUserIDs = new HashSet<>();
-		for (Receptionist receptionist : receptionists) {
-			existingReceptionistUserIDs.add(receptionist.getReceptionistID());
-		}
-
-		boolean updated = false;
-
-		// Add new receptionists from users.csv if they don't already exist
-		for (User user : users) {
-			if (user.getRole().equalsIgnoreCase("receptionist")
-					&& !existingReceptionistUserIDs.contains(user.getID())) {
-				int newReceptionistID = nextAvailableReceptionistID();
-				Receptionist newReceptionist = new Receptionist(newReceptionistID, user.getID());
-				receptionists.add(newReceptionist);
-				System.out.println("Added new receptionist from refresh: " + user.getUsername());
-				updated = true;
-			}
-		}
-		
-		// save only if there was a change
-		if (updated) {
-			saveReceptionists("src//receptionists.csv");
-		}
-	}
-
 	public void saveReceptionists(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("receptionist_id,user_id,contact,email,address");
+			bw.write("receptionist_id,user_id,contact,email,address\n");
 			for (Receptionist receptionist : receptionists) {
 				bw.write(receptionist.toCSV());
 				bw.newLine();
@@ -95,10 +66,68 @@ public class ReceptionistManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void updateReceptionistInCSV() {
+		userManager.loadUsers("src/users.csv");
+		List<User> users = userManager.getAllUsers();
+		System.out.println("updateReceptionistInCSV: Updating receptionists in receptionists.csv");
+		System.out.println("Total users: " + users.size());
+
+		// Map current receptionist userIDs for fast lookup
+		Set<Integer> existingReceptionistUserIDs = new HashSet<>();
+		for (Receptionist receptionist : receptionists) {
+			existingReceptionistUserIDs.add(receptionist.getUserID());
+		}
+
+		boolean updated = false;
+
+		// Add new receptionists from users.csv
+		for (User user : users) {
+			if (user.getRole().equalsIgnoreCase("receptionist")) {
+				if (!existingReceptionistUserIDs.contains(user.getID())) {
+					System.out.println("Adding new receptionist: " + user.getUsername());
+					int newReceptionistID = nextAvailableReceptionistID(); // Find lowest available ID
+					Receptionist newReceptionist = new Receptionist(newReceptionistID, user.getID());
+					receptionists.add(newReceptionist);
+					updated = true;
+				} else {
+					System.out.println("Receptionist already exists: " + user.getUsername());
+				}
+			}
+		}
+
+		// Remove receptionists who are no longer in users.csv or no longer have the role
+		Iterator<Receptionist> iterator = receptionists.iterator();
+		while (iterator.hasNext()) {
+			Receptionist receptionist = iterator.next();
+			User user = userManager.findUserByUserID(receptionist.getUserID());
+
+			if (user == null || !user.getRole().equalsIgnoreCase("receptionist")) {
+				String username = (user == null) ? "Unknown" : user.getUsername();
+				System.out.println("Removing receptionist (no longer has role): " + username);
+				iterator.remove();
+				updated = true;
+			}
+		}
+
+		// Save only if changes were made
+		if (updated) {
+			receptionists.sort(Comparator.comparingInt(Receptionist::getReceptionistID));
+			saveReceptionists("src/receptionists.csv");
+		}
+	}
 
 	public int nextAvailableReceptionistID() {
-		int nextID = receptionists.stream().mapToInt(Receptionist::getReceptionistID).max().orElse(0) + 1;
-		return nextID;
+		Set<Integer> usedIDs = new HashSet<>();
+		for (Receptionist receptionist : receptionists) {
+			usedIDs.add(receptionist.getReceptionistID());
+		}
+
+		int id = 1;
+		while (usedIDs.contains(id)) {
+			id++;
+		}
+		return id;
 	}
 
 	public boolean isValidEmail(String email) {

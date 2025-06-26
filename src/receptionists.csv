@@ -1,2 +1,4 @@
-receptionistID,userID,contact,email,address
-1,4,014-241-2523,ilovepizza@gmail.com,Dominos Pizza
+receptionist_id,user_id,contact,email,address
+1,4,Not set,Not set,Not set
+2,9,Not set,Not set,Not set
+3,10,Not set,Not set,Not set

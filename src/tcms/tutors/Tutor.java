@@ -17,6 +17,7 @@ public class Tutor {
 		setUserID(userID);
 		setContact(contact);
 		setEmail(email);
+		setAddress(address);
 		setAssigned_level(assigned_level);
 		setAssigned_subjectID_1(assigned_subjectID_1);
 		setAssigned_subjectID_2(assigned_subjectID_2);
@@ -28,6 +29,7 @@ public class Tutor {
 		setUserID(userID);
 		setContact("Not set");
 		setEmail("Not set");
+		setAddress("Not set");
 		setAssigned_level(1);
 		setAssigned_subjectID_1(0);
 		setAssigned_subjectID_2(0);

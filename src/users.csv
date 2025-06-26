@@ -5,3 +5,7 @@ User_id,username,password,role,login_attempts,status
 4,Pizza,123,receptionist,3,active
 5,Adam,123,admin,3,active
 6,John Doe,123,admin,3,active
+7,Lily,123,tutor,3,active
+8,Kevin,123,tutor,3,active
+9,Jenny,123,receptionist,3,active
+10,Griff,123,receptionist,3,active
