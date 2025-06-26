@@ -9,3 +9,5 @@ User_id,username,password,role,login_attempts,status
 8,Kevin,123,tutor,3,active
 9,Jenny,123,receptionist,3,active
 10,Griff,123,receptionist,3,active
+11,Alice,123,student,3,active
+12,Bob,123,student,3,active

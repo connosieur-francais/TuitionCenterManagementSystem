@@ -92,6 +92,8 @@ public class StudentManager {
 				studentIDStudentMap.put(newStudentID, newStudent);
 				System.out.println("Added new student: " + user.getUsername());
 				updated = true;
+			} else {
+				System.out.println("Student already exists: " + user.getUsername());
 			}
 		}
 
