@@ -22,6 +22,17 @@ public class Tutor {
 		setAssigned_subjectID_2(assigned_subjectID_2);
 		setAssigned_subjectID_3(assigned_subjectID_3);
 	}
+	
+	public Tutor(int tutorID, int userID) {
+		setTutorID(tutorID);
+		setUserID(userID);
+		setContact("Not set");
+		setEmail("Not set");
+		setAssigned_level(1);
+		setAssigned_subjectID_1(0);
+		setAssigned_subjectID_2(0);
+		setAssigned_subjectID_3(0);
+	}
 
 	public int getTutorID() {
 		return tutorID;
