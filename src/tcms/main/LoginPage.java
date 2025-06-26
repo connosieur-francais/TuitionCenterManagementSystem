@@ -23,6 +23,7 @@ import javax.swing.border.SoftBevelBorder;
 import tcms.admin.AdminManager;
 import tcms.admin.AdminPage;
 import tcms.receptionists.ReceptionistManager;
+import tcms.students.StudentManager;
 import tcms.tutors.TutorManager;
 import tcms.users.User;
 import tcms.users.UserManager;
@@ -34,7 +35,7 @@ public class LoginPage extends JFrame implements ActionListener {
 	AdminManager adminManager = new AdminManager();
 	ReceptionistManager receptionistManager = new ReceptionistManager();
 	TutorManager tutorManager = new TutorManager();
-	// StudentManager studentManager = new StudentManager();
+	StudentManager studentManager = new StudentManager();
 	
 
 	private static final long serialVersionUID = 1L;
@@ -198,11 +199,13 @@ public class LoginPage extends JFrame implements ActionListener {
 		userManager.loadUsers(userFilePath);
 		adminManager.loadAdmins("src/admins.csv");
 		tutorManager.loadTutors("src/tutors.csv");
+		studentManager.loadStudents("src/students.csv");
 		receptionistManager.loadReceptionists("src/receptionists.csv");
 		
 		adminManager.updateAdminsInCSV();
 		tutorManager.updateTutorsInCSV();
 		receptionistManager.updateReceptionistInCSV();
+		studentManager.updateStudentsInCSV();
 		
 
 		// Create a list to store the user data
