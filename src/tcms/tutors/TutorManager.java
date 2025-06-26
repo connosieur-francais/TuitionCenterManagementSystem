@@ -104,6 +104,19 @@ public class TutorManager {
 		}
 	}
 	
+	public User findUserByTutorID(int tutorID) {
+		if (tutorIDTutorMap.get(tutorID) != null) {
+			Tutor tutor = tutorIDTutorMap.get(tutorID);
+			int userID = tutor.getUserID();
+			User user = userManager.findUserByUserID(userID);
+			System.out.println("findUserByTutorID: Successfully located user" + user.getUsername());
+			return user;
+		} else {
+			System.out.println("findUserByTutorID: Failed to locate user");
+			return null;
+		}
+	}
+	
 	public int nextAvailableTutorID() {
 		int nextID = tutors.stream().mapToInt(Tutor::getTutorID).max().orElse(0) + 1;
 		return nextID;
