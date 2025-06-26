@@ -73,7 +73,6 @@ public class AdminManager {
 	}
 
 	public User findUserByAdminID(int adminID) {
-
 		if (adminIDAdminMap.get(adminID) != null) {
 			Admin admin = adminIDAdminMap.get(adminID);
 			int userID = admin.getUserID();

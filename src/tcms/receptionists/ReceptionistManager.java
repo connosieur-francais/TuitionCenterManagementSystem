@@ -7,9 +7,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -20,6 +22,8 @@ public class ReceptionistManager {
 
 	private int fieldLength = 5;
 	private UserManager userManager = new UserManager();
+	private Map<Integer, Receptionist> userIDReceptionistMap = new HashMap<>();
+	private Map<Integer, Receptionist> receptionistIDReceptionistMap = new HashMap<>();
 	private List<Receptionist> receptionists = new ArrayList<>();
 
 	public void loadReceptionists(String filename) {
@@ -45,6 +49,8 @@ public class ReceptionistManager {
 					String address = fields[4].trim();
 					Receptionist receptionist = new Receptionist(receptionistID, userID, contact, email, address);
 					receptionists.add(receptionist); // Add receptionist to receptionist list
+					userIDReceptionistMap.put(userID, receptionist);
+					receptionistIDReceptionistMap.put(receptionistID, receptionist);
 
 					// Debug Print
 					System.out.println("Loaded receptionist " + receptionist);
@@ -64,6 +70,28 @@ public class ReceptionistManager {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public User findUserByReceptionistID(int receptionistID) {
+		if (receptionistIDReceptionistMap.containsKey(receptionistID)) {
+			Receptionist receptionist = receptionistIDReceptionistMap.get(receptionistID);
+			int userID = receptionist.getUserID();
+			User user = userManager.findUserByUserID(userID);
+			System.out.println("findUserByReceptionistID: Successfully located user = " + user.getUsername());
+			return user;
+		} else {
+			System.out.println("findUserByReceptionistID: Failed to locate user");
+			return null;
+		}
+	}
+	
+	public Receptionist findReceptionistByUserID(int userID) {
+		if (userIDReceptionistMap.containsKey(userID)) {
+			return userIDReceptionistMap.get(userID);
+		} else {
+			System.out.println("findReceptionistByUserID: Failed to locate receptionist");
+			return null;
 		}
 	}
 	
@@ -89,6 +117,8 @@ public class ReceptionistManager {
 					int newReceptionistID = nextAvailableReceptionistID(); // Find lowest available ID
 					Receptionist newReceptionist = new Receptionist(newReceptionistID, user.getID());
 					receptionists.add(newReceptionist);
+					userIDReceptionistMap.put(user.getID(), newReceptionist);
+					receptionistIDReceptionistMap.put(newReceptionistID, newReceptionist);
 					updated = true;
 				} else {
 					System.out.println("Receptionist already exists: " + user.getUsername());
@@ -154,6 +184,18 @@ public class ReceptionistManager {
 	public static boolean isValidContact(String contact) {
 		String contactRegex = "^01[0-46-9]-\\d{3}-\\d{4}$";
 		return Pattern.matches(contactRegex, contact);
+	}
+	
+	public Map<Integer, Receptionist> getUserIDReceptionistMap() {
+		return userIDReceptionistMap;
+	}
+
+	public Map<Integer, Receptionist> getReceptionistIDReceptionistMap() {
+		return receptionistIDReceptionistMap;
+	}
+	
+	public List<Receptionist> getAllReceptionists() {
+		return receptionists;
 	}
 
 }
