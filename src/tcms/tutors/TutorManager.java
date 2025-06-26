@@ -157,4 +157,38 @@ public class TutorManager {
 		int nextID = tutors.stream().mapToInt(Tutor::getTutorID).max().orElse(0) + 1;
 		return nextID;
 	}
+
+	public boolean isValidEmail(String email) {
+		// Check for null or empty string after trimming whitespace
+		if (email == null || email.trim().isEmpty()) {
+			return false;
+		}
+
+		// Find the position of '@' and the last '.'
+		int positionOfAt = email.indexOf('@');
+		int positionOfLastDot = email.lastIndexOf('.');
+
+		// Conditions for a valid email:
+		// 1. '@' must exist and not be the first character
+		// 2. '.' must come after '@'
+		// 3. '.' must not be the last character
+		boolean hasValidAt = positionOfAt > 0;
+		boolean hasDotAfterAt = positionOfLastDot > positionOfAt + 1;
+		boolean dotNotAtEnd = positionOfLastDot < email.length() - 1;
+
+		return hasValidAt && hasDotAfterAt && dotNotAtEnd;
+	}
+
+	public Map<Integer, Tutor> getUserIDTutorMap() {
+		return userIDTutorMap;
+	}
+
+	public Map<Integer, Tutor> getTutorIDTutorMap() {
+		return tutorIDTutorMap;
+	}
+
+	public List<Tutor> getAllTutors() {
+		return tutors;
+	}
+
 }

@@ -129,15 +129,30 @@ public class AdminManager {
 
 		// Save only if changes were made
 		if (updated) {
+			// Optional: sort by userID or username
+			admins.sort(Comparator.comparingInt(Admin::getUserID));
+
+			// Reassign sequential admin IDs
+			for (int i = 0; i < admins.size(); i++) {
+				admins.get(i).setAdminID(i + 1); // IDs start at 1
+			}
+
 			saveAdmins("src/admins.csv");
 		}
 	}
 
 	public int nextAvailableAdminID() {
-		int nextID = admins.stream().mapToInt(Admin::getAdminID).max().orElse(0) + 1;
-		return nextID;
-	}
+		Set<Integer> usedIDs = new HashSet<>();
+		for (Admin admin : admins) {
+			usedIDs.add(admin.getAdminID());
+		}
 
+		int id = 1;
+		while (usedIDs.contains(id)) {
+			id++;
+		}
+		return id;
+	}
 	public boolean isValidEmail(String email) {
 		// Check for null or empty string after trimming whitespace
 		if (email == null || email.trim().isEmpty()) {
