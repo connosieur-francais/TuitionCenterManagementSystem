@@ -1,4 +1,4 @@
-package assignmentGracious;
+package tcms.students;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,12 +6,12 @@ import java.awt.event.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.io.File;
 
-public class DashboardStudent extends JFrame {
+public class StudentDashboard extends JFrame {
 
     private String studentName;
     private String studentID;
 
-    public DashboardStudent(String studentName, String studentID) {
+    public StudentDashboard(String studentName, String studentID) {
         this.studentName = studentName;
         this.studentID = studentID;
 
@@ -183,6 +183,6 @@ public class DashboardStudent extends JFrame {
     }
 
     public static void main(String[] args) {
-        new DashboardStudent("Gracious Rusike", "S12");
+        new StudentDashboard("Gracious Rusike", "S12");
     }
 }
