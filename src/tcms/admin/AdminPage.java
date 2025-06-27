@@ -1,6 +1,7 @@
 package tcms.admin;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,8 @@ import java.awt.event.ItemListener;
 import java.util.Calendar;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,17 +23,21 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 
+import tcms.custom_gui_components.CustomRoundedPanel;
+import tcms.custom_gui_components.ModelColor;
 import tcms.users.User;
 import tcms.users.UserManager;
+import java.awt.CardLayout;
 
 public class AdminPage extends JFrame implements ActionListener {
 
-	private String atcBannerImg = "src/tcms/resources/atcBanner.png";
-	private String backgroundImg = "src/tcms/resources/loginPageBackground.png";
+	private String atcBannerImg = "src/tcms/resources/atcBanner2.png";
+	private String backgroundImg = "src/tcms/resources/loginPageBackground2.jpg";
 
 	private AdminManager adminManager = new AdminManager();
 	private UserManager userManager = new UserManager();
@@ -42,7 +49,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame();
-	private JPanel contentPane;
+	private CustomRoundedPanel contentPane;
 	private JPanel headerPanel;
 	private JButton updateProfileBtn, manageTutorsButton;
 	private JButton manageReceptionistsBtn, viewIncomeBtn;
@@ -96,90 +103,79 @@ public class AdminPage extends JFrame implements ActionListener {
 		adminManager.saveAdmins(adminCSVFile);
 
 		admin = adminManager.findAdminByUserID(user_id);
-
 		frame.setResizable(false);
 		frame.setTitle("Admin Panel");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 700, 450);
-		contentPane = new JPanel();
+		frame.setBounds(100, 100, 1200, 750);
+		contentPane = new CustomRoundedPanel();
+		contentPane.addColor(new ModelColor(Color.decode("#DFD9FF"), 0f), new ModelColor(Color.decode("#9F75FF"), 0.5f), new ModelColor(Color.decode("#4D9AFF"), 1f));
 		contentPane.setBackground(Color.white);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		frame.setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		headerPanel = new JPanel();
+		headerPanel.setBounds(5, 5, 1176, 80);
 		headerPanel.setBackground(new Color(7, 15, 43));
-		headerPanel.setBounds(0, 0, 686, 80);
-		contentPane.add(headerPanel);
-		headerPanel.setLayout(null);
 
 		atcBannerLabel = new JLabel("");
 		atcBannerLabel.setIcon(new ImageIcon(atcBannerImg));
-		atcBannerLabel.setBounds(0, 0, 150, 75);
-		headerPanel.add(atcBannerLabel);
 
 		updateProfileBtn = new JButton(
 				"<html>\r\n<head>\r\n<style>\r\np {text-align: center;}\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<p>Update</p>\r\n<p>Profile</p>\r\n</body>\r\n</html>");
+		updateProfileBtn.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\profile.png"));
 		updateProfileBtn.setBackground(buttonColor);
 		updateProfileBtn.setForeground(buttonTxtColor);
 		updateProfileBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		updateProfileBtn.setFont(buttonFont);
 		updateProfileBtn.addActionListener(this);
 		updateProfileBtn.setFocusable(false);
-		updateProfileBtn.setBounds(160, 10, 106, 60);
-		headerPanel.add(updateProfileBtn);
 
 		manageTutorsButton = new JButton(
 				"<html>\r\n<head>\r\n<style>\r\np {text-align: center;}\r\n</style>\r\n</head>\r\n<body>\r\n<p>Manage</p>\r\n<p>Tutors</p>\r\n</body>\r\n</html>");
+		manageTutorsButton.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\tutor.png"));
 		manageTutorsButton.setBackground(buttonColor);
 		manageTutorsButton.setForeground(buttonTxtColor);
 		manageTutorsButton.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		manageTutorsButton.setFont(buttonFont);
 		manageTutorsButton.addActionListener(this);
-		manageTutorsButton.setBounds(276, 10, 116, 60);
 		manageTutorsButton.setFocusable(false);
-		headerPanel.add(manageTutorsButton);
 
 		manageReceptionistsBtn = new JButton(
 				"<html>\r\n<head>\r\n<style>\r\np {text-align: center;}\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
+		manageReceptionistsBtn.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\receptionist.png"));
 		manageReceptionistsBtn.setBackground(buttonColor);
 		manageReceptionistsBtn.setForeground(buttonTxtColor);
 		manageReceptionistsBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		manageReceptionistsBtn.setFont(buttonFont);
 		manageReceptionistsBtn.addActionListener(this);
-		manageReceptionistsBtn.setBounds(402, 10, 106, 60);
 		manageReceptionistsBtn.setFocusable(false);
-		headerPanel.add(manageReceptionistsBtn);
 
 		viewIncomeBtn = new JButton(
 				"<html>\r\n<head>\r\n<style>\r\np {text-align: center;}\r\n</style>\r\n</head>\r\n<body>\r\n<p>View Monthly</p>\r\n<p>Income Report</p>\r\n</body>\r\n</html>");
+		viewIncomeBtn.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\incomereport.png"));
 		viewIncomeBtn.setBackground(buttonColor);
 		viewIncomeBtn.setForeground(buttonTxtColor);
 		viewIncomeBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		viewIncomeBtn.setFont(buttonFont);
 		viewIncomeBtn.addActionListener(this);
-		viewIncomeBtn.setBounds(518, 10, 116, 60);
 		viewIncomeBtn.setFocusable(false);
-		headerPanel.add(viewIncomeBtn);
 
 		contentPanel = new JLayeredPane();
+		contentPanel.setBounds(5, 85, 1176, 618);
 		contentPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		contentPanel.setBackground(new Color(27, 26, 85));
-		contentPanel.setBounds(0, 80, 686, 335);
-		contentPane.add(contentPanel);
-		contentPanel.setLayout(null);
 
 		// UPDATE PROFILE PANEL
 		// -----------------------------------------------------------------------
 		updateProfilePanel = new JPanel();
 		updateProfilePanel.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		contentPanel.setLayer(updateProfilePanel, 0);
+		contentPanel.setLayer(updateProfilePanel, 1);
 		updateProfilePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		updateProfilePanel.setBackground(new Color(83, 92, 145));
-		updateProfilePanel.setBounds(10, 5, 666, 320);
 		updateProfilePanel.setVisible(false);
-		contentPanel.add(updateProfilePanel);
+		contentPanel.setLayout(new CardLayout(0, 0));
+		contentPanel.add(updateProfilePanel, "name_164342192424500");
 		updateProfilePanel.setLayout(null);
 
 		profileSettingsLabel = new JLabel("Profile Settings");
@@ -345,18 +341,16 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		background = new JLabel("");
 		background.setIcon(new ImageIcon(backgroundImg));
-		background.setBounds(0, 0, 686, 335);
-		contentPanel.add(background);
+		contentPanel.add(background, "name_164342214344200");
 
 		// MANAGE RECEPTIONISTS PANEL
 
 		manageReceptionistPanel = new JPanel();
-		contentPanel.setLayer(manageReceptionistPanel, 3);
+		contentPanel.setLayer(manageReceptionistPanel, 2);
 		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
 		manageReceptionistPanel.setVisible(false);
 		manageReceptionistPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		manageReceptionistPanel.setBounds(10, 5, 666, 320);
-		contentPanel.add(manageReceptionistPanel);
+		contentPanel.add(manageReceptionistPanel, "name_164342236052900");
 		manageReceptionistPanel.setLayout(null);
 
 		ManageReceptionistsLabel = new JLabel("Manage Receptionists");
@@ -372,9 +366,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewMonthlyIncomePanel.setBackground(new Color(83, 92, 145));
 		viewMonthlyIncomePanel.setVisible(false);
 		viewMonthlyIncomePanel.setLayout(null);
-		viewMonthlyIncomePanel.setBounds(10, 5, 666, 320);
-		contentPanel.setLayer(viewMonthlyIncomePanel, 2);
-		contentPanel.add(viewMonthlyIncomePanel);
+		contentPanel.setLayer(viewMonthlyIncomePanel, 3);
+		contentPanel.add(viewMonthlyIncomePanel, "name_164342258048700");
 
 		viewMonthlyIncomeLabel = new JLabel("View Monthly Income Report");
 		viewMonthlyIncomeLabel.setForeground(new Color(255, 255, 255));
@@ -411,12 +404,51 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewMonthlyIncomePanel.add(generateReportBtn);
 
 		manageTutorsPanel = new JPanel();
+		contentPanel.setLayer(manageTutorsPanel, 4);
 		manageTutorsPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		manageTutorsPanel.setBackground(new Color(83, 92, 145));
 		manageTutorsPanel.setVisible(false);
-		manageTutorsPanel.setBounds(10, 5, 666, 320);
-		contentPanel.add(manageTutorsPanel);
+		contentPanel.add(manageTutorsPanel, "name_164342281094100");
 		manageTutorsPanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("MANAGE TUTORS");
+		lblNewLabel.setFont(new Font("Serif", Font.ITALIC, 28));
+		lblNewLabel.setBounds(91, 37, 502, 169);
+		manageTutorsPanel.add(lblNewLabel);
+		
+		contentPane.setLayout(null);
+		GroupLayout gl_headerPanel = new GroupLayout(headerPanel);
+		gl_headerPanel.setHorizontalGroup(
+			gl_headerPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_headerPanel.createSequentialGroup()
+					.addComponent(atcBannerLabel, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(updateProfileBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+					.addGap(30)
+					.addComponent(manageTutorsButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+					.addGap(30)
+					.addComponent(manageReceptionistsBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+					.addGap(30)
+					.addComponent(viewIncomeBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(59, Short.MAX_VALUE))
+		);
+		gl_headerPanel.setVerticalGroup(
+			gl_headerPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_headerPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_headerPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(updateProfileBtn, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+						.addComponent(manageTutorsButton, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+						.addComponent(manageReceptionistsBtn, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+						.addComponent(viewIncomeBtn, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+					.addGap(10))
+				.addGroup(gl_headerPanel.createSequentialGroup()
+					.addComponent(atcBannerLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		headerPanel.setLayout(gl_headerPanel);
+		contentPane.add(headerPanel);
+		contentPane.add(contentPanel);
 
 		frame.setVisible(true);
 	}
