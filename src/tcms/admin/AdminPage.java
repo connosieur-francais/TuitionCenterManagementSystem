@@ -33,6 +33,8 @@ import tcms.custom_gui_components.ModelColor;
 import tcms.users.User;
 import tcms.users.UserManager;
 import java.awt.CardLayout;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 public class AdminPage extends JFrame implements ActionListener {
 
@@ -42,8 +44,8 @@ public class AdminPage extends JFrame implements ActionListener {
 	private AdminManager adminManager = new AdminManager();
 	private UserManager userManager = new UserManager();
 
-	private Admin admin;
-	private User user;
+	private static Admin admin;
+	private static User user;
 	private String adminCSVFile = "src//admins.csv";
 	private String userCSVFile = "src//users.csv";
 
@@ -58,11 +60,9 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	// HEADER LABEL SETTINGS
 	private Color buttonColor = new Color(83, 92, 145);
-	private Color buttonTxtColor = Color.white;
-	private Font buttonFont = new Font("SansSerif", Font.BOLD, 12);
 
 	// UPDATE PROFILE PAGE ------------------------
-	private JPanel updateProfilePanel;
+	private CustomRoundedPanel updateProfilePanel;
 	private JLabel profileSettingsLabel, usernameLabel;
 	private JLabel passwordLabel, emailLabel, addressLabel, contactLabel;
 	private JTextField usernameTxtfield, emailTxtfield;
@@ -108,154 +108,153 @@ public class AdminPage extends JFrame implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 1200, 750);
 		contentPane = new CustomRoundedPanel();
-		contentPane.addColor(new ModelColor(Color.decode("#DFD9FF"), 0f), new ModelColor(Color.decode("#9F75FF"), 0.5f), new ModelColor(Color.decode("#4D9AFF"), 1f));
+		contentPane.addColor(new ModelColor(Color.decode("#DFD9FF"), 0f), new ModelColor(Color.decode("#9F75FF"), 0.5f),
+				new ModelColor(Color.decode("#4D9AFF"), 1f));
 		contentPane.setBackground(Color.white);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		frame.setContentPane(contentPane);
 
 		headerPanel = new JPanel();
-		headerPanel.setBounds(5, 5, 1176, 80);
+		headerPanel.setBounds(0, 0, 1186, 86);
 		headerPanel.setBackground(new Color(7, 15, 43));
 
 		atcBannerLabel = new JLabel("");
 		atcBannerLabel.setIcon(new ImageIcon(atcBannerImg));
 
-		updateProfileBtn = new JButton(
-				"<html>\r\n<head>\r\n<style>\r\np {text-align: center;}\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<p>Update</p>\r\n<p>Profile</p>\r\n</body>\r\n</html>");
-		updateProfileBtn.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\profile.png"));
-		updateProfileBtn.setBackground(buttonColor);
-		updateProfileBtn.setForeground(buttonTxtColor);
-		updateProfileBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		updateProfileBtn.setFont(buttonFont);
+		updateProfileBtn = new JButton("Update Profile");
+		updateProfileBtn.setIcon(new ImageIcon(
+				"C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\profile.png"));
+		updateProfileBtn.setBackground(new Color(182, 177, 220));
+		updateProfileBtn.setForeground(new Color(18, 21, 62));
+		updateProfileBtn.setBorder(new LineBorder(new Color(18, 21, 62), 2));
+		updateProfileBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		updateProfileBtn.addActionListener(this);
 		updateProfileBtn.setFocusable(false);
 
 		manageTutorsButton = new JButton(
 				"<html>\r\n<head>\r\n<style>\r\np {text-align: center;}\r\n</style>\r\n</head>\r\n<body>\r\n<p>Manage</p>\r\n<p>Tutors</p>\r\n</body>\r\n</html>");
-		manageTutorsButton.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\tutor.png"));
-		manageTutorsButton.setBackground(buttonColor);
-		manageTutorsButton.setForeground(buttonTxtColor);
-		manageTutorsButton.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		manageTutorsButton.setFont(buttonFont);
+		manageTutorsButton.setIcon(new ImageIcon(
+				"C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\tutor.png"));
+		manageTutorsButton.setBackground(new Color(182, 177, 220));
+		manageTutorsButton.setForeground(new Color(18, 21, 62));
+		manageTutorsButton.setBorder(new LineBorder(new Color(18, 21, 62), 2));
+		manageTutorsButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		manageTutorsButton.addActionListener(this);
 		manageTutorsButton.setFocusable(false);
 
 		manageReceptionistsBtn = new JButton(
 				"<html>\r\n<head>\r\n<style>\r\np {text-align: center;}\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
-		manageReceptionistsBtn.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\receptionist.png"));
-		manageReceptionistsBtn.setBackground(buttonColor);
-		manageReceptionistsBtn.setForeground(buttonTxtColor);
-		manageReceptionistsBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		manageReceptionistsBtn.setFont(buttonFont);
+		manageReceptionistsBtn.setIcon(new ImageIcon(
+				"C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\receptionist.png"));
+		manageReceptionistsBtn.setBackground(new Color(182, 177, 220));
+		manageReceptionistsBtn.setForeground(new Color(18, 21, 62));
+		manageReceptionistsBtn.setBorder(new LineBorder(new Color(18, 21, 62), 2));
+		manageReceptionistsBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		manageReceptionistsBtn.addActionListener(this);
 		manageReceptionistsBtn.setFocusable(false);
 
 		viewIncomeBtn = new JButton(
 				"<html>\r\n<head>\r\n<style>\r\np {text-align: center;}\r\n</style>\r\n</head>\r\n<body>\r\n<p>View Monthly</p>\r\n<p>Income Report</p>\r\n</body>\r\n</html>");
-		viewIncomeBtn.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\incomereport.png"));
-		viewIncomeBtn.setBackground(buttonColor);
-		viewIncomeBtn.setForeground(buttonTxtColor);
-		viewIncomeBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		viewIncomeBtn.setFont(buttonFont);
+		viewIncomeBtn.setIcon(new ImageIcon(
+				"C:\\Users\\User\\eclipse-workspace\\TuitionCenterManagementSystem\\src\\tcms\\resources\\incomereport.png"));
+		viewIncomeBtn.setBackground(new Color(182, 177, 220));
+		viewIncomeBtn.setForeground(new Color(18, 21, 62));
+		viewIncomeBtn.setBorder(new LineBorder(new Color(18, 21, 62), 2));
+		viewIncomeBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		viewIncomeBtn.addActionListener(this);
 		viewIncomeBtn.setFocusable(false);
 
 		contentPanel = new JLayeredPane();
-		contentPanel.setBounds(5, 85, 1176, 618);
+		contentPanel.setBounds(0, 85, 1186, 628);
 		contentPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		contentPanel.setBackground(new Color(27, 26, 85));
 
 		// UPDATE PROFILE PANEL
 		// -----------------------------------------------------------------------
-		updateProfilePanel = new JPanel();
+		updateProfilePanel = new CustomRoundedPanel();
+		updateProfilePanel.addColor(new ModelColor(Color.decode("#D9D9FF"), 0f), new ModelColor(Color.decode("#C2DFFF"), 1f));
 		updateProfilePanel.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		contentPanel.setLayer(updateProfilePanel, 1);
-		updateProfilePanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		updateProfilePanel.setBackground(new Color(83, 92, 145));
-		updateProfilePanel.setVisible(false);
+		updateProfilePanel.setBorder(new LineBorder(new Color(7, 15, 43), 5));
+		updateProfilePanel.setBackground(new Color(240, 248, 255));
 		contentPanel.setLayout(new CardLayout(0, 0));
 		contentPanel.add(updateProfilePanel, "name_164342192424500");
-		updateProfilePanel.setLayout(null);
 
-		profileSettingsLabel = new JLabel("Profile Settings");
-		profileSettingsLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+		profileSettingsLabel = new JLabel("Update Profile");
+		profileSettingsLabel.setBounds(440, 10, 300, 40);
+		profileSettingsLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 32));
 		profileSettingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		profileSettingsLabel.setBounds(10, 0, 120, 40);
-		profileSettingsLabel.setBackground(new Color(255, 255, 255));
-		profileSettingsLabel.setForeground(new Color(255, 255, 255));
-		profileSettingsLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-		updateProfilePanel.add(profileSettingsLabel);
+		profileSettingsLabel.setForeground(new Color(0, 0, 0));
 
 		usernameLabel = new JLabel("Username");
-		usernameLabel.setForeground(new Color(255, 255, 255));
-		usernameLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-		usernameLabel.setBounds(10, 50, 70, 20);
-		updateProfilePanel.add(usernameLabel);
+		usernameLabel.setBounds(100, 60, 100, 25);
+		usernameLabel.setForeground(new Color(0, 0, 0));
+		usernameLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		passwordLabel = new JLabel("Password");
-		passwordLabel.setForeground(new Color(255, 255, 255));
-		passwordLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-		passwordLabel.setBounds(10, 100, 70, 20);
-		updateProfilePanel.add(passwordLabel);
+		passwordLabel.setBounds(640, 60, 100, 25);
+		passwordLabel.setForeground(new Color(0, 0, 0));
+		passwordLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		usernameTxtfield = new JTextField();
-		usernameTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		usernameTxtfield.setBackground(new Color(192, 192, 192));
+		usernameTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		usernameTxtfield.setBounds(100, 85, 450, 50);
+		usernameTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+		usernameTxtfield.setBackground(new Color(223, 239, 255));
 		usernameTxtfield.setEnabled(false);
 		usernameTxtfield.setDisabledTextColor(Color.GRAY);
-		usernameTxtfield.setBounds(80, 50, 200, 20);
-		updateProfilePanel.add(usernameTxtfield);
 		usernameTxtfield.setColumns(10);
 
 		passwordField = new JPasswordField();
-		passwordField.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		passwordField.setBackground(new Color(192, 192, 192));
+		passwordField.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		passwordField.setBounds(640, 85, 450, 50);
+		passwordField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+		passwordField.setBackground(new Color(223, 239, 255));
 		passwordField.setEnabled(false);
 		passwordField.setDisabledTextColor(Color.GRAY);
 		passwordField.setEchoChar('*');
-		passwordField.setBounds(80, 100, 200, 20);
-		updateProfilePanel.add(passwordField);
 
 		changeUsernameBtn = new JButton("Change Username");
-		changeUsernameBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		changeUsernameBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		changeUsernameBtn.setBackground(new Color(235, 235, 235));
+		changeUsernameBtn.setForeground(new Color(240, 236, 232));
+		changeUsernameBtn.setLocation(360, 134);
+		changeUsernameBtn.setSize(new Dimension(190, 25));
+		changeUsernameBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		changeUsernameBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		changeUsernameBtn.setBackground(new Color(7, 15, 43));
 		changeUsernameBtn.setFocusable(false);
-		changeUsernameBtn.setBounds(300, 50, 120, 20);
 		changeUsernameBtn.addActionListener(this);
-		updateProfilePanel.add(changeUsernameBtn);
 
 		changePasswordBtn = new JButton("Change Password");
-		changePasswordBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		changePasswordBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		changePasswordBtn.setBackground(new Color(235, 235, 235));
+		changePasswordBtn.setForeground(new Color(240, 236, 232));
+		changePasswordBtn.setBounds(900, 135, 190, 25);
+		changePasswordBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		changePasswordBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		changePasswordBtn.setBackground(new Color(7, 15, 43));
 		changePasswordBtn.addActionListener(this);
 		changePasswordBtn.setFocusable(false);
-		changePasswordBtn.setBounds(300, 100, 120, 20);
-		updateProfilePanel.add(changePasswordBtn);
 
 		emailLabel = new JLabel("E-mail");
-		emailLabel.setForeground(Color.WHITE);
-		emailLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-		emailLabel.setBounds(10, 200, 70, 20);
-		updateProfilePanel.add(emailLabel);
+		emailLabel.setBounds(640, 170, 70, 25);
+		emailLabel.setForeground(new Color(0, 0, 0));
+		emailLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		changeEmailBtn = new JButton("Change E-mail");
-		changeEmailBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		changeEmailBtn.setBackground(new Color(235, 235, 235));
-		changeEmailBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		changeEmailBtn.setForeground(new Color(240, 236, 232));
+		changeEmailBtn.setBounds(900, 245, 190, 25);
+		changeEmailBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		changeEmailBtn.setBackground(new Color(7, 15, 43));
+		changeEmailBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		changeEmailBtn.addActionListener(this);
 		changeEmailBtn.setFocusable(false);
-		changeEmailBtn.setBounds(300, 200, 120, 20);
-		updateProfilePanel.add(changeEmailBtn);
 
 		showPasswordToggleBtn = new JToggleButton("Show Password");
-		showPasswordToggleBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		showPasswordToggleBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		showPasswordToggleBtn.setBackground(new Color(235, 235, 235));
+		showPasswordToggleBtn.setForeground(new Color(240, 236, 232));
+		showPasswordToggleBtn.setBounds(779, 135, 120, 25);
+		showPasswordToggleBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		showPasswordToggleBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		showPasswordToggleBtn.setBackground(new Color(7, 15, 43));
 		showPasswordToggleBtn.setFocusable(false);
-		showPasswordToggleBtn.setBounds(160, 120, 120, 15);
 		showPasswordToggleBtn.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -266,80 +265,97 @@ public class AdminPage extends JFrame implements ActionListener {
 				}
 			}
 		});
-		updateProfilePanel.add(showPasswordToggleBtn);
 
 		emailTxtfield = new JTextField();
-		emailTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		emailTxtfield.setBackground(new Color(192, 192, 192));
+		emailTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		emailTxtfield.setBounds(640, 195, 450, 50);
+		emailTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+		emailTxtfield.setBackground(new Color(223, 239, 255));
 		emailTxtfield.setEnabled(false);
 		emailTxtfield.setDisabledTextColor(Color.GRAY);
 		emailTxtfield.setColumns(10);
-		emailTxtfield.setBounds(80, 200, 200, 20);
-		updateProfilePanel.add(emailTxtfield);
 
 		addressLabel = new JLabel("Address");
-		addressLabel.setForeground(Color.WHITE);
-		addressLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-		addressLabel.setBounds(10, 250, 70, 20);
-		updateProfilePanel.add(addressLabel);
+		addressLabel.setBounds(100, 280, 70, 25);
+		addressLabel.setForeground(new Color(0, 0, 0));
+		addressLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		addressTxtfield = new JTextField();
-		addressTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		addressTxtfield.setBackground(new Color(192, 192, 192));
+		addressTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		addressTxtfield.setBounds(100, 305, 990, 50);
+		addressTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+		addressTxtfield.setBackground(new Color(223, 239, 255));
 		addressTxtfield.setText("<dynamic>");
 		addressTxtfield.setEnabled(false);
 		addressTxtfield.setDisabledTextColor(Color.GRAY);
 		addressTxtfield.setColumns(10);
-		addressTxtfield.setBounds(80, 250, 200, 20);
-		updateProfilePanel.add(addressTxtfield);
 
 		changeAddressBtn = new JButton("Change Address");
-		changeAddressBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		changeAddressBtn.setBackground(new Color(235, 235, 235));
-		changeAddressBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		changeAddressBtn.setForeground(new Color(240, 236, 232));
+		changeAddressBtn.setBounds(900, 355, 190, 25);
+		changeAddressBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		changeAddressBtn.setBackground(new Color(7, 15, 43));
+		changeAddressBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		changeAddressBtn.addActionListener(this);
 		changeAddressBtn.setFocusable(false);
-		changeAddressBtn.setBounds(300, 250, 120, 20);
-		updateProfilePanel.add(changeAddressBtn);
 
 		saveChangesBtn = new JButton("Save Changes");
-		saveChangesBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		saveChangesBtn.setBackground(new Color(235, 235, 235));
-		saveChangesBtn.setFont(new Font("SansSerif", Font.BOLD, 12));
+		saveChangesBtn.setForeground(new Color(244, 244, 240));
+		saveChangesBtn.setBounds(972, 564, 200, 50);
+		saveChangesBtn.setBorder(new LineBorder(new Color(7, 15, 43), 2));
+		saveChangesBtn.setBackground(new Color(7, 15, 43));
+		saveChangesBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 24));
 		saveChangesBtn.addActionListener(this);
 		saveChangesBtn.setFocusable(false);
-		saveChangesBtn.setBounds(506, 270, 150, 40);
-		updateProfilePanel.add(saveChangesBtn);
 
 		contactLabel = new JLabel("Contact");
-		contactLabel.setForeground(Color.WHITE);
-		contactLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-		contactLabel.setBounds(10, 150, 70, 20);
-		updateProfilePanel.add(contactLabel);
+		contactLabel.setBounds(100, 170, 100, 25);
+		contactLabel.setForeground(new Color(0, 0, 0));
+		contactLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		contactTxtfield = new JTextField();
+		contactTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		contactTxtfield.setBounds(100, 195, 450, 50);
 		contactTxtfield.setText("<dynamic>");
 		contactTxtfield.setEnabled(false);
 		contactTxtfield.setDisabledTextColor(Color.GRAY);
 		contactTxtfield.setColumns(10);
-		contactTxtfield.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		contactTxtfield.setBackground(Color.LIGHT_GRAY);
-		contactTxtfield.setBounds(80, 150, 200, 20);
-		updateProfilePanel.add(contactTxtfield);
+		contactTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
+		contactTxtfield.setBackground(new Color(223, 239, 255));
 
 		changeContactBtn = new JButton("Change Contact");
-		changeContactBtn.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		changeContactBtn.setForeground(new Color(240, 236, 232));
+		changeContactBtn.setBounds(360, 245, 190, 25);
+		changeContactBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		changeContactBtn.setFocusable(false);
-		changeContactBtn.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		changeContactBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		changeContactBtn.addActionListener(this);
-		changeContactBtn.setBackground(new Color(235, 235, 235));
-		changeContactBtn.setBounds(300, 150, 120, 20);
+		changeContactBtn.setBackground(new Color(7, 15, 43));
+		updateProfilePanel.setLayout(null);
+		updateProfilePanel.add(usernameLabel);
+		updateProfilePanel.add(passwordLabel);
+		updateProfilePanel.add(contactLabel);
+		updateProfilePanel.add(addressLabel);
+		updateProfilePanel.add(emailLabel);
+		updateProfilePanel.add(addressTxtfield);
+		updateProfilePanel.add(emailTxtfield);
+		updateProfilePanel.add(contactTxtfield);
+		updateProfilePanel.add(usernameTxtfield);
+		updateProfilePanel.add(showPasswordToggleBtn);
+		updateProfilePanel.add(passwordField);
 		updateProfilePanel.add(changeContactBtn);
+		updateProfilePanel.add(changePasswordBtn);
+		updateProfilePanel.add(changeEmailBtn);
+		updateProfilePanel.add(changeAddressBtn);
+		updateProfilePanel.add(changeUsernameBtn);
+		updateProfilePanel.add(saveChangesBtn);
+		updateProfilePanel.add(profileSettingsLabel);
 
 		updateProfilePanelInformation(user, admin); // Update the information in txtfields with logged in user's
 													// information
 
 		background = new JLabel("");
+		contentPanel.setLayer(background, 5);
 		background.setIcon(new ImageIcon(backgroundImg));
 		contentPanel.add(background, "name_164342214344200");
 
@@ -354,9 +370,10 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageReceptionistPanel.setLayout(null);
 
 		ManageReceptionistsLabel = new JLabel("Manage Receptionists");
+		ManageReceptionistsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ManageReceptionistsLabel.setForeground(new Color(255, 255, 255));
-		ManageReceptionistsLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
-		ManageReceptionistsLabel.setBounds(10, 10, 286, 41);
+		ManageReceptionistsLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+		ManageReceptionistsLabel.setBounds(440, 10, 286, 41);
 		manageReceptionistPanel.add(ManageReceptionistsLabel);
 
 		// VIEW MONTHLY INCOME PANEL ------------------------------------------
@@ -366,7 +383,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewMonthlyIncomePanel.setBackground(new Color(83, 92, 145));
 		viewMonthlyIncomePanel.setVisible(false);
 		viewMonthlyIncomePanel.setLayout(null);
-		contentPanel.setLayer(viewMonthlyIncomePanel, 3);
+		contentPanel.setLayer(viewMonthlyIncomePanel, 4);
 		contentPanel.add(viewMonthlyIncomePanel, "name_164342258048700");
 
 		viewMonthlyIncomeLabel = new JLabel("View Monthly Income Report");
@@ -404,50 +421,40 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewMonthlyIncomePanel.add(generateReportBtn);
 
 		manageTutorsPanel = new JPanel();
-		contentPanel.setLayer(manageTutorsPanel, 4);
+		contentPanel.setLayer(manageTutorsPanel, 3);
 		manageTutorsPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		manageTutorsPanel.setBackground(new Color(83, 92, 145));
 		manageTutorsPanel.setVisible(false);
 		contentPanel.add(manageTutorsPanel, "name_164342281094100");
 		manageTutorsPanel.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("MANAGE TUTORS");
 		lblNewLabel.setFont(new Font("Serif", Font.ITALIC, 28));
 		lblNewLabel.setBounds(91, 37, 502, 169);
 		manageTutorsPanel.add(lblNewLabel);
-		
+
 		contentPane.setLayout(null);
-		GroupLayout gl_headerPanel = new GroupLayout(headerPanel);
-		gl_headerPanel.setHorizontalGroup(
-			gl_headerPanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_headerPanel.createSequentialGroup()
-					.addComponent(atcBannerLabel, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addComponent(updateProfileBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(manageTutorsButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(manageReceptionistsBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(viewIncomeBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(59, Short.MAX_VALUE))
-		);
-		gl_headerPanel.setVerticalGroup(
-			gl_headerPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_headerPanel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_headerPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(updateProfileBtn, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-						.addComponent(manageTutorsButton, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-						.addComponent(manageReceptionistsBtn, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-						.addComponent(viewIncomeBtn, GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
-					.addGap(10))
-				.addGroup(gl_headerPanel.createSequentialGroup()
-					.addComponent(atcBannerLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		headerPanel.setLayout(gl_headerPanel);
 		contentPane.add(headerPanel);
+		GroupLayout gl_headerPanel = new GroupLayout(headerPanel);
+		gl_headerPanel.setHorizontalGroup(gl_headerPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_headerPanel
+				.createSequentialGroup()
+				.addComponent(atcBannerLabel, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE).addGap(10)
+				.addComponent(updateProfileBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE).addGap(30)
+				.addComponent(manageTutorsButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+				.addGap(30)
+				.addComponent(manageReceptionistsBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+				.addGap(30).addComponent(viewIncomeBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)));
+		gl_headerPanel.setVerticalGroup(gl_headerPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(atcBannerLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+				.addGroup(gl_headerPanel.createSequentialGroup().addGap(10).addComponent(updateProfileBtn,
+						GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_headerPanel.createSequentialGroup().addGap(10).addComponent(manageTutorsButton,
+						GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_headerPanel.createSequentialGroup().addGap(10).addComponent(manageReceptionistsBtn,
+						GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_headerPanel.createSequentialGroup().addGap(10).addComponent(viewIncomeBtn,
+						GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)));
+		headerPanel.setLayout(gl_headerPanel);
 		contentPane.add(contentPanel);
 
 		frame.setVisible(true);
@@ -491,6 +498,8 @@ public class AdminPage extends JFrame implements ActionListener {
 			manageReceptionistsBtn.setEnabled(true);
 			viewIncomeBtn.setEnabled(true);
 
+			resetUpdateProfilePage();
+
 			System.out.println("Opened Manage Tutors Panel");
 		}
 		if (e.getSource() == manageReceptionistsBtn) {
@@ -508,6 +517,8 @@ public class AdminPage extends JFrame implements ActionListener {
 			updateProfileBtn.setEnabled(true);
 			manageTutorsButton.setEnabled(true);
 			viewIncomeBtn.setEnabled(true);
+
+			resetUpdateProfilePage();
 
 			System.out.println("Opened Manage Receptionists Panel");
 		}
@@ -527,6 +538,8 @@ public class AdminPage extends JFrame implements ActionListener {
 			updateProfileBtn.setEnabled(true);
 			manageTutorsButton.setEnabled(true);
 			manageReceptionistsBtn.setEnabled(true);
+
+			resetUpdateProfilePage();
 
 			System.out.println("Opened View Income Panel");
 		}
@@ -616,6 +629,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		contactTxtfield.setEnabled(false);
 		emailTxtfield.setEnabled(false);
 		addressTxtfield.setEnabled(false);
+
+		updateProfilePanelInformation(user, admin);
 	}
 
 	public void updateUserDetails(Admin admin, User user, String newUsername, String newPassword, String newContact,

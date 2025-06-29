@@ -8,7 +8,11 @@ import java.io.File;
 
 public class StudentDashboard extends JFrame {
 
-    private String studentName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4669474195873028109L;
+	private String studentName;
     private String studentID;
 
     public StudentDashboard(String studentName, String studentID) {
