@@ -197,25 +197,25 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPanel.add(updateProfilePanel, "name_164342192424500");
 
 		profileSettingsLabel = new JLabel("Update Profile");
-		profileSettingsLabel.setBounds(440, 10, 300, 40);
-		profileSettingsLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 32));
+		profileSettingsLabel.setBounds(440, 25, 300, 40);
+		profileSettingsLabel.setFont(new Font("Arial Black", Font.PLAIN, 32));
 		profileSettingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		profileSettingsLabel.setForeground(new Color(220, 221, 222));
 
 		usernameLabel = new JLabel("Username");
-		usernameLabel.setBounds(100, 60, 100, 25);
+		usernameLabel.setBounds(100, 100, 100, 25);
 		usernameLabel.setForeground(new Color(220, 221, 222));
 		usernameLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		passwordLabel = new JLabel("Password");
-		passwordLabel.setBounds(640, 60, 100, 25);
+		passwordLabel.setBounds(640, 100, 100, 25);
 		passwordLabel.setForeground(new Color(220, 221, 222));
 		passwordLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		usernameTxtfield = new JTextField();
 		usernameTxtfield.setForeground(new Color(220, 221, 222));
 		usernameTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		usernameTxtfield.setBounds(100, 85, 450, 50);
+		usernameTxtfield.setBounds(100, 125, 450, 50);
 		usernameTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
 		usernameTxtfield.setBackground(new Color(56, 58, 65));
 		usernameTxtfield.setEnabled(false);
@@ -225,7 +225,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		passwordField = new JPasswordField();
 		passwordField.setForeground(new Color(220, 221, 222));
 		passwordField.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		passwordField.setBounds(640, 85, 450, 50);
+		passwordField.setBounds(640, 125, 450, 50);
 		passwordField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
 		passwordField.setBackground(new Color(56, 58, 65));
 		passwordField.setEnabled(false);
@@ -239,7 +239,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeUsernameBtn.setColor(new Color(30, 31, 34));
 		changeUsernameBtn.setBorderColor(new Color(30, 31, 34));
 		changeUsernameBtn.setForeground(new Color(220, 221, 222));
-		changeUsernameBtn.setLocation(360, 135);
+		changeUsernameBtn.setLocation(360, 175);
 		changeUsernameBtn.setSize(new Dimension(190, 25));
 		changeUsernameBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changeUsernameBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
@@ -254,7 +254,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changePasswordBtn.setColor(new Color(30, 31, 34));
 		changePasswordBtn.setBorderColor(new Color(30, 31, 34));
 		changePasswordBtn.setForeground(new Color(220, 221, 222));
-		changePasswordBtn.setBounds(900, 135, 190, 25);
+		changePasswordBtn.setBounds(900, 175, 190, 25);
 		changePasswordBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changePasswordBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		changePasswordBtn.setBackground(new Color(30, 31, 34));
@@ -262,7 +262,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changePasswordBtn.setFocusable(false);
 
 		emailLabel = new JLabel("E-mail");
-		emailLabel.setBounds(640, 170, 70, 25);
+		emailLabel.setBounds(640, 210, 70, 25);
 		emailLabel.setForeground(new Color(220, 221, 222));
 		emailLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
@@ -273,7 +273,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeEmailBtn.setColor(new Color(30, 31, 34));
 		changeEmailBtn.setBorderColor(new Color(30, 31, 34));
 		changeEmailBtn.setForeground(new Color(220, 221, 222));
-		changeEmailBtn.setBounds(900, 245, 190, 25);
+		changeEmailBtn.setBounds(900, 285, 190, 25);
 		changeEmailBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changeEmailBtn.setBackground(new Color(30, 31, 34));
 		changeEmailBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
@@ -288,7 +288,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		showPasswordToggleBtn.setCornerRadius(0);
 		showPasswordToggleBtn.setText("Show Password");
 		showPasswordToggleBtn.setForeground(new Color(220, 221, 222));
-		showPasswordToggleBtn.setBounds(640, 135, 120, 25);
+		showPasswordToggleBtn.setBounds(640, 175, 120, 25);
 		showPasswordToggleBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		showPasswordToggleBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		showPasswordToggleBtn.setBackground(new Color(30, 31, 34));
@@ -307,7 +307,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		emailTxtfield = new JTextField();
 		emailTxtfield.setForeground(new Color(220, 221, 222));
 		emailTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		emailTxtfield.setBounds(640, 195, 450, 50);
+		emailTxtfield.setBounds(640, 235, 450, 50);
 		emailTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
 		emailTxtfield.setBackground(new Color(56, 58, 65));
 		emailTxtfield.setEnabled(false);
@@ -315,14 +315,14 @@ public class AdminPage extends JFrame implements ActionListener {
 		emailTxtfield.setColumns(10);
 
 		addressLabel = new JLabel("Address");
-		addressLabel.setBounds(100, 280, 70, 25);
+		addressLabel.setBounds(100, 320, 70, 25);
 		addressLabel.setForeground(new Color(220, 221, 222));
 		addressLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		addressTxtfield = new JTextField();
 		addressTxtfield.setForeground(new Color(220, 221, 222));
 		addressTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		addressTxtfield.setBounds(100, 300, 990, 50);
+		addressTxtfield.setBounds(100, 345, 990, 50);
 		addressTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
 		addressTxtfield.setBackground(new Color(56, 58, 65));
 		addressTxtfield.setText("<dynamic>");
@@ -337,7 +337,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeAddressBtn.setColor(new Color(30, 31, 34));
 		changeAddressBtn.setBorderColor(new Color(30, 31, 34));
 		changeAddressBtn.setForeground(new Color(220, 221, 222));
-		changeAddressBtn.setBounds(900, 350, 190, 25);
+		changeAddressBtn.setBounds(900, 395, 190, 25);
 		changeAddressBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changeAddressBtn.setBackground(new Color(30, 31, 34));
 		changeAddressBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
@@ -353,21 +353,21 @@ public class AdminPage extends JFrame implements ActionListener {
 		saveChangesBtn.setRadius(25);
 		saveChangesBtn.setText("Update Profile");
 		saveChangesBtn.setForeground(new Color(220, 221, 222));
-		saveChangesBtn.setBounds(510, 420, 200, 50);
+		saveChangesBtn.setBounds(510, 460, 200, 50);
 		saveChangesBtn.setBorder(null);
 		saveChangesBtn.setBackground(new Color(88, 101, 242));
 		saveChangesBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 24));
 		saveChangesBtn.setFocusable(false);
 
 		contactLabel = new JLabel("Contact");
-		contactLabel.setBounds(100, 170, 100, 25);
+		contactLabel.setBounds(100, 210, 100, 25);
 		contactLabel.setForeground(new Color(220, 221, 222));
 		contactLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		contactTxtfield = new JTextField();
 		contactTxtfield.setForeground(new Color(220, 221, 222));
 		contactTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		contactTxtfield.setBounds(100, 195, 450, 50);
+		contactTxtfield.setBounds(100, 235, 450, 50);
 		contactTxtfield.setText("<dynamic>");
 		contactTxtfield.setEnabled(false);
 		contactTxtfield.setDisabledTextColor(new Color(79, 84, 92));
@@ -382,7 +382,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeContactBtn.setColor(new Color(30, 31, 34));
 		changeContactBtn.setBorderColor(new Color(30, 31, 34));
 		changeContactBtn.setForeground(new Color(220, 221, 222));
-		changeContactBtn.setBounds(360, 245, 190, 25);
+		changeContactBtn.setBounds(360, 285, 190, 25);
 		changeContactBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		changeContactBtn.setFocusable(false);
 		changeContactBtn.addActionListener(this);
