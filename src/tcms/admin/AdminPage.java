@@ -1,7 +1,7 @@
 package tcms.admin;
 
+import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,21 +22,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
+import tcms.custom_gui_components.CustomComponents;
+import tcms.custom_gui_components.CustomJButton;
+import tcms.custom_gui_components.CustomJToggleButton;
 import tcms.custom_gui_components.CustomRoundedPanel;
+import tcms.custom_gui_components.HeaderButton;
 import tcms.custom_gui_components.ModelColor;
 import tcms.users.User;
 import tcms.users.UserManager;
-import java.awt.CardLayout;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import tcms.custom_gui_components.CustomJButton;
-import tcms.custom_gui_components.CustomJToggleButton;
 
 public class AdminPage extends JFrame implements ActionListener {
 
@@ -119,24 +118,11 @@ public class AdminPage extends JFrame implements ActionListener {
 		atcBannerLabel = new JLabel("");
 		atcBannerLabel.setIcon(new ImageIcon(atcBannerImg));
 
-		updateProfileBtn = new CustomJButton();
-		updateProfileBtn.setRadius(25);
-		updateProfileBtn.setIcon(new ImageIcon("src\\tcms\\resources\\profile.png"));
-		updateProfileBtn.setText("<html>\r\n<body>\r\n<p>Update</p>\r\n<p>Profile</p>\r\n</body>\r\n</html>");
-		updateProfileBtn.setBackground(new Color(96, 76, 195));
-		updateProfileBtn.setForeground(new Color(220, 221, 222));
-		updateProfileBtn.setBorder(null);
-		updateProfileBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		updateProfileBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"), "<html>\r\n<body>\r\n<p>Update</p>\r\n<p>Profile</p>\r\n</body>\r\n</html>");
 		updateProfileBtn.addActionListener(this);
-		updateProfileBtn.setColorClick(new Color(60, 69, 165));
-		updateProfileBtn.setColor(new Color(88, 101, 242));
-		updateProfileBtn.setColorOver(new Color(79, 82, 196));
-		updateProfileBtn.setBorderColor(new Color(43, 45, 49));
-		updateProfileBtn.setFocusable(false);
 
-		manageTutorsButton = new CustomJButton();
+		manageTutorsButton = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"), "<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Tutors</p>\r\n</body>\r\n</html>");
 		manageTutorsButton.setRadius(25);
-		manageTutorsButton.setText("<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Tutors</p>\r\n</body>\r\n</html>");
 		manageTutorsButton.addActionListener(this);
 		manageTutorsButton.setIcon(new ImageIcon("src\\tcms\\resources\\tutor.png"));
 		manageTutorsButton.setBackground(new Color(96, 76, 195));
@@ -149,10 +135,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageTutorsButton.setBorderColor(new Color(43, 45, 49));
 		manageTutorsButton.setFocusable(false);
 
-		manageReceptionistsBtn = new CustomJButton();
+		manageReceptionistsBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"), "<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
 		manageReceptionistsBtn.setRadius(25);
-		manageReceptionistsBtn
-				.setText("<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
 		manageReceptionistsBtn.addActionListener(this);
 		manageReceptionistsBtn.setIcon(new ImageIcon("src\\tcms\\resources\\receptionist.png"));
 		manageReceptionistsBtn.setBackground(new Color(96, 76, 195));
@@ -165,10 +149,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageReceptionistsBtn.setBorderColor(new Color(43, 45, 49));
 		manageReceptionistsBtn.setFocusable(false);
 
-		viewIncomeBtn = new CustomJButton();
+		viewIncomeBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"), "<html>\r\n<body>\r\n<p>View</p>\r\n<p>Income</p>\r\n<p>Report</p>\r\n</body>\r\n</html>");
 		viewIncomeBtn.setRadius(25);
-		viewIncomeBtn
-				.setText("<html>\r\n<body>\r\n<p>View</p>\r\n<p>Income</p>\r\n<p>Report</p>\r\n</body>\r\n</html>");
 		viewIncomeBtn.addActionListener(this);
 		viewIncomeBtn.setIcon(new ImageIcon("src\\tcms\\resources\\incomereport.png"));
 		viewIncomeBtn.setBackground(new Color(96, 76, 195));
@@ -184,7 +166,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPanel = new JLayeredPane();
 		contentPanel.setBounds(0, 85, 1186, 628);
 		contentPanel.setBorder(null);
-		contentPanel.setBackground(new Color(27, 26, 85));
+		contentPanel.setBackground(new Color(44, 47, 51));
 
 		// UPDATE PROFILE PANEL
 		// -----------------------------------------------------------------------
@@ -212,20 +194,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		passwordLabel.setForeground(new Color(220, 221, 222));
 		passwordLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
-		usernameTxtfield = new JTextField();
-		usernameTxtfield.setForeground(new Color(220, 221, 222));
-		usernameTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		usernameTxtfield = CustomComponents.createJTextField("<dynamic>");
 		usernameTxtfield.setBounds(100, 125, 450, 50);
-		usernameTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
-		usernameTxtfield.setBackground(new Color(56, 58, 65));
-		usernameTxtfield.setEnabled(false);
-		usernameTxtfield.setDisabledTextColor(new Color(79, 84, 92));
-		usernameTxtfield.setColumns(10);
 
 		passwordField = new JPasswordField();
+		passwordField.setBounds(640, 125, 450, 50);
 		passwordField.setForeground(new Color(220, 221, 222));
 		passwordField.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		passwordField.setBounds(640, 125, 450, 50);
 		passwordField.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
 		passwordField.setBackground(new Color(56, 58, 65));
 		passwordField.setEnabled(false);
@@ -233,14 +208,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		passwordField.setEchoChar('*');
 
 		changeUsernameBtn = new CustomJButton();
+		changeUsernameBtn.setBounds(360, 175, 190, 25);
 		changeUsernameBtn.setText("Change Username");
 		changeUsernameBtn.setColorOver(new Color(30, 30, 34));
 		changeUsernameBtn.setColorClick(new Color(19, 19, 21));
 		changeUsernameBtn.setColor(new Color(30, 31, 34));
 		changeUsernameBtn.setBorderColor(new Color(30, 31, 34));
 		changeUsernameBtn.setForeground(new Color(220, 221, 222));
-		changeUsernameBtn.setLocation(360, 175);
-		changeUsernameBtn.setSize(new Dimension(190, 25));
 		changeUsernameBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changeUsernameBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		changeUsernameBtn.setBackground(new Color(30, 31, 34));
@@ -248,13 +222,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeUsernameBtn.setFocusable(false);
 
 		changePasswordBtn = new CustomJButton();
+		changePasswordBtn.setBounds(900, 175, 190, 25);
 		changePasswordBtn.setText("Change Password");
 		changePasswordBtn.setColorOver(new Color(30, 30, 34));
 		changePasswordBtn.setColorClick(new Color(19, 19, 21));
 		changePasswordBtn.setColor(new Color(30, 31, 34));
 		changePasswordBtn.setBorderColor(new Color(30, 31, 34));
 		changePasswordBtn.setForeground(new Color(220, 221, 222));
-		changePasswordBtn.setBounds(900, 175, 190, 25);
 		changePasswordBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changePasswordBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		changePasswordBtn.setBackground(new Color(30, 31, 34));
@@ -267,13 +241,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		emailLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
 		changeEmailBtn = new CustomJButton();
+		changeEmailBtn.setBounds(900, 285, 190, 25);
 		changeEmailBtn.setText("Change E-mail");
 		changeEmailBtn.setColorOver(new Color(30, 30, 34));
 		changeEmailBtn.setColorClick(new Color(19, 19, 21));
 		changeEmailBtn.setColor(new Color(30, 31, 34));
 		changeEmailBtn.setBorderColor(new Color(30, 31, 34));
 		changeEmailBtn.setForeground(new Color(220, 221, 222));
-		changeEmailBtn.setBounds(900, 285, 190, 25);
 		changeEmailBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changeEmailBtn.setBackground(new Color(30, 31, 34));
 		changeEmailBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
@@ -281,6 +255,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeEmailBtn.setFocusable(false);
 
 		showPasswordToggleBtn = new CustomJToggleButton();
+		showPasswordToggleBtn.setBounds(640, 175, 120, 25);
 		showPasswordToggleBtn.setBackgroundColor(new Color(30, 31, 34));
 		showPasswordToggleBtn.setBorderColor(new Color(30, 31, 34));
 		showPasswordToggleBtn.setHoverColor(new Color(37, 38, 41));
@@ -288,7 +263,6 @@ public class AdminPage extends JFrame implements ActionListener {
 		showPasswordToggleBtn.setCornerRadius(0);
 		showPasswordToggleBtn.setText("Show Password");
 		showPasswordToggleBtn.setForeground(new Color(220, 221, 222));
-		showPasswordToggleBtn.setBounds(640, 175, 120, 25);
 		showPasswordToggleBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
 		showPasswordToggleBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		showPasswordToggleBtn.setBackground(new Color(30, 31, 34));
@@ -304,40 +278,25 @@ public class AdminPage extends JFrame implements ActionListener {
 		});
 		showPasswordToggleBtn.setFocusable(false);
 
-		emailTxtfield = new JTextField();
-		emailTxtfield.setForeground(new Color(220, 221, 222));
-		emailTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		emailTxtfield = CustomComponents.createJTextField("dynamic");
 		emailTxtfield.setBounds(640, 235, 450, 50);
-		emailTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
-		emailTxtfield.setBackground(new Color(56, 58, 65));
-		emailTxtfield.setEnabled(false);
-		emailTxtfield.setDisabledTextColor(new Color(79, 84, 92));
-		emailTxtfield.setColumns(10);
 
 		addressLabel = new JLabel("Address");
 		addressLabel.setBounds(100, 320, 70, 25);
 		addressLabel.setForeground(new Color(220, 221, 222));
 		addressLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
-		addressTxtfield = new JTextField();
-		addressTxtfield.setForeground(new Color(220, 221, 222));
-		addressTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		addressTxtfield = CustomComponents.createJTextField("<dynamic>");
 		addressTxtfield.setBounds(100, 345, 990, 50);
-		addressTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
-		addressTxtfield.setBackground(new Color(56, 58, 65));
-		addressTxtfield.setText("<dynamic>");
-		addressTxtfield.setEnabled(false);
-		addressTxtfield.setDisabledTextColor(new Color(79, 84, 92));
-		addressTxtfield.setColumns(10);
 
 		changeAddressBtn = new CustomJButton();
+		changeAddressBtn.setBounds(900, 395, 190, 25);
 		changeAddressBtn.setText("Change Address");
 		changeAddressBtn.setColorOver(new Color(30, 30, 34));
 		changeAddressBtn.setColorClick(new Color(19, 19, 21));
 		changeAddressBtn.setColor(new Color(30, 31, 34));
 		changeAddressBtn.setBorderColor(new Color(30, 31, 34));
 		changeAddressBtn.setForeground(new Color(220, 221, 222));
-		changeAddressBtn.setBounds(900, 395, 190, 25);
 		changeAddressBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changeAddressBtn.setBackground(new Color(30, 31, 34));
 		changeAddressBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
@@ -345,6 +304,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeAddressBtn.setFocusable(false);
 
 		saveChangesBtn = new CustomJButton();
+		saveChangesBtn.setBounds(510, 460, 200, 50);
 		saveChangesBtn.addActionListener(this);
 		saveChangesBtn.setColorOver(new Color(92, 141, 241));
 		saveChangesBtn.setColorClick(new Color(96, 76, 195));
@@ -353,7 +313,6 @@ public class AdminPage extends JFrame implements ActionListener {
 		saveChangesBtn.setRadius(25);
 		saveChangesBtn.setText("Update Profile");
 		saveChangesBtn.setForeground(new Color(220, 221, 222));
-		saveChangesBtn.setBounds(510, 460, 200, 50);
 		saveChangesBtn.setBorder(null);
 		saveChangesBtn.setBackground(new Color(88, 101, 242));
 		saveChangesBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 24));
@@ -364,33 +323,24 @@ public class AdminPage extends JFrame implements ActionListener {
 		contactLabel.setForeground(new Color(220, 221, 222));
 		contactLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 16));
 
-		contactTxtfield = new JTextField();
-		contactTxtfield.setForeground(new Color(220, 221, 222));
-		contactTxtfield.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		contactTxtfield = CustomComponents.createJTextField("<dynamic>");
 		contactTxtfield.setBounds(100, 235, 450, 50);
-		contactTxtfield.setText("<dynamic>");
-		contactTxtfield.setEnabled(false);
-		contactTxtfield.setDisabledTextColor(new Color(79, 84, 92));
-		contactTxtfield.setColumns(10);
-		contactTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 31, 34)));
-		contactTxtfield.setBackground(new Color(56, 58, 65));
 
 		changeContactBtn = new CustomJButton();
+		changeContactBtn.setBounds(360, 285, 190, 25);
 		changeContactBtn.setText("Change Contact");
 		changeContactBtn.setColorOver(new Color(30, 30, 34));
 		changeContactBtn.setColorClick(new Color(19, 19, 21));
 		changeContactBtn.setColor(new Color(30, 31, 34));
 		changeContactBtn.setBorderColor(new Color(30, 31, 34));
 		changeContactBtn.setForeground(new Color(220, 221, 222));
-		changeContactBtn.setBounds(360, 285, 190, 25);
 		changeContactBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
 		changeContactBtn.setFocusable(false);
 		changeContactBtn.addActionListener(this);
 		changeContactBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changeContactBtn.setBackground(new Color(30, 31, 34));
-		
-		
 		updateProfilePanel.setLayout(null);
+		
 		updateProfilePanel.add(usernameLabel);
 		updateProfilePanel.add(passwordLabel);
 		updateProfilePanel.add(contactLabel);
@@ -417,7 +367,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		manageReceptionistPanel = new JPanel();
 		contentPanel.setLayer(manageReceptionistPanel, 2);
-		manageReceptionistPanel.setBackground(new Color(83, 92, 145));
+		manageReceptionistPanel.setBackground(new Color(44, 47, 51));
 		manageReceptionistPanel.setVisible(false);
 		manageReceptionistPanel.setBorder(null);
 		contentPanel.add(manageReceptionistPanel, "name_164342236052900");
@@ -426,8 +376,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		ManageReceptionistsLabel = new JLabel("Manage Receptionists");
 		ManageReceptionistsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ManageReceptionistsLabel.setForeground(new Color(255, 255, 255));
-		ManageReceptionistsLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
-		ManageReceptionistsLabel.setBounds(440, 10, 286, 41);
+		ManageReceptionistsLabel.setFont(new Font("Arial Black", Font.BOLD, 32));
+		ManageReceptionistsLabel.setBounds(375, 10, 450, 60);
 		manageReceptionistPanel.add(ManageReceptionistsLabel);
 
 		// VIEW MONTHLY INCOME PANEL ------------------------------------------
