@@ -23,8 +23,8 @@ import javax.swing.border.SoftBevelBorder;
 import tcms.admin.AdminManager;
 import tcms.admin.AdminPage;
 import tcms.receptionists.ReceptionistManager;
-import tcms.students.StudentDashboard2;
 import tcms.students.StudentManager;
+import tcms.students.TestDashboard;
 import tcms.tutors.TutorManager;
 import tcms.users.User;
 import tcms.users.UserManager;
@@ -42,7 +42,6 @@ public class LoginPage extends JFrame implements ActionListener {
 	private ReceptionistManager receptionistManager = new ReceptionistManager();
 	private TutorManager tutorManager = new TutorManager();
 	private StudentManager studentManager = new StudentManager();
-	
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame();
@@ -207,12 +206,11 @@ public class LoginPage extends JFrame implements ActionListener {
 		tutorManager.loadTutors(tutorFilePath);
 		studentManager.loadStudents(studentFilePath);
 		receptionistManager.loadReceptionists(receptionistFilePath);
-		
+
 		adminManager.updateAdminsInCSV();
 		tutorManager.updateTutorsInCSV();
 		receptionistManager.updateReceptionistInCSV();
 		studentManager.updateStudentsInCSV();
-		
 
 		// Create a list to store the user data
 		List<User> users = userManager.getAllUsers();
@@ -248,17 +246,18 @@ public class LoginPage extends JFrame implements ActionListener {
 			} else {
 				User user = userManager.findUserByUsername(username);
 
-			if (!checkPassword(username, password)) {
-				passwordErrorLabel.setVisible(true);
-				usernameErrorLabel.setVisible(false);
-				loginAttemptLabel.setText("Attempts left:");
-				loginAttemptLabel.setVisible(true);
-				attemptsLeftLabel.setVisible(true);
-				checkLoginAttempts(user);
-				passwordField.setText("");
-			} else {
-				selectRoleLoginPage(user);
-			}}
+				if (!checkPassword(username, password)) {
+					passwordErrorLabel.setVisible(true);
+					usernameErrorLabel.setVisible(false);
+					loginAttemptLabel.setText("Attempts left:");
+					loginAttemptLabel.setVisible(true);
+					attemptsLeftLabel.setVisible(true);
+					checkLoginAttempts(user);
+					passwordField.setText("");
+				} else {
+					selectRoleLoginPage(user);
+				}
+			}
 		}
 	}
 
@@ -305,7 +304,7 @@ public class LoginPage extends JFrame implements ActionListener {
 			// to-do
 		case "student":
 			userManager.saveUsers(userFilePath);
-			new StudentDashboard2(user);
+			new TestDashboard(user);
 			frame.dispose();
 			break;
 		}
