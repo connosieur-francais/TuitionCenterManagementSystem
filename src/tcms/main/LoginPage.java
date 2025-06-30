@@ -23,7 +23,7 @@ import javax.swing.border.SoftBevelBorder;
 import tcms.admin.AdminManager;
 import tcms.admin.AdminPage;
 import tcms.receptionists.ReceptionistManager;
-import tcms.students.StudentDashboard2;
+import tcms.students.StudentDashboard;
 import tcms.students.StudentManager;
 import tcms.tutors.TutorManager;
 import tcms.users.User;
@@ -305,7 +305,7 @@ public class LoginPage extends JFrame implements ActionListener {
 			// to-do
 		case "student":
 			userManager.saveUsers(userFilePath);
-			new StudentDashboard2(user);
+			new StudentDashboard(user);
 			frame.dispose();
 			break;
 		}
