@@ -50,7 +50,6 @@ public class AdminPage extends JFrame implements ActionListener {
 	private String userCSVFile = "src//users.csv";
 
 	private static final long serialVersionUID = 1L;
-	private JFrame frame = new JFrame();
 	private CustomRoundedPanel contentPane;
 	private JPanel headerPanel;
 	private CustomJButton updateProfileBtn, manageTutorsButton;
@@ -99,17 +98,17 @@ public class AdminPage extends JFrame implements ActionListener {
 		adminManager.saveAdmins(adminCSVFile);
 
 		admin = adminManager.findAdminByUserID(user_id);
-		frame.setResizable(false);
-		frame.setTitle("Admin Panel");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 1200, 750);
+		setResizable(false);
+		setTitle("Admin Panel");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1200, 750);
 		contentPane = new CustomRoundedPanel();
 		contentPane.addColor(new ModelColor(Color.decode("#DFD9FF"), 0f), new ModelColor(Color.decode("#9F75FF"), 0.5f),
 				new ModelColor(Color.decode("#4D9AFF"), 1f));
 		contentPane.setBackground(Color.white);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		frame.setContentPane(contentPane);
+		setContentPane(contentPane);
 
 		headerPanel = new JPanel();
 		headerPanel.setBounds(0, 0, 1186, 86);
@@ -474,7 +473,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		headerPanel.setLayout(gl_headerPanel);
 		contentPane.add(contentPanel);
 
-		frame.setVisible(true);
+		setVisible(true);
 	}
 
 	@Override
