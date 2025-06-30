@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 
 public final class HeaderButton {
-	/**
-	 * This class a helper class that CREATES a Customized JButton for the
-	 *  AdminPage.java file with customized properties and preset colors.
-	 * 	Copyright @author Eason Wong
+	/**DO NOT REMOVE THIS COMMENT !!!
+	 * @wbp.factory
+	 * @wbp.factory.parameter.source icon new javax.swing.ImageIcon("src\\tcms\\resources\\profile.png")
+	 * @wbp.factory.parameter.source text "<html>\r\n<body>\r\n<p>Update</p>\r\n<p>Profile</p>\r\n</body>\r\n</html>"
 	 */
 	public static CustomJButton createHeaderButton(Icon icon, String text) {
 		CustomJButton customJButton = new CustomJButton();

@@ -5,7 +5,7 @@ import java.awt.Font;
 import javax.swing.border.MatteBorder;
 
 public final class CustomComponents {
-	/**
+	/** DO NOT REMOVE THIS COMMENT !!!
 	 * @wbp.factory
 	 * @wbp.factory.parameter.source text contact
 	 */

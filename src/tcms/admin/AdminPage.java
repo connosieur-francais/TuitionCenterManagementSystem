@@ -98,17 +98,17 @@ public class AdminPage extends JFrame implements ActionListener {
 		adminManager.saveAdmins(adminCSVFile);
 
 		admin = adminManager.findAdminByUserID(user_id);
-		setResizable(false);
-		setTitle("Admin Panel");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 750);
+		this.setResizable(false);
+		this.setTitle("Admin Panel");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(100, 100, 1200, 750);
 		contentPane = new CustomRoundedPanel();
 		contentPane.addColor(new ModelColor(Color.decode("#DFD9FF"), 0f), new ModelColor(Color.decode("#9F75FF"), 0.5f),
 				new ModelColor(Color.decode("#4D9AFF"), 1f));
 		contentPane.setBackground(Color.white);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
+		this.setContentPane(contentPane);
 
 		headerPanel = new JPanel();
 		headerPanel.setBounds(0, 0, 1186, 86);
@@ -473,7 +473,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		headerPanel.setLayout(gl_headerPanel);
 		contentPane.add(contentPanel);
 
-		setVisible(true);
+		this.setVisible(true);
 	}
 
 	@Override
