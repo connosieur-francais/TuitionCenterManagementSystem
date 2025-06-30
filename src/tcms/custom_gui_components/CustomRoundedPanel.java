@@ -70,7 +70,7 @@ public class CustomRoundedPanel extends JPanel {
 				colorArr[i] = colors.get(i).getColor();
 				posArr[i] = colors.get(i).getPosition();
 			}
-			LinearGradientPaint gradient = new LinearGradientPaint(0, 0, width, 0, posArr, colorArr);
+			LinearGradientPaint gradient = new LinearGradientPaint(0, 0, width, height, posArr, colorArr);
 			g2.setPaint(gradient);
 		} else {
 			g2.setColor(getBackground());
