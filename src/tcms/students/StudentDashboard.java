@@ -18,11 +18,12 @@ public class StudentDashboard extends JFrame {
     public StudentDashboard(String studentName, String studentID) {
         this.studentName = studentName;
         this.studentID = studentID;
+        
+        setResizable(false);
+        setSize(1200,750);
 
         setTitle("Student Dashboard");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(900, 600);
-        setLocationRelativeTo(null);
 
         Color darkGrey = new Color(34, 34, 34);
         Color blueAcc = new Color(70, 130, 180);
