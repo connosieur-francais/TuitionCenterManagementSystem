@@ -56,6 +56,7 @@ public class AdminPage extends JFrame implements ActionListener {
 	private CustomJButton manageReceptionistsBtn, viewIncomeBtn;
 	private JLabel atcBannerLabel;
 	private JLayeredPane contentPanel;
+	private CardLayout cl;
 
 	// UPDATE PROFILE PAGE ------------------------
 	private JPanel updateProfilePanel;
@@ -63,7 +64,7 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JLabel passwordLabel, emailLabel, addressLabel, contactLabel;
 	private JTextField usernameTxtfield, emailTxtfield;
 	private JPasswordField passwordField;
-	private CustomJButton saveChangesBtn;
+	private CustomJButton saveChangesBtn, returnBtn;
 	private CustomJButton changeUsernameBtn, changePasswordBtn, changeEmailBtn, changeAddressBtn, changeContactBtn;
 	private CustomJToggleButton showPasswordToggleBtn;
 	private JTextField addressTxtfield;
@@ -82,6 +83,7 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JComboBox<String> monthSelector;
 	private JButton generateReportBtn;
 	private JTextField contactTxtfield;
+	private landingPagePanel landingPagePanel;
 
 	/**
 	 * Create the frame.
@@ -117,10 +119,12 @@ public class AdminPage extends JFrame implements ActionListener {
 		atcBannerLabel = new JLabel("");
 		atcBannerLabel.setIcon(new ImageIcon(atcBannerImg));
 
-		updateProfileBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"), "<html>\r\n<body>\r\n<p>Update</p>\r\n<p>Profile</p>\r\n</body>\r\n</html>");
+		updateProfileBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"),
+				"<html>\r\n<body>\r\n<p>Update</p>\r\n<p>Profile</p>\r\n</body>\r\n</html>");
 		updateProfileBtn.addActionListener(this);
 
-		manageTutorsButton = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"), "<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Tutors</p>\r\n</body>\r\n</html>");
+		manageTutorsButton = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"),
+				"<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Tutors</p>\r\n</body>\r\n</html>");
 		manageTutorsButton.setRadius(25);
 		manageTutorsButton.addActionListener(this);
 		manageTutorsButton.setIcon(new ImageIcon("src\\tcms\\resources\\tutor.png"));
@@ -134,7 +138,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageTutorsButton.setBorderColor(new Color(43, 45, 49));
 		manageTutorsButton.setFocusable(false);
 
-		manageReceptionistsBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"), "<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
+		manageReceptionistsBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"),
+				"<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
 		manageReceptionistsBtn.setRadius(25);
 		manageReceptionistsBtn.addActionListener(this);
 		manageReceptionistsBtn.setIcon(new ImageIcon("src\\tcms\\resources\\receptionist.png"));
@@ -148,7 +153,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageReceptionistsBtn.setBorderColor(new Color(43, 45, 49));
 		manageReceptionistsBtn.setFocusable(false);
 
-		viewIncomeBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"), "<html>\r\n<body>\r\n<p>View</p>\r\n<p>Income</p>\r\n<p>Report</p>\r\n</body>\r\n</html>");
+		viewIncomeBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"),
+				"<html>\r\n<body>\r\n<p>View</p>\r\n<p>Income</p>\r\n<p>Report</p>\r\n</body>\r\n</html>");
 		viewIncomeBtn.setRadius(25);
 		viewIncomeBtn.addActionListener(this);
 		viewIncomeBtn.setIcon(new ImageIcon("src\\tcms\\resources\\incomereport.png"));
@@ -166,16 +172,17 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPanel.setBounds(0, 85, 1186, 628);
 		contentPanel.setBorder(null);
 		contentPanel.setBackground(new Color(44, 47, 51));
+		contentPanel.setLayout(new CardLayout(0, 0));
 
 		// UPDATE PROFILE PANEL
 		// -----------------------------------------------------------------------
+
 		updateProfilePanel = new JPanel();
 		updateProfilePanel.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		contentPanel.setLayer(updateProfilePanel, 1);
 		updateProfilePanel.setBorder(null);
 		updateProfilePanel.setBackground(new Color(44, 47, 51));
-		contentPanel.setLayout(new CardLayout(0, 0));
-		contentPanel.add(updateProfilePanel, "name_164342192424500");
+		contentPanel.add(updateProfilePanel, "Update Profile");
 
 		profileSettingsLabel = new JLabel("Update Profile");
 		profileSettingsLabel.setBounds(440, 25, 300, 40);
@@ -339,7 +346,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		changeContactBtn.setBorder(new LineBorder(new Color(30, 31, 34), 2));
 		changeContactBtn.setBackground(new Color(30, 31, 34));
 		updateProfilePanel.setLayout(null);
-		
+
 		updateProfilePanel.add(usernameLabel);
 		updateProfilePanel.add(passwordLabel);
 		updateProfilePanel.add(contactLabel);
@@ -359,17 +366,22 @@ public class AdminPage extends JFrame implements ActionListener {
 		updateProfilePanel.add(saveChangesBtn);
 		updateProfilePanel.add(profileSettingsLabel);
 
+		returnBtn = CustomComponents.createReturnBtn();
+		returnBtn.addActionListener(this);
+		returnBtn.setBounds(10, 10, 150, 30);
+		updateProfilePanel.add(returnBtn);
+
 		updateProfilePanelInformation(user, admin); // Update the information in txtfields with logged in user's
 													// information
 
 		// MANAGE RECEPTIONISTS PANEL
 
 		manageReceptionistPanel = new JPanel();
-		contentPanel.setLayer(manageReceptionistPanel, 2);
+		contentPanel.setLayer(manageReceptionistPanel, 3);
 		manageReceptionistPanel.setBackground(new Color(44, 47, 51));
 		manageReceptionistPanel.setVisible(false);
 		manageReceptionistPanel.setBorder(null);
-		contentPanel.add(manageReceptionistPanel, "name_164342236052900");
+		contentPanel.add(manageReceptionistPanel, "Manage Receptionists");
 		manageReceptionistPanel.setLayout(null);
 
 		ManageReceptionistsLabel = new JLabel("Manage Receptionists");
@@ -387,8 +399,8 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewMonthlyIncomePanel.setBorder(null);
 		viewMonthlyIncomePanel.setBackground(new Color(83, 92, 145));
 		viewMonthlyIncomePanel.setLayout(null);
-		contentPanel.setLayer(viewMonthlyIncomePanel, 4);
-		contentPanel.add(viewMonthlyIncomePanel, "name_164342258048700");
+		contentPanel.setLayer(viewMonthlyIncomePanel, 5);
+		contentPanel.add(viewMonthlyIncomePanel, "View Monthly Income");
 
 		viewMonthlyIncomeLabel = new JLabel("View Monthly Income Report");
 		viewMonthlyIncomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -429,11 +441,11 @@ public class AdminPage extends JFrame implements ActionListener {
 		viewMonthlyIncomePanel.add(generateReportBtn);
 
 		manageTutorsPanel = new JPanel();
-		contentPanel.setLayer(manageTutorsPanel, 3);
+		contentPanel.setLayer(manageTutorsPanel, 4);
 		manageTutorsPanel.setBorder(null);
 		manageTutorsPanel.setBackground(new Color(83, 92, 145));
 		manageTutorsPanel.setVisible(false);
-		contentPanel.add(manageTutorsPanel, "name_164342281094100");
+		contentPanel.add(manageTutorsPanel, "Manage Tutors");
 		manageTutorsPanel.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("MANAGE TUTORS");
@@ -473,24 +485,29 @@ public class AdminPage extends JFrame implements ActionListener {
 		headerPanel.setLayout(gl_headerPanel);
 		contentPane.add(contentPanel);
 
+		landingPagePanel = new landingPagePanel(userManager, admin, user);
+		contentPanel.setLayer(landingPagePanel, 2);
+		landingPagePanel.setBackground(new Color(44, 47, 51));
+		contentPanel.add(landingPagePanel, "Landing Page");
+		cl = (CardLayout) contentPanel.getLayout();
+		cl.show(contentPanel, "Landing Page"); // show the landing page as default
+		landingPagePanel.setLayout(null);
+
 		this.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		// RETURN TO DASHBOARD SPECIAL
+
+		if (e.getSource() == returnBtn) {
+			cl.show(contentPanel, "Landing Page");
+		}
+
 		// HEADER PANEL --------------------------------
 		if (e.getSource() == updateProfileBtn) {
-			updateProfilePanel.setVisible(true);
-			manageTutorsPanel.setVisible(false);
-			manageReceptionistPanel.setVisible(false);
-			viewMonthlyIncomePanel.setVisible(false);
-
-			contentPanel.setLayer(updateProfilePanel, 1);
-			contentPanel.setLayer(manageReceptionistPanel, 0);
-			contentPanel.setLayer(viewMonthlyIncomePanel, 0);
-			contentPanel.setLayer(manageTutorsPanel, 0);
-
+			cl.show(contentPanel, "Update Profile");
 			updateProfileBtn.setEnabled(false);
 			manageTutorsButton.setEnabled(true);
 			manageReceptionistsBtn.setEnabled(true);
@@ -499,15 +516,7 @@ public class AdminPage extends JFrame implements ActionListener {
 			System.out.println("Opened Update Profile Panel");
 		}
 		if (e.getSource() == manageTutorsButton) {
-			manageTutorsPanel.setVisible(true);
-			updateProfilePanel.setVisible(false);
-			manageReceptionistPanel.setVisible(false);
-			viewMonthlyIncomePanel.setVisible(false);
-
-			contentPanel.setLayer(manageTutorsPanel, 1);
-			contentPanel.setLayer(updateProfilePanel, 0);
-			contentPanel.setLayer(manageReceptionistPanel, 0);
-			contentPanel.setLayer(viewMonthlyIncomePanel, 0);
+			cl.show(contentPanel, "Manage Tutors");
 
 			manageTutorsButton.setEnabled(false);
 			updateProfileBtn.setEnabled(true);
@@ -519,15 +528,7 @@ public class AdminPage extends JFrame implements ActionListener {
 			System.out.println("Opened Manage Tutors Panel");
 		}
 		if (e.getSource() == manageReceptionistsBtn) {
-			manageReceptionistPanel.setVisible(true);
-			viewMonthlyIncomePanel.setVisible(false);
-			updateProfilePanel.setVisible(false);
-			manageTutorsPanel.setVisible(false);
-
-			contentPanel.setLayer(manageReceptionistPanel, 1);
-			contentPanel.setLayer(updateProfilePanel, 0);
-			contentPanel.setLayer(viewMonthlyIncomePanel, 0);
-			contentPanel.setLayer(manageTutorsPanel, 0);
+			cl.show(contentPanel, "Manage Receptionists");
 
 			manageReceptionistsBtn.setEnabled(false);
 			updateProfileBtn.setEnabled(true);
@@ -539,16 +540,7 @@ public class AdminPage extends JFrame implements ActionListener {
 			System.out.println("Opened Manage Receptionists Panel");
 		}
 		if (e.getSource() == viewIncomeBtn) {
-			viewMonthlyIncomePanel.setVisible(true);
-			manageReceptionistPanel.setVisible(false);
-			updateProfilePanel.setVisible(false);
-			manageTutorsPanel.setVisible(false);
-
-			viewIncomeBtn.setEnabled(false);
-			contentPanel.setLayer(viewMonthlyIncomePanel, 1);
-			contentPanel.setLayer(updateProfilePanel, 0);
-			contentPanel.setLayer(manageReceptionistPanel, 0);
-			contentPanel.setLayer(manageTutorsPanel, 0);
+			cl.show(contentPanel, "View Monthly Income");
 
 			viewIncomeBtn.setEnabled(false);
 			updateProfileBtn.setEnabled(true);

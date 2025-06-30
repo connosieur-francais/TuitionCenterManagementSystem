@@ -21,4 +21,22 @@ public final class CustomComponents {
 		textField.setBackground(new Color(56, 58, 65));
 		return textField;
 	}
+	/**
+	 * @wbp.factory
+	 */
+	public static CustomJButton createReturnBtn() {
+		CustomJButton customJButton = new CustomJButton();
+		customJButton.setRadius(15);
+		customJButton.setText("<- Return to dashboard");
+		customJButton.setBackground(new Color(96, 76, 195));
+		customJButton.setForeground(new Color(220, 221, 222));
+		customJButton.setBorder(null);
+		customJButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
+		customJButton.setColorClick(new Color(60, 69, 165));
+		customJButton.setColor(new Color(88, 101, 242));
+		customJButton.setColorOver(new Color(79, 82, 196));
+		customJButton.setBorderColor(new Color(43, 45, 49));
+		customJButton.setFocusPainted(false);
+		return customJButton;
+	}
 }
