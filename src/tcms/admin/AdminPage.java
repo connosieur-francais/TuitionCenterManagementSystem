@@ -150,7 +150,8 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		manageReceptionistsBtn = new CustomJButton();
 		manageReceptionistsBtn.setRadius(25);
-		manageReceptionistsBtn.setText("<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
+		manageReceptionistsBtn
+				.setText("<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
 		manageReceptionistsBtn.addActionListener(this);
 		manageReceptionistsBtn.setIcon(new ImageIcon("src\\tcms\\resources\\receptionist.png"));
 		manageReceptionistsBtn.setBackground(new Color(96, 76, 195));
@@ -165,7 +166,8 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		viewIncomeBtn = new CustomJButton();
 		viewIncomeBtn.setRadius(25);
-		viewIncomeBtn.setText("<html>\r\n<body>\r\n<p>View</p>\r\n<p>Income</p>\r\n<p>Report</p>\r\n</body>\r\n</html>");
+		viewIncomeBtn
+				.setText("<html>\r\n<body>\r\n<p>View</p>\r\n<p>Income</p>\r\n<p>Report</p>\r\n</body>\r\n</html>");
 		viewIncomeBtn.addActionListener(this);
 		viewIncomeBtn.setIcon(new ImageIcon("src\\tcms\\resources\\incomereport.png"));
 		viewIncomeBtn.setBackground(new Color(96, 76, 195));
@@ -459,36 +461,32 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		contentPane.add(headerPanel);
 		GroupLayout gl_headerPanel = new GroupLayout(headerPanel);
-		gl_headerPanel.setHorizontalGroup(
-			gl_headerPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_headerPanel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(atcBannerLabel, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(updateProfileBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(manageTutorsButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(manageReceptionistsBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(viewIncomeBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_headerPanel.setVerticalGroup(
-			gl_headerPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_headerPanel.createSequentialGroup()
-					.addGap(10)
-					.addGroup(gl_headerPanel.createParallelGroup(Alignment.LEADING, false)
+		gl_headerPanel.setHorizontalGroup(gl_headerPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_headerPanel
+				.createSequentialGroup().addContainerGap()
+				.addComponent(atcBannerLabel, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addComponent(updateProfileBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE).addGap(30)
+				.addComponent(manageTutorsButton, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+				.addGap(30)
+				.addComponent(manageReceptionistsBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+				.addGap(30).addComponent(viewIncomeBtn, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)));
+		gl_headerPanel.setVerticalGroup(gl_headerPanel.createParallelGroup(Alignment.LEADING).addGroup(gl_headerPanel
+				.createSequentialGroup().addGap(10)
+				.addGroup(gl_headerPanel.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_headerPanel.createSequentialGroup()
-							.addComponent(atcBannerLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addContainerGap())
-						.addGroup(gl_headerPanel.createSequentialGroup()
-							.addGroup(gl_headerPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(manageTutorsButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-								.addComponent(manageReceptionistsBtn, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+								.addComponent(atcBannerLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addContainerGap())
+						.addGroup(gl_headerPanel.createSequentialGroup().addGroup(gl_headerPanel
+								.createParallelGroup(Alignment.LEADING)
+								.addComponent(manageTutorsButton, GroupLayout.PREFERRED_SIZE, 60,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(manageReceptionistsBtn, GroupLayout.PREFERRED_SIZE, 60,
+										GroupLayout.PREFERRED_SIZE)
 								.addComponent(viewIncomeBtn, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-								.addComponent(updateProfileBtn, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
-							.addGap(16))))
-		);
+								.addComponent(updateProfileBtn, GroupLayout.PREFERRED_SIZE, 60,
+										GroupLayout.PREFERRED_SIZE))
+								.addGap(16)))));
 		headerPanel.setLayout(gl_headerPanel);
 		contentPane.add(contentPanel);
 
