@@ -38,8 +38,7 @@ public class StudentDashboard extends JFrame {
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         //LEFt PROFILE PICTURE
-        File imgFile = new File("data/ProfilePicture.jpg");
-        ImageIcon origIcon = new ImageIcon(imgFile.getAbsolutePath());
+        ImageIcon origIcon = new ImageIcon("src\\tcms\\resources\\ProfilePicture.jpg");
         Image scaledImg = origIcon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
         JLabel picLabel = new JLabel(new ImageIcon(scaledImg));
         picLabel.setBorder(BorderFactory.createLineBorder(blueAcc, 2));
@@ -84,9 +83,9 @@ public class StudentDashboard extends JFrame {
         whatsNewPan.setPreferredSize(new Dimension(300, 300));
 
         String[] imagePaths = {
-            "data/ScheduleEDITED.jpg",
-            "data/briefingEDITED.png",
-            "data/enrollEDITED.jpg"
+            "src\\tcms\\resources\\ScheduleEDITED.jpg",
+            "src\\tcms\\resources\\briefingEDITED.png",
+            "src\\tcms\\resources\\enrollEDITED.jpg"
         };
 
         for (int i = 0; i < imagePaths.length; i++) {
@@ -96,7 +95,7 @@ public class StudentDashboard extends JFrame {
             whatsNewPan.add(imageLabel, "card" + i);
         }
 
-        Timer autoSlide = new Timer(6000, new ActionListener() {
+        Timer autoSlide = new Timer(4000, new ActionListener() {
             int currentIndex = 0;
 
             public void actionPerformed(ActionEvent e) {
