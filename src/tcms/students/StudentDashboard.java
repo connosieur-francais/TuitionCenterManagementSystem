@@ -191,9 +191,6 @@ public class StudentDashboard extends JFrame implements ActionListener {
 		nextBtn.setFocusPainted(false);
 		carouselHolderPanel.add(nextBtn, BorderLayout.EAST);
 
-		previousBtn.addActionListener(e -> cardLayout.previous(whatsNewPanel));
-		nextBtn.addActionListener(e -> cardLayout.next(whatsNewPanel));
-
 		buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(34, 34, 34));
 		buttonPanel.setBounds(100, 380, 1000, 300);

@@ -23,12 +23,9 @@ import javax.swing.border.SoftBevelBorder;
 import tcms.admin.AdminManager;
 import tcms.admin.AdminPage;
 import tcms.receptionists.ReceptionistManager;
-<<<<<<< HEAD
 import tcms.students.StudentDashboard;
-=======
->>>>>>> branch 'main' of https://github.com/connosieur-francais/TuitionCenterManagementSystem.git
+//github.com/connosieur-francais/TuitionCenterManagementSystem.git
 import tcms.students.StudentManager;
-import tcms.students.TestDashboard;
 import tcms.tutors.TutorManager;
 import tcms.users.User;
 import tcms.users.UserManager;
@@ -308,11 +305,7 @@ public class LoginPage extends JFrame implements ActionListener {
 			// to-do
 		case "student":
 			userManager.saveUsers(userFilePath);
-<<<<<<< HEAD
 			new StudentDashboard(user);
-=======
-			new TestDashboard(user);
->>>>>>> branch 'main' of https://github.com/connosieur-francais/TuitionCenterManagementSystem.git
 			frame.dispose();
 			break;
 		}
