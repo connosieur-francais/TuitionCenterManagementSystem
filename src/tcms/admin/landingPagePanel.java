@@ -8,17 +8,23 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -26,16 +32,25 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 
 import tcms.custom_gui_components.CustomJButton;
 import tcms.users.User;
 import tcms.users.UserManager;
 
-public class landingPagePanel extends JPanel {
+public class landingPagePanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+
+	private JTextField searchTxtfield;
 	private JTable table;
-	private JTextField txtSearchForUsername;
+	private TableRowSorter<DefaultTableModel> sorter;
+	private JTableHeader header;
+
+	private JMenuItem item;
+
+	private CustomJButton searchButton;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the panel.
@@ -49,7 +64,7 @@ public class landingPagePanel extends JPanel {
 		setSize(1186, 628);
 		setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(40, 43, 48), 2));
 		scrollPane.getVerticalScrollBar().setUI(new DiscordScrollBarUI());
 		scrollPane.getHorizontalScrollBar().setUI(new DiscordScrollBarUI());
@@ -65,37 +80,37 @@ public class landingPagePanel extends JPanel {
 		table.setForeground(new Color(220, 221, 222));
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
 		table.setBackground(new Color(44, 47, 51));
-		table.setRowHeight(30); // Optional: more vertical spacing
+		table.setRowHeight(25);
 		scrollPane.setViewportView(table);
+		scrollPane.getViewport().setBackground(new Color(44, 47, 51)); // Match your table background
 
 		// Set custom cell renderer for all columns
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 2415388109071200355L;
 
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 					boolean hasFocus, int row, int column) {
 
-				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
+				// Always apply custom colors
 				if (isSelected) {
-					c.setBackground(new Color(88, 101, 242)); // Discord blurple when selected
-					c.setForeground(Color.WHITE);
+					setBackground(new Color(88, 101, 242));
+					setForeground(Color.WHITE);
 				} else {
-					c.setBackground(new Color(54, 57, 63)); // Normal row
-					c.setForeground(Color.LIGHT_GRAY);
+					setBackground(new Color(54, 57, 63));
+					setForeground(Color.LIGHT_GRAY);
 				}
-
-				return c;
+				setBorder(null);
+				return this;
 			}
 		});
 
 		// Style the table header
-		JTableHeader header = table.getTableHeader();
+		header = table.getTableHeader();
 		header.setOpaque(false); // make background transparent if needed
+		header.setReorderingAllowed(false); // Dont allow the users to reorder the columns
 		header.setBorder(null); // remove column header borders
 		header.setPreferredSize(new Dimension(0, 32));
 
@@ -123,47 +138,48 @@ public class landingPagePanel extends JPanel {
 		JLabel label1 = new JLabel("Table Of Users");
 		label1.setForeground(new Color(220, 221, 222));
 		label1.setFont(new Font("Arial Black", Font.BOLD, 16));
-		label1.setBounds(10, 400, 270, 25);
+		label1.setBounds(10, 400, 200, 25);
 		add(label1);
 
 		JLabel dashboardLabel = new JLabel();
 		dashboardLabel.setText("Welcome, " + user.getUsername());
-		dashboardLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 32));
+		dashboardLabel.setFont(new Font("Arial", Font.BOLD, 32));
 		dashboardLabel.setForeground(new Color(220, 221, 222));
 		dashboardLabel.setBounds(10, 10, 700, 40);
 		add(dashboardLabel);
 
-		txtSearchForUsername = new JTextField();
-		txtSearchForUsername.setText("🔍 Search for a specific username");
-		txtSearchForUsername.setCaretColor(Color.white);
+		searchTxtfield = new JTextField();
+		searchTxtfield.setText("🔍 Search for a specific username");
+		searchTxtfield.setCaretColor(Color.white);
 		final boolean[] placeholderCleared = { false };
 
-		txtSearchForUsername.addFocusListener(new FocusAdapter() {
+		searchTxtfield.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (!placeholderCleared[0] && txtSearchForUsername.getText().equals("🔍 Search for a specific username")) {
-					txtSearchForUsername.setText("");
-					txtSearchForUsername.setForeground(Color.WHITE);
+				if (!placeholderCleared[0] && searchTxtfield.getText().equals("🔍 Search for a specific username")) {
+					searchTxtfield.setText("");
+					searchTxtfield.setForeground(Color.WHITE);
 					placeholderCleared[0] = true;
 				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (txtSearchForUsername.getText().trim().isEmpty()) {
-					txtSearchForUsername.setText("🔍 Search for a specific username");
-					txtSearchForUsername.setForeground(Color.GRAY);
+				if (searchTxtfield.getText().trim().isEmpty()) {
+					searchTxtfield.setText("🔍 Search for a specific username");
+					searchTxtfield.setForeground(Color.GRAY);
 					placeholderCleared[0] = false;
 				}
 			}
 		});
-		txtSearchForUsername.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 33, 36)));
-		txtSearchForUsername.setForeground(new Color(163, 166, 170));
-		txtSearchForUsername.setBackground(new Color(35, 39, 42));
-		txtSearchForUsername.setBounds(290, 400, 730, 30);
-		add(txtSearchForUsername);
+		searchTxtfield.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(30, 33, 36)));
+		searchTxtfield.setForeground(new Color(163, 166, 170));
+		searchTxtfield.setBackground(new Color(35, 39, 42));
+		searchTxtfield.setBounds(290, 400, 730, 25);
+		add(searchTxtfield);
 
-		CustomJButton searchButton = new CustomJButton();
+		searchButton = new CustomJButton();
+		searchButton.addActionListener(this);
 		searchButton.setRadius(15);
 		searchButton.setText("Search");
 		searchButton.setBackground(new Color(96, 76, 195));
@@ -173,11 +189,73 @@ public class landingPagePanel extends JPanel {
 		searchButton.setColorClick(new Color(60, 69, 165));
 		searchButton.setColor(new Color(88, 101, 242));
 		searchButton.setColorOver(new Color(79, 82, 196));
-		searchButton.setBorderColor(new Color(43, 45, 49));
+		searchButton.setBorderColor(new Color(54, 57, 62));
 		searchButton.setFocusable(true);
 		searchButton.setFocusPainted(false);
-		searchButton.setBounds(1026, 398, 150, 30);
+		searchButton.setBounds(1026, 398, 150, 27);
 		add(searchButton);
+
+		CustomJButton filterButton = new CustomJButton();
+		filterButton.setText("Filter");
+		filterButton.setRadius(15);
+		filterButton.setForeground(Color.WHITE);
+		filterButton.setBackground(new Color(88, 101, 242));
+		filterButton.setColor(new Color(88, 101, 242));
+		filterButton.setColorClick(new Color(60, 69, 165));
+		filterButton.setColorOver(new Color(79, 82, 196));
+		filterButton.setBorder(null);
+		filterButton.setFocusPainted(false);
+		filterButton.setBounds(163, 403, 117, 25);
+		add(filterButton);
+
+		// Create popup menu for role filtering
+		JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu.setBackground(new Color(35, 39, 42));
+		popupMenu.setBorder(null);
+
+		String[] roles = { "Admin", "Student", "Tutor", "Receptionist" };
+		for (String role : roles) {
+			item = new JMenuItem(role);
+			item.setBorder(null);
+			item.setForeground(new Color(220, 221, 222));
+			item.setBackground(new Color(54, 57, 63));
+			item.setFont(new Font("Arial", Font.PLAIN, 13));
+
+			// Hover effect
+			item.addChangeListener(e -> {
+				JMenuItem source = (JMenuItem) e.getSource();
+				if (source.isArmed()) {
+					source.setBackground(new Color(88, 101, 242));
+				} else {
+					source.setBackground(new Color(54, 57, 63));
+				}
+			});
+
+			// Apply filter when clicked
+			item.addActionListener(ev -> {
+				filterButton.setText(role);
+				sorter.setRowFilter(RowFilter.regexFilter("(?i)^" + role + "$", 3)); // Role is column index 3
+			});
+
+			popupMenu.add(item);
+		}
+
+		// Add an option to clear the role filter
+		JMenuItem clearFilter = new JMenuItem("Clear Filter");
+		clearFilter.setForeground(Color.LIGHT_GRAY);
+		clearFilter.setBackground(new Color(35, 39, 42));
+		clearFilter.setFont(new Font("Arial", Font.ITALIC, 12));
+		clearFilter.addActionListener(e -> {
+			filterButton.setText("🔽 Filter");
+			sorter.setRowFilter(null);
+		});
+		popupMenu.addSeparator();
+		popupMenu.add(clearFilter);
+
+		// Show the popup menu when the filter button is clicked
+		filterButton.addActionListener(e -> {
+			popupMenu.show(filterButton, 0, filterButton.getHeight());
+		});
 
 		// Load users from UserManager
 		loadUsersIntoTable(um);
@@ -219,6 +297,10 @@ public class landingPagePanel extends JPanel {
 		};
 
 		table.setModel(model);
+
+		// Set the sorter
+		sorter = new TableRowSorter<>(model);
+		table.setRowSorter(sorter);
 	}
 
 	private static class DiscordScrollBarUI extends BasicScrollBarUI {
@@ -251,5 +333,23 @@ public class landingPagePanel extends JPanel {
 		protected Dimension getMinimumThumbSize() {
 			return new Dimension(8, 40); // Slim thumb
 		}
+	}
+
+	// ACTION PERFORMED METHOD -> FOR ACTION LISTENERS (BUTTON & TEXTFIELD)
+	// -----------------------------------------
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == searchButton) {
+			String query = searchTxtfield.getText().trim();
+			// If input is empty or placeholder text, remove filter
+			if (query.isEmpty() || query.equals("🔍 Search for a specific username")) {
+				sorter.setRowFilter(null);
+			} else {
+				// Case insensitive filter on column index 1 (Username)
+				sorter.setRowFilter(RowFilter.regexFilter("(?i)" + query, 1));
+			}
+
+		}
+
 	}
 }
