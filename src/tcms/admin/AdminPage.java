@@ -77,13 +77,12 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JLabel ManageReceptionistsLabel;
 
 	// VIEW MONTHLY INCOME PAGE -------------------------------
-	private CustomRoundedPanel viewMonthlyIncomePanel;
-	private JLabel viewMonthlyIncomeLabel;
+	private JPanel viewMonthlyIncomePanel;
 	private JComboBox<String> yearSelector;
 	private JComboBox<String> monthSelector;
 	private JButton generateReportBtn;
 	private JTextField contactTxtfield;
-	private landingPagePanel landingPagePanel;
+	private JPanel landingPagePanel;
 
 	/**
 	 * Create the frame.
@@ -393,52 +392,10 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		// VIEW MONTHLY INCOME PANEL ------------------------------------------
 
-		viewMonthlyIncomePanel = new CustomRoundedPanel();
-		viewMonthlyIncomePanel.addColor(new ModelColor(Color.decode("#D9D9FF"), 0f),
-				new ModelColor(Color.decode("#C2DFFF"), 1f));
-		viewMonthlyIncomePanel.setBorder(null);
-		viewMonthlyIncomePanel.setBackground(new Color(83, 92, 145));
-		viewMonthlyIncomePanel.setLayout(null);
-		contentPanel.setLayer(viewMonthlyIncomePanel, 5);
+		viewMonthlyIncomePanel = new GenerateMonthlyIncomeReportPanel();
 		contentPanel.add(viewMonthlyIncomePanel, "View Monthly Income");
-
-		viewMonthlyIncomeLabel = new JLabel("View Monthly Income Report");
-		viewMonthlyIncomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		viewMonthlyIncomeLabel.setForeground(new Color(0, 0, 0));
-		viewMonthlyIncomeLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 32));
-		viewMonthlyIncomeLabel.setBounds(350, 10, 500, 40);
-		viewMonthlyIncomePanel.add(viewMonthlyIncomeLabel);
-
-		monthSelector = new JComboBox<String>();
-		monthSelector.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		monthSelector.setMaximumRowCount(12);
-		monthSelector.setModel(
-				new DefaultComboBoxModel<String>(new String[] { "- Select Month -", "January", "February", "March",
-						"April", "May", "June", "July", "August", "September", "October", "November", "December" }));
-		monthSelector.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		monthSelector.setBounds(20, 55, 200, 20);
-		viewMonthlyIncomePanel.add(monthSelector);
-
-		yearSelector = new JComboBox<String>();
-		yearSelector.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		yearSelector.setModel(new DefaultComboBoxModel<String>(new String[] { "- Select Year -" }));
-		yearSelector.setMaximumRowCount(12);
-		yearSelector.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		yearSelector.setBounds(230, 56, 200, 20);
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		System.out.println("Year Selector: Current Year = 2025");
-		for (int i = 1950; i <= currentYear; i++) {
-			yearSelector.addItem(String.valueOf(i));
-		}
-		viewMonthlyIncomePanel.add(yearSelector);
-
-		generateReportBtn = new JButton("Generate Report");
-		generateReportBtn.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		generateReportBtn.setFont(new Font("SansSerif", Font.PLAIN, 12));
-		generateReportBtn.addActionListener(this);
-		generateReportBtn.setFocusable(false);
-		generateReportBtn.setBounds(480, 120, 160, 80);
-		viewMonthlyIncomePanel.add(generateReportBtn);
+		
+		// MANAGE TUTORS ------------------------------------
 
 		manageTutorsPanel = new JPanel();
 		contentPanel.setLayer(manageTutorsPanel, 4);
@@ -448,10 +405,10 @@ public class AdminPage extends JFrame implements ActionListener {
 		contentPanel.add(manageTutorsPanel, "Manage Tutors");
 		manageTutorsPanel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("MANAGE TUTORS");
-		lblNewLabel.setFont(new Font("Serif", Font.ITALIC, 28));
-		lblNewLabel.setBounds(91, 37, 502, 169);
-		manageTutorsPanel.add(lblNewLabel);
+		JLabel manageTutorsLabel = new JLabel("MANAGE TUTORS");
+		manageTutorsLabel.setFont(new Font("Serif", Font.ITALIC, 28));
+		manageTutorsLabel.setBounds(91, 37, 502, 169);
+		manageTutorsPanel.add(manageTutorsLabel);
 
 		contentPane.setLayout(null);
 		contentPane.add(headerPanel);
@@ -484,6 +441,8 @@ public class AdminPage extends JFrame implements ActionListener {
 								.addGap(16)))));
 		headerPanel.setLayout(gl_headerPanel);
 		contentPane.add(contentPanel);
+		
+		// LANDING PAGE PANEL --------------------------------
 
 		landingPagePanel = new landingPagePanel(userManager, admin, user);
 		contentPanel.setLayer(landingPagePanel, 2);
