@@ -255,6 +255,10 @@ public class landingPagePanel extends JPanel implements ActionListener {
 		// Show the popup menu when the filter button is clicked
 		filterButton.addActionListener(e -> {
 			popupMenu.show(filterButton, 0, filterButton.getHeight());
+			
+			JPanel panel = new JPanel();
+			panel.setBounds(600, 10, 576, 380);
+			add(panel);
 		});
 
 		// Load users from UserManager
