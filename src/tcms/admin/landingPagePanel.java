@@ -37,6 +37,7 @@ import javax.swing.table.TableRowSorter;
 import tcms.custom_gui_components.CustomJButton;
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.custom_gui_components.IncomeChartPanel;
 
 public class landingPagePanel extends JPanel implements ActionListener {
 
@@ -255,14 +256,16 @@ public class landingPagePanel extends JPanel implements ActionListener {
 		// Show the popup menu when the filter button is clicked
 		filterButton.addActionListener(e -> {
 			popupMenu.show(filterButton, 0, filterButton.getHeight());
-			
-			JPanel panel = new JPanel();
-			panel.setBounds(600, 10, 576, 380);
-			add(panel);
+
 		});
 
 		// Load users from UserManager
 		loadUsersIntoTable(um);
+		
+		IncomeChartPanel incomeChartPanel = new IncomeChartPanel();
+		incomeChartPanel.setBackground(new Color(35, 39, 42));
+		incomeChartPanel.setBounds(600, 10, 576, 380);
+		add(incomeChartPanel);
 	}
 
 	private void loadUsersIntoTable(UserManager um) {
