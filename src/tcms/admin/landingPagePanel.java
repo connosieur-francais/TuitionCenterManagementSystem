@@ -233,7 +233,7 @@ public class landingPagePanel extends JPanel implements ActionListener {
 			});
 
 			// Apply filter when clicked
-			item.addActionListener(ev -> {
+			item.addActionListener(e -> {
 				filterButton.setText(role);
 				sorter.setRowFilter(RowFilter.regexFilter("(?i)^" + role + "$", 3)); // Role is column index 3
 			});
@@ -253,9 +253,10 @@ public class landingPagePanel extends JPanel implements ActionListener {
 		popupMenu.addSeparator();
 		popupMenu.add(clearFilter);
 
-		// Show the popup menu when the filter button is clicked
+		// Show the popup menu on top when filter button is clicked
 		filterButton.addActionListener(e -> {
-			popupMenu.show(filterButton, 0, filterButton.getHeight());
+			popupMenu.setPreferredSize(new Dimension(filterButton.getWidth(), popupMenu.getPreferredSize().height));
+			popupMenu.show(filterButton, 0, -popupMenu.getPreferredSize().height);
 
 		});
 

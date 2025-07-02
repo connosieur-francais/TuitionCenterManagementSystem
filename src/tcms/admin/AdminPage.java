@@ -11,8 +11,6 @@ import java.awt.event.ItemListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -77,8 +75,8 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	// VIEW MONTHLY INCOME PAGE -------------------------------
 	private JPanel viewMonthlyIncomePanel;
-	
-	// LANDING PAGE  ---------------------------------
+
+	// LANDING PAGE ---------------------------------
 	private JPanel landingPagePanel;
 
 	/**
@@ -119,50 +117,17 @@ public class AdminPage extends JFrame implements ActionListener {
 				"<html>\r\n<body>\r\n<p>Update</p>\r\n<p>Profile</p>\r\n</body>\r\n</html>");
 		updateProfileBtn.addActionListener(this);
 
-		manageTutorsButton = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"),
+		manageTutorsButton = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\tutor.png"),
 				"<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Tutors</p>\r\n</body>\r\n</html>");
-		manageTutorsButton.setRadius(25);
 		manageTutorsButton.addActionListener(this);
-		manageTutorsButton.setIcon(new ImageIcon("src\\tcms\\resources\\tutor.png"));
-		manageTutorsButton.setBackground(new Color(96, 76, 195));
-		manageTutorsButton.setForeground(new Color(220, 221, 222));
-		manageTutorsButton.setBorder(null);
-		manageTutorsButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		manageTutorsButton.setColorClick(new Color(60, 69, 165));
-		manageTutorsButton.setColor(new Color(88, 101, 242));
-		manageTutorsButton.setColorOver(new Color(79, 82, 196));
-		manageTutorsButton.setBorderColor(new Color(43, 45, 49));
-		manageTutorsButton.setFocusable(false);
 
-		manageReceptionistsBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"),
+		manageReceptionistsBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\receptionist.png"),
 				"<html>\r\n<body>\r\n<p>Manage</p>\r\n<p>Receptionists</p>\r\n</body>\r\n</html>");
-		manageReceptionistsBtn.setRadius(25);
 		manageReceptionistsBtn.addActionListener(this);
-		manageReceptionistsBtn.setIcon(new ImageIcon("src\\tcms\\resources\\receptionist.png"));
-		manageReceptionistsBtn.setBackground(new Color(96, 76, 195));
-		manageReceptionistsBtn.setForeground(new Color(220, 221, 222));
-		manageReceptionistsBtn.setBorder(null);
-		manageReceptionistsBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		manageReceptionistsBtn.setColorClick(new Color(60, 69, 165));
-		manageReceptionistsBtn.setColor(new Color(88, 101, 242));
-		manageReceptionistsBtn.setColorOver(new Color(79, 82, 196));
-		manageReceptionistsBtn.setBorderColor(new Color(43, 45, 49));
-		manageReceptionistsBtn.setFocusable(false);
 
-		viewIncomeBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\profile.png"),
+		viewIncomeBtn = HeaderButton.createHeaderButton(new ImageIcon("src\\tcms\\resources\\incomereport.png"),
 				"<html>\r\n<body>\r\n<p>View</p>\r\n<p>Income</p>\r\n<p>Report</p>\r\n</body>\r\n</html>");
-		viewIncomeBtn.setRadius(25);
 		viewIncomeBtn.addActionListener(this);
-		viewIncomeBtn.setIcon(new ImageIcon("src\\tcms\\resources\\incomereport.png"));
-		viewIncomeBtn.setBackground(new Color(96, 76, 195));
-		viewIncomeBtn.setForeground(new Color(220, 221, 222));
-		viewIncomeBtn.setBorder(null);
-		viewIncomeBtn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 12));
-		viewIncomeBtn.setColorClick(new Color(60, 69, 165));
-		viewIncomeBtn.setColor(new Color(88, 101, 242));
-		viewIncomeBtn.setColorOver(new Color(79, 82, 196));
-		viewIncomeBtn.setBorderColor(new Color(43, 45, 49));
-		viewIncomeBtn.setFocusable(false);
 
 		contentPanel = new JLayeredPane();
 		contentPanel.setBounds(0, 85, 1186, 628);
@@ -391,7 +356,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		viewMonthlyIncomePanel = new GenerateMonthlyIncomeReportPanel();
 		contentPanel.add(viewMonthlyIncomePanel, "View Monthly Income");
-		
+
 		// MANAGE TUTORS ------------------------------------
 
 		manageTutorsPanel = new JPanel();
@@ -438,7 +403,7 @@ public class AdminPage extends JFrame implements ActionListener {
 								.addGap(16)))));
 		headerPanel.setLayout(gl_headerPanel);
 		contentPane.add(contentPanel);
-		
+
 		// LANDING PAGE PANEL --------------------------------
 
 		landingPagePanel = new landingPagePanel(userManager, admin, user);
@@ -459,6 +424,23 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		if (e.getSource() == returnBtn) {
 			cl.show(contentPanel, "Landing Page");
+
+		    // Reset all header button visuals
+		    updateProfileBtn.setEnabled(false);
+		    updateProfileBtn.setEnabled(true);
+
+		    manageTutorsButton.setEnabled(false);
+		    manageTutorsButton.setEnabled(true);
+
+		    manageReceptionistsBtn.setEnabled(false);
+		    manageReceptionistsBtn.setEnabled(true);
+
+		    viewIncomeBtn.setEnabled(false);
+		    viewIncomeBtn.setEnabled(true);
+		    
+		    // Drag focus to a neutral component
+		    contentPanel.requestFocusInWindow();
+
 		}
 
 		// HEADER PANEL --------------------------------
