@@ -220,7 +220,7 @@ public class landingPagePanel extends JPanel implements ActionListener {
 			item.setBorder(null);
 			item.setForeground(new Color(220, 221, 222));
 			item.setBackground(new Color(54, 57, 63));
-			item.setFont(new Font("Arial", Font.PLAIN, 13));
+			item.setFont(new Font("Arial", Font.BOLD, 12));
 
 			// Hover effect
 			item.addChangeListener(e -> {

@@ -1,107 +1,248 @@
 package tcms.admin;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class GenerateMonthlyIncomeReportPanel extends JPanel {
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-    private static final long serialVersionUID = 1L;
+public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionListener {
 
-    private JPanel reportContainer;
-    private JButton monthSelectBtn;
-    private JButton yearSelectBtn;
-    private JButton generateReportBtn;
-    private JButton downloadBtn;
-    private JLabel lblNewLabel;
-    private JScrollPane scrollPane;
+	private static final long serialVersionUID = 1L;
 
-    public GenerateMonthlyIncomeReportPanel() {
-        setBackground(new Color(35, 39, 42));
-        setSize(1186, 628);
-        setLayout(null);
+	private JPanel reportContainer;
+	private JButton monthSelectBtn;
+	private JButton yearSelectBtn;
+	private JButton generateReportBtn;
+	private JButton downloadBtn;
+	private JLabel lblNewLabel;
+	private JScrollPane scrollPane;
 
-        monthSelectBtn = new JButton("Select Month");
-        monthSelectBtn.setBounds(10, 70, 125, 25);
-        add(monthSelectBtn);
+	private String month;
+	private int year;
 
-        yearSelectBtn = new JButton("Select Year");
-        yearSelectBtn.setBounds(145, 70, 125, 25);
-        add(yearSelectBtn);
+	private JPopupMenu yearSelectionMenu;
+	private JPopupMenu monthSelectionMenu;
+	private JMenuItem item1, item2;
 
-        lblNewLabel = new JLabel("View Monthly Income Report");
-        lblNewLabel.setForeground(new Color(220, 221, 222));
-        lblNewLabel.setFont(new Font("Arial", Font.BOLD, 32));
-        lblNewLabel.setBounds(10, 10, 445, 50);
-        add(lblNewLabel);
+	public GenerateMonthlyIncomeReportPanel() {
+		setBackground(new Color(35, 39, 42));
+		setSize(1186, 628);
+		setLayout(null);
 
-        generateReportBtn = new JButton("Generate Report");
-        generateReportBtn.setBounds(280, 70, 175, 25);
-        add(generateReportBtn);
+		// Create the button and Popup menu for month selection
 
-        downloadBtn = new JButton("Download Report");
-        downloadBtn.setBounds(1026, 70, 150, 25);
-        add(downloadBtn);
+		monthSelectBtn = new JButton("Select Month");
+		monthSelectBtn.setBounds(10, 70, 125, 25);
+		monthSelectBtn.setFocusPainted(false);
+		monthSelectBtn.addActionListener(this);
+		add(monthSelectBtn);
 
-        scrollPane = new JScrollPane();
-        scrollPane.setBackground(new Color(30, 33, 36));
-        scrollPane.setBounds(10, 105, 1166, 513);
-        add(scrollPane);
+		monthSelectionMenu = createMonthSelectionMenu(); // Creates a popup menu
+		add(monthSelectionMenu);
 
-        reportContainer = new JPanel();
-        reportContainer.setBackground(new Color(54, 57, 63));
-        reportContainer.setLayout(new BoxLayout(reportContainer, BoxLayout.Y_AXIS));
-        scrollPane.setViewportView(reportContainer);
+		yearSelectBtn = new JButton("Select Year");
+		yearSelectBtn.setBounds(145, 70, 125, 25);
+		yearSelectBtn.setFocusPainted(false);
+		yearSelectBtn.addActionListener(this);
+		add(yearSelectBtn);
 
-        addHeaderSection();
-        addBodySections();
-    }
+		yearSelectionMenu = createYearSelectionMenu(); // Creates another popup menu for year
+		add(yearSelectionMenu);
 
-    private void addHeaderSection() {
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(new Color(54, 57, 63));
-        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
-        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		lblNewLabel = new JLabel("View Monthly Income Report");
+		lblNewLabel.setForeground(new Color(220, 221, 222));
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 32));
+		lblNewLabel.setBounds(10, 10, 445, 50);
+		add(lblNewLabel);
 
-        JLabel titleLabel = new JLabel("Income Statement");
-        titleLabel.setForeground(new Color(255, 255, 255));
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
-        headerPanel.add(titleLabel);
+		generateReportBtn = new JButton("Generate Report");
+		generateReportBtn.setBounds(280, 70, 175, 25);
+		add(generateReportBtn);
 
-        JLabel subtitleLabel = new JLabel("for the month ended April 2024");
-        subtitleLabel.setForeground(new Color(220, 221, 222));
-        subtitleLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        headerPanel.add(subtitleLabel);
+		downloadBtn = new JButton("Download Report");
+		downloadBtn.setBounds(1026, 70, 150, 25);
+		add(downloadBtn);
 
-        JLabel totalLabel = new JLabel("Total Income: RM 2330.00");
-        totalLabel.setForeground(new Color(0, 255, 128));
-        totalLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        headerPanel.add(totalLabel);
+		scrollPane = new JScrollPane();
+		scrollPane.setBackground(new Color(30, 33, 36));
+		scrollPane.setBounds(10, 105, 1166, 513);
+		add(scrollPane);
 
-        reportContainer.add(headerPanel);
-    }
+		reportContainer = new JPanel();
+		reportContainer.setBackground(new Color(54, 57, 63));
+		reportContainer.setLayout(new BoxLayout(reportContainer, BoxLayout.Y_AXIS));
+		scrollPane.setViewportView(reportContainer);
 
-    private void addBodySections() {
-        reportContainer.add(createSectionPanel("Breakdown by Subject"));
-        reportContainer.add(createSectionPanel("Breakdown by Level"));
-        reportContainer.add(createSectionPanel("Breakdown by Student"));
-    }
+		addHeaderSection();
+		addBodySections();
+	}
 
-    private JPanel createSectionPanel(String title) {
-        JPanel section = new JPanel();
-        section.setBackground(new Color(64, 68, 75));
-        section.setLayout(new BoxLayout(section, BoxLayout.Y_AXIS));
-        section.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	private JPopupMenu createMonthSelectionMenu() {
+		monthSelectionMenu = new JPopupMenu();
+		monthSelectionMenu.setBackground(new Color(35, 39, 42));
+		monthSelectionMenu.setBorder(null);
 
-        JLabel titleLabel = new JLabel(title);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        titleLabel.setForeground(new Color(255, 255, 255));
-        section.add(titleLabel);
+		String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+				"October", "November", "December" };
 
-        JLabel placeholder = new JLabel(" - data goes here -");
-        placeholder.setForeground(new Color(200, 200, 200));
-        section.add(placeholder);
+		for (String month : months) {
+			item1 = new JMenuItem(month);
+			item1.setBorder(null);
+			item1.setForeground(new Color(220, 221, 222));
+			item1.setBackground(new Color(54, 57, 63));
+			item1.setFont(new Font("Arial", Font.BOLD, 12));
 
-        section.setAlignmentX(LEFT_ALIGNMENT);
-        return section;
-    }
+			// Add a hover effect
+			item1.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					JMenuItem source = (JMenuItem) e.getSource();
+					if (source.isArmed()) {
+						source.setBackground(new Color(88, 101, 242));
+					} else {
+						source.setBackground(new Color(54, 57, 63));
+					}
+				}
+			});
+			// Add action listener to each of the menu items
+			item1.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					monthSelectBtn.setText(month);
+				}
+			});
+			monthSelectionMenu.add(item1);
+		}
+		return monthSelectionMenu;
+	}
+
+	private JPopupMenu createYearSelectionMenu() {
+
+		// Create the popup menu
+		yearSelectionMenu = new JPopupMenu();
+		yearSelectionMenu.setBackground(new Color(35, 39, 42));
+		yearSelectionMenu.setBorder(null);
+
+		// Get current year
+		LocalDate today = LocalDate.now();
+		year = today.getYear();
+
+		// Initiate a list of current year down to 2020
+		ArrayList<String> years = new ArrayList<String>();
+		for (int i = year; i >= 2020; i--) {
+			years.add(String.valueOf(i));
+		}
+
+		// Create a JMenuItem for each year in the list
+		for (String year : years) {
+			item2 = new JMenuItem(year);
+			item2.setBorder(null);
+			item2.setForeground(new Color(220, 221, 222));
+			item2.setBackground(new Color(54, 57, 63));
+			item2.setFont(new Font("Arial", Font.BOLD, 12));
+
+			item2.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					JMenuItem source = (JMenuItem) e.getSource();
+					if (source.isArmed()) {
+						source.setBackground(new Color(88, 101, 242));
+					} else {
+						source.setBackground(new Color(54, 57, 63));
+					}
+				}
+			});
+			
+			item2.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					yearSelectBtn.setText(year);
+				}
+			});
+			yearSelectionMenu.add(item2);
+		}
+		return yearSelectionMenu;
+	}
+
+	private void addHeaderSection() {
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBackground(new Color(54, 57, 63));
+		headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		headerPanel.setLayout(null);
+
+		JLabel titleLabel = new JLabel("Income Statement");
+		titleLabel.setBounds(10, 10, 358, 33);
+		titleLabel.setForeground(new Color(255, 255, 255));
+		titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
+		headerPanel.add(titleLabel);
+
+		JLabel subtitleLabel = new JLabel();
+		subtitleLabel.setText(String.format("for the month ended %s, %s", month, year));
+		subtitleLabel.setBounds(10, 43, 262, 22);
+		subtitleLabel.setForeground(new Color(220, 221, 222));
+		subtitleLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+		headerPanel.add(subtitleLabel);
+
+		JLabel totalLabel = new JLabel("Total Income: RM 2330.00");
+		totalLabel.setBounds(10, 65, 242, 24);
+		totalLabel.setForeground(new Color(0, 255, 128));
+		totalLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		headerPanel.add(totalLabel);
+
+		reportContainer.add(headerPanel);
+	}
+
+	private void addBodySections() {
+		reportContainer.add(createSectionPanel("Breakdown by Subject"));
+		reportContainer.add(createSectionPanel("Breakdown by Level"));
+		reportContainer.add(createSectionPanel("Breakdown by Student"));
+	}
+
+	private JPanel createSectionPanel(String title) {
+		JPanel section = new JPanel();
+		section.setBackground(new Color(64, 68, 75));
+		section.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		section.setLayout(null);
+
+		JLabel titleLabel = new JLabel(title);
+		titleLabel.setBounds(10, 10, 199, 22);
+		titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		titleLabel.setForeground(new Color(255, 255, 255));
+		section.add(titleLabel);
+
+		JLabel placeholder = new JLabel(" - data goes here -");
+		placeholder.setBounds(10, 32, 86, 13);
+		placeholder.setForeground(new Color(200, 200, 200));
+		section.add(placeholder);
+
+		section.setAlignmentX(LEFT_ALIGNMENT);
+		return section;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == yearSelectBtn) {
+			yearSelectionMenu.setPreferredSize(new Dimension(yearSelectBtn.getWidth(), yearSelectionMenu.getPreferredSize().height));
+			yearSelectionMenu.show(yearSelectBtn, 0, yearSelectBtn.getHeight());
+		}
+		if (e.getSource() == monthSelectBtn) {
+			monthSelectionMenu.setPreferredSize(new Dimension(monthSelectBtn.getWidth(), monthSelectionMenu.getPreferredSize().height));
+			monthSelectionMenu.show(monthSelectBtn, 0, monthSelectBtn.getHeight());
+		}
+	}
 }

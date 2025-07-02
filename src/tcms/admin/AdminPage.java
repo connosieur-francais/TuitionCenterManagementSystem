@@ -7,9 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Calendar;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -68,6 +66,7 @@ public class AdminPage extends JFrame implements ActionListener {
 	private CustomJButton changeUsernameBtn, changePasswordBtn, changeEmailBtn, changeAddressBtn, changeContactBtn;
 	private CustomJToggleButton showPasswordToggleBtn;
 	private JTextField addressTxtfield;
+	private JTextField contactTxtfield;
 
 	// MANAGE TUTORS PAGE ------------------------------------
 	private JPanel manageTutorsPanel;
@@ -78,10 +77,8 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	// VIEW MONTHLY INCOME PAGE -------------------------------
 	private JPanel viewMonthlyIncomePanel;
-	private JComboBox<String> yearSelector;
-	private JComboBox<String> monthSelector;
-	private JButton generateReportBtn;
-	private JTextField contactTxtfield;
+	
+	// LANDING PAGE  ---------------------------------
 	private JPanel landingPagePanel;
 
 	/**
@@ -562,22 +559,6 @@ public class AdminPage extends JFrame implements ActionListener {
 			resetUpdateProfilePage();
 
 			return;
-		}
-		if (e.getSource() == generateReportBtn) {
-			String year = (String) yearSelector.getSelectedItem();
-			String month = (String) monthSelector.getSelectedItem();
-
-			if (year.contains("-") || month.contains("-")) { // Simple validation check if the user didnt select any
-																// option
-				JOptionPane.showMessageDialog(this, "You must select a month and year!", "Selection Error",
-						JOptionPane.INFORMATION_MESSAGE);
-				return;
-			}
-
-			System.out.println("GenerateMonthlyIncomeReport: Selected year = " + year);
-			System.out.println("GenerateMonthlyIncomeReport: Selected month = " + month);
-
-			new AdminPageGenerateReport(month, year);
 		}
 
 	}
