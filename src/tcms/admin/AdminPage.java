@@ -60,7 +60,7 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JLabel passwordLabel, emailLabel, addressLabel, contactLabel;
 	private JTextField usernameTxtfield, emailTxtfield;
 	private JPasswordField passwordField;
-	private CustomJButton saveChangesBtn, returnBtn;
+	private CustomJButton saveChangesBtn, updateProfileReturnBtn;
 	private CustomJButton changeUsernameBtn, changePasswordBtn, changeEmailBtn, changeAddressBtn, changeContactBtn;
 	private CustomJToggleButton showPasswordToggleBtn;
 	private JTextField addressTxtfield;
@@ -71,7 +71,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	// MANAGE RECEPTIONISTS PAGE ------------------------------
 	private JPanel manageReceptionistPanel;
-	private JLabel ManageReceptionistsLabel;
+	private CustomJButton receptionistReturnBtn;
 
 	// VIEW MONTHLY INCOME PAGE -------------------------------
 	private JPanel viewMonthlyIncomePanel;
@@ -273,7 +273,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		saveChangesBtn = new CustomJButton();
 		saveChangesBtn.setBounds(510, 460, 200, 50);
 		saveChangesBtn.addActionListener(this);
-		saveChangesBtn.setColorOver(new Color(92, 141, 241));
+		saveChangesBtn.setColorOver(new Color(79, 82, 196));
 		saveChangesBtn.setColorClick(new Color(96, 76, 195));
 		saveChangesBtn.setColor(new Color(88, 101, 242));
 		saveChangesBtn.setBorderColor(new Color(88, 101, 242));
@@ -327,31 +327,24 @@ public class AdminPage extends JFrame implements ActionListener {
 		updateProfilePanel.add(saveChangesBtn);
 		updateProfilePanel.add(profileSettingsLabel);
 
-		returnBtn = CustomComponents.createReturnBtn();
-		returnBtn.addActionListener(this);
-		returnBtn.setBounds(10, 10, 150, 30);
-		updateProfilePanel.add(returnBtn);
+		updateProfileReturnBtn = CustomComponents.createReturnBtn();
+		updateProfileReturnBtn.addActionListener(this);
+		updateProfileReturnBtn.setBounds(10, 10, 150, 40);
+		updateProfilePanel.add(updateProfileReturnBtn);
 
 		updateProfilePanelInformation(user, admin); // Update the information in txtfields with logged in user's
 													// information
 
 		// MANAGE RECEPTIONISTS PANEL
 
-		manageReceptionistPanel = new JPanel();
-		contentPanel.setLayer(manageReceptionistPanel, 3);
-		manageReceptionistPanel.setBackground(new Color(44, 47, 51));
-		manageReceptionistPanel.setVisible(false);
-		manageReceptionistPanel.setBorder(null);
+		manageReceptionistPanel = new ManageReceptionistsPanel();
 		contentPanel.add(manageReceptionistPanel, "Manage Receptionists");
-		manageReceptionistPanel.setLayout(null);
-
-		ManageReceptionistsLabel = new JLabel("Manage Receptionists");
-		ManageReceptionistsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		ManageReceptionistsLabel.setForeground(new Color(255, 255, 255));
-		ManageReceptionistsLabel.setFont(new Font("Arial Black", Font.BOLD, 32));
-		ManageReceptionistsLabel.setBounds(375, 10, 450, 60);
-		manageReceptionistPanel.add(ManageReceptionistsLabel);
-
+		
+		receptionistReturnBtn = CustomComponents.createReturnBtn();
+		receptionistReturnBtn.setBounds(10, 10, 150, 40);
+		receptionistReturnBtn.addActionListener(this);
+		manageReceptionistPanel.add(receptionistReturnBtn);
+		
 		// VIEW MONTHLY INCOME PANEL ------------------------------------------
 
 		viewMonthlyIncomePanel = new GenerateMonthlyIncomeReportPanel();
@@ -421,26 +414,12 @@ public class AdminPage extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		// RETURN TO DASHBOARD SPECIAL
-
-		if (e.getSource() == returnBtn) {
-			cl.show(contentPanel, "Landing Page");
-
-		    // Reset all header button visuals
-		    updateProfileBtn.setEnabled(false);
-		    updateProfileBtn.setEnabled(true);
-
-		    manageTutorsButton.setEnabled(false);
-		    manageTutorsButton.setEnabled(true);
-
-		    manageReceptionistsBtn.setEnabled(false);
-		    manageReceptionistsBtn.setEnabled(true);
-
-		    viewIncomeBtn.setEnabled(false);
-		    viewIncomeBtn.setEnabled(true);
-		    
-		    // Drag focus to a neutral component
-		    contentPanel.requestFocusInWindow();
-
+		if (e.getSource() == updateProfileReturnBtn) {
+			returnToLandingPage();
+		}
+		
+		if (e.getSource() == receptionistReturnBtn) {
+			returnToLandingPage();
 		}
 
 		// HEADER PANEL --------------------------------
@@ -543,6 +522,28 @@ public class AdminPage extends JFrame implements ActionListener {
 			return;
 		}
 
+	}
+
+	private void returnToLandingPage() {
+		cl.show(contentPanel, "Landing Page");
+
+	    // Reset all header button visuals
+	    updateProfileBtn.setEnabled(false);
+	    updateProfileBtn.setEnabled(true);
+
+	    manageTutorsButton.setEnabled(false);
+	    manageTutorsButton.setEnabled(true);
+
+	    manageReceptionistsBtn.setEnabled(false);
+	    manageReceptionistsBtn.setEnabled(true);
+
+	    viewIncomeBtn.setEnabled(false);
+	    viewIncomeBtn.setEnabled(true);
+	    
+	    // Drag focus to a neutral component
+	    contentPanel.requestFocusInWindow();
+	    
+	    System.out.println("Button Pressed: Returned to admin landing page");
 	}
 
 	public void resetUpdateProfilePage() {

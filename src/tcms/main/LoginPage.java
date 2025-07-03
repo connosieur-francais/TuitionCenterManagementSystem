@@ -220,6 +220,8 @@ public class LoginPage extends JFrame implements ActionListener {
 		for (User user : users) {
 			userManager.resetLoginAttempts(user);
 		}
+		
+		frame.getRootPane().setDefaultButton(loginBtn); // Allows the user to press enter key to access login button
 	}
 
 	@Override

@@ -60,7 +60,6 @@ public class landingPagePanel extends JPanel implements ActionListener {
 		SwingUtilities.invokeLater(() -> {
 			requestFocusInWindow(); // focus a neutral component
 		});
-		setBorder(new LineBorder(new Color(40, 43, 48), 2));
 		setBackground(new Color(44, 47, 51));
 		setSize(1186, 628);
 		setLayout(null);
