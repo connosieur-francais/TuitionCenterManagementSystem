@@ -30,15 +30,19 @@ import tcms.custom_gui_components.CustomJToggleButton;
 import tcms.custom_gui_components.CustomRoundedPanel;
 import tcms.custom_gui_components.HeaderButton;
 import tcms.custom_gui_components.ModelColor;
+import tcms.receptionists.ReceptionistManager;
+import tcms.tutors.TutorManager;
 import tcms.users.User;
 import tcms.users.UserManager;
 
 public class AdminPage extends JFrame implements ActionListener {
 
 	private String atcBannerImg = "src/tcms/resources/atcBanner4.png";
-
-	private AdminManager adminManager = new AdminManager();
-	private UserManager userManager = new UserManager();
+	
+	private static AdminManager adminManager;
+	private static UserManager userManager;
+	private static ReceptionistManager receptionistManager;
+	private static TutorManager tutorManager;
 
 	private static Admin admin;
 	private static User user;
@@ -82,18 +86,19 @@ public class AdminPage extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public AdminPage(User u) {
-
+	public AdminPage(User u, AdminManager am, UserManager um, ReceptionistManager rm, TutorManager tm) {
+		// Gather all the needed manager classes that were initiated from loginPage;
+		adminManager = am;
+		userManager = um;
+		tutorManager = tm;
+		receptionistManager = rm;
+		
+		// Gets necessary details about the admin
 		user = u;
-		// Upon starting this page, load all admins and check if all admin accounts
-		// exist
 		int user_id = user.getID();
-		adminManager.loadAdmins(adminCSVFile); // Loads admin accounts
-		userManager.loadUsers(userCSVFile); // Load user accounts (connected to admin)
-		adminManager.updateAdminsInCSV(); // Checks if all admin accounts are created properly.
-		adminManager.saveAdmins(adminCSVFile);
-
 		admin = adminManager.findAdminByUserID(user_id);
+		
+		
 		this.setResizable(false);
 		this.setTitle("Admin Panel");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -337,7 +342,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		// MANAGE RECEPTIONISTS PANEL
 
-		manageReceptionistPanel = new ManageReceptionistsPanel();
+		manageReceptionistPanel = new ManageReceptionistsPanel(um, rm);
 		contentPanel.add(manageReceptionistPanel, "Manage Receptionists");
 		
 		receptionistReturnBtn = CustomComponents.createReturnBtn();
@@ -399,7 +404,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		// LANDING PAGE PANEL --------------------------------
 
-		landingPagePanel = new landingPagePanel(userManager, admin, user);
+		landingPagePanel = new landingPagePanel(um, admin, user);
 		contentPanel.setLayer(landingPagePanel, 2);
 		landingPagePanel.setBackground(new Color(44, 47, 51));
 		contentPanel.add(landingPagePanel, "Landing Page");

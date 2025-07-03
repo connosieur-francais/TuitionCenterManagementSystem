@@ -13,6 +13,8 @@ import javax.swing.SwingConstants;
 
 import tcms.custom_gui_components.CustomJButton;
 import tcms.custom_gui_components.CustomRoundedPanel;
+import tcms.receptionists.ReceptionistManager;
+import tcms.users.UserManager;
 
 public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
@@ -40,7 +42,7 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
-	public ManageReceptionistsPanel() {
+	public ManageReceptionistsPanel(UserManager um, ReceptionistManager rm) {
 		setBackground(new Color(44, 47, 51));
 		setSize(1186, 628);
 		setLayout(null);
@@ -107,6 +109,7 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 		manageReceptionistsLabel.setFont(new Font("Arial", Font.BOLD, 32));
 		add(manageReceptionistsLabel);
 		
+		// Get Data from CSV - Receptionist and User
 		
 
 		// Create the table

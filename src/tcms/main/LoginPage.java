@@ -207,11 +207,12 @@ public class LoginPage extends JFrame implements ActionListener {
 		tutorManager.loadTutors(tutorFilePath);
 		studentManager.loadStudents(studentFilePath);
 		receptionistManager.loadReceptionists(receptionistFilePath);
-
-		adminManager.updateAdminsInCSV();
-		tutorManager.updateTutorsInCSV();
-		receptionistManager.updateReceptionistInCSV();
-		studentManager.updateStudentsInCSV();
+		
+		// Checks if the accounts are created properly - if not - create new account (default, no data)
+		adminManager.updateAdminsInCSV(userManager);
+		tutorManager.updateTutorsInCSV(userManager);
+		receptionistManager.updateReceptionistInCSV(userManager);
+		studentManager.updateStudentsInCSV(userManager);
 
 		// Create a list to store the user data
 		List<User> users = userManager.getAllUsers();
@@ -298,7 +299,7 @@ public class LoginPage extends JFrame implements ActionListener {
 		switch (role) {
 		case "admin":
 			userManager.saveUsers(userFilePath); // save users before moving on
-			new AdminPage(user);
+			new AdminPage(user, adminManager, userManager, receptionistManager, tutorManager);
 			frame.dispose();
 			break;
 		case "receptionist":

@@ -20,7 +20,7 @@ import tcms.users.UserManager;
 public class TutorManager {
 
 	private int fieldLength = 9;
-	private UserManager userManager = new UserManager();
+	private static UserManager userManager;
 	private Map<Integer, Tutor> userIDTutorMap = new HashMap<>();
 	private Map<Integer, Tutor> tutorIDTutorMap = new HashMap<>();
 	private List<Tutor> tutors = new ArrayList<>();
@@ -103,8 +103,8 @@ public class TutorManager {
 		}
 	}
 
-	public void updateTutorsInCSV() {
-		userManager.loadUsers("src/users.csv");
+	public void updateTutorsInCSV(UserManager um) {
+		userManager = um;
 		List<User> users = userManager.getAllUsers();
 		System.out.println("updateTutorsInCSV: Updating tutors in tutors.csv");
 		System.out.println("Total users: " + users.size());

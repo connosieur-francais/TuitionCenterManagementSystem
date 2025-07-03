@@ -20,7 +20,7 @@ import tcms.users.UserManager;
 public class AdminManager {
 
 	private int fieldLength = 5; // If CSV file fields change, change this number
-	private UserManager userManager = new UserManager();
+	private static UserManager userManager;
 	private Map<Integer, Admin> userIDAdminMap = new HashMap<>();
 	private Map<Integer, Admin> adminIDAdminMap = new HashMap<>();
 	private List<Admin> admins = new ArrayList<>();
@@ -94,8 +94,8 @@ public class AdminManager {
 		}
 	}
 
-	public void updateAdminsInCSV() {
-		userManager.loadUsers("src/users.csv");
+	public void updateAdminsInCSV(UserManager um) {
+		userManager = um;
 		List<User> users = userManager.getAllUsers();
 		System.out.println("updateAdminsInCSV: Updating admins in admins.csv");
 		System.out.println("Total users: " + users.size());
