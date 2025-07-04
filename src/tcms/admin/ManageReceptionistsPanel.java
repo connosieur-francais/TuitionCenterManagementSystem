@@ -2,9 +2,12 @@ package tcms.admin;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,6 +22,8 @@ import tcms.users.UserManager;
 public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private static ReceptionistManager receptionistManager;
+	private static UserManager userManager;
 
 	// === Panels ===
 	private CustomRoundedPanel totalReceptionistsPanel;
@@ -35,20 +40,27 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 	// === Scroll Pane ===
 	private JScrollPane scrollPane;
-	
+
 	// === Table ===
 	private JTable receptionistTable;
+
+	// Icon image files
+	private String user_icon_img = new File("src/tcms/resources/receptionist_user_icon.png").getAbsolutePath();
 
 	/**
 	 * Create the panel.
 	 */
 	public ManageReceptionistsPanel(UserManager um, ReceptionistManager rm) {
+		userManager = um;
+		receptionistManager = rm;
+
 		setBackground(new Color(44, 47, 51));
 		setSize(1186, 628);
 		setLayout(null);
 
 		// Total Receptionists Panel
 		totalReceptionistsPanel = new CustomRoundedPanel();
+		totalReceptionistsPanel.setBackground(new Color(88, 101, 242));
 		totalReceptionistsPanel.setRoundTopRight(10);
 		totalReceptionistsPanel.setRoundTopLeft(10);
 		totalReceptionistsPanel.setRoundBottomRight(10);
@@ -58,14 +70,25 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 		add(totalReceptionistsPanel);
 
 		totalRecepLabel = new JLabel("Total Receptionists: ");
-		totalRecepLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		totalRecepLabel.setBounds(10, 10, 200, 20);
+		totalRecepLabel.setForeground(new Color(255, 255, 255));
+		totalRecepLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		totalRecepLabel.setBounds(10, 10, 230, 20);
 		totalReceptionistsPanel.add(totalRecepLabel);
 
 		totalRecepNumberLbl = new JLabel("<dynamic>");
-		totalRecepNumberLbl.setFont(new Font("Arial", Font.BOLD, 16));
-		totalRecepNumberLbl.setBounds(10, 40, 200, 20);
+		totalRecepNumberLbl.setForeground(new Color(255, 255, 255));
+		totalRecepNumberLbl.setFont(new Font("Arial", Font.BOLD, 48));
+		totalRecepNumberLbl.setBounds(20, 40, 120, 48);
 		totalReceptionistsPanel.add(totalRecepNumberLbl);
+
+		// Resize icon image
+		ImageIcon user_icon = new ImageIcon(user_icon_img.toString());
+		Image user_img = user_icon.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH);
+		ImageIcon resized_img = new ImageIcon(user_img);
+
+		JLabel userIconLabel = new JLabel(resized_img);
+		userIconLabel.setBounds(150, 40, 90, 48);
+		totalReceptionistsPanel.add(userIconLabel);
 
 		// Register Receptionist Panel
 		receptionistInfoPanel = new CustomRoundedPanel();
@@ -81,7 +104,7 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 		customJButton.setRadius(10);
 		customJButton.setText("+ Add Receptionist");
 		customJButton.setBackground(new Color(96, 76, 195));
-		customJButton.setForeground(new Color(220, 221, 222));
+		customJButton.setForeground(new Color(255, 255, 255));
 		customJButton.setBorder(null);
 		customJButton.setColorClick(new Color(60, 69, 165));
 		customJButton.setColor(new Color(88, 101, 242));
@@ -108,9 +131,8 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 		manageReceptionistsLabel.setForeground(new Color(220, 221, 222));
 		manageReceptionistsLabel.setFont(new Font("Arial", Font.BOLD, 32));
 		add(manageReceptionistsLabel);
-		
+
 		// Get Data from CSV - Receptionist and User
-		
 
 		// Create the table
 		receptionistTable = new JTable();
@@ -135,10 +157,18 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 		// Add table to scroll pane
 		scrollPane.setViewportView(receptionistTable);
+
+		refreshManageReceptionistsPanel();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO: Add action logic here
+	}
+
+	public void refreshManageReceptionistsPanel() {
+		int total_receptionists = receptionistManager.getAllReceptionists().size(); // Returns the total amount of
+																					// elements in receptionists list
+		totalRecepNumberLbl.setText(String.valueOf(total_receptionists));
 	}
 }
