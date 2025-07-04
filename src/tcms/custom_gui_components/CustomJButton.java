@@ -30,6 +30,7 @@ public class CustomJButton extends JButton {
 	public CustomJButton() {
 		setText("New Button");
 		setBorder(null);
+		setFocusPainted(false);
 		setFocusable(false);
 		setContentAreaFilled(false);
 
@@ -125,6 +126,7 @@ public class CustomJButton extends JButton {
 	// =======================
 	// Overridden Paint Method
 	// =======================
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
@@ -139,6 +141,12 @@ public class CustomJButton extends JButton {
 		g2.fillRoundRect(2, 2, getWidth() - 4, getHeight() - 4, radius, radius);
 
 		super.paintComponent(g);
+	}
+	
+	@Override
+	public void setBackground(Color bg) {
+		super.setBackground(bg);
+		repaint();
 	}
 }
 

@@ -64,6 +64,7 @@ public class IncomeChartPanel extends JPanel {
             });
             monthMenu.add(item);
         }
+        monthMenu.setPreferredSize(new Dimension(monthButton.getWidth(), monthMenu.getPreferredSize().height));
         monthButton.addActionListener(e -> monthMenu.show(monthButton, 0, monthButton.getHeight()));
 
         JButton yearButton = new JButton("Year");
@@ -82,6 +83,7 @@ public class IncomeChartPanel extends JPanel {
             });
             yearMenu.add(item);
         }
+        yearMenu.setPreferredSize(new Dimension(yearButton.getWidth(), yearMenu.getPreferredSize().height));
         yearButton.addActionListener(e -> yearMenu.show(yearButton, 0, yearButton.getHeight()));
 
         startMonthYearSwitchTimer();

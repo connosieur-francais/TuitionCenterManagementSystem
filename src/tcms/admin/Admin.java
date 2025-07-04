@@ -1,6 +1,7 @@
 package tcms.admin;
 
 public class Admin {
+	
 	private int adminID;
 	private int userID;
 	private String contact;

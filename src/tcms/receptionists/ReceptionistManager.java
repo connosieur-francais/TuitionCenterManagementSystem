@@ -21,7 +21,7 @@ import tcms.users.UserManager;
 public class ReceptionistManager {
 
 	private int fieldLength = 5;
-	private UserManager userManager = new UserManager();
+	private static UserManager userManager;
 	private Map<Integer, Receptionist> userIDReceptionistMap = new HashMap<>();
 	private Map<Integer, Receptionist> receptionistIDReceptionistMap = new HashMap<>();
 	private List<Receptionist> receptionists = new ArrayList<>();
@@ -95,8 +95,8 @@ public class ReceptionistManager {
 		}
 	}
 	
-	public void updateReceptionistInCSV() {
-		userManager.loadUsers("src/users.csv");
+	public void updateReceptionistInCSV(UserManager um) {
+		userManager = um;
 		List<User> users = userManager.getAllUsers();
 		System.out.println("updateReceptionistInCSV: Updating receptionists in receptionists.csv");
 		System.out.println("Total users: " + users.size());

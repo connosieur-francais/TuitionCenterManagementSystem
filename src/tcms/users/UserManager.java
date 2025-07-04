@@ -52,7 +52,7 @@ public class UserManager {
 
 	public void saveUsers(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("User_id,username,password,role,login_attempts,status\n");
+			bw.write("user_id,username,password,role,login_attempts,status\n");
 			for (User user : users) {
 				bw.write(user.toCSV());
 				bw.newLine();

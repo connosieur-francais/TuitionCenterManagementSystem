@@ -60,12 +60,6 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 		Title.setBounds(425, 0, 101, 48);
 		contentPane.add(Title);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setFont(new Font("Arial Black", Font.BOLD, 14));
-		lblNewLabel_2.setForeground(new Color(255, 255, 255));
-		lblNewLabel_2.setBounds(684, 265, 101, 13);
-		contentPane.add(lblNewLabel_2);
-		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(52, 97, 133));
 		panel.setBounds(40, 58, 290, 279);

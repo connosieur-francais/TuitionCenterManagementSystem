@@ -37,6 +37,7 @@ public final class CustomComponents {
 		customJButton.setColorOver(new Color(79, 82, 196));
 		customJButton.setBorderColor(new Color(43, 45, 49));
 		customJButton.setFocusPainted(false);
+		customJButton.setFocusable(true);
 		return customJButton;
 	}
 }
