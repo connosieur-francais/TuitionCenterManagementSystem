@@ -59,7 +59,7 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 		JLabel PFP = new JLabel("");
 		PFP.setBounds(61, 64, 258, 228);
 		contentPane.add(PFP);
-		ImageIcon x = new ImageIcon(UpdateStudentWindow.class.getResource("/tcms/resources/BlankPFP"));
+		ImageIcon x = new ImageIcon(UpdateStudentWindow.class.getResource("/tcms/resources/blank_profile"));
 		Image i = x.getImage().getScaledInstance(275,275, Image.SCALE_SMOOTH);
 		ImageIcon pfp = new ImageIcon(i);
 		PFP.setIcon(pfp);
