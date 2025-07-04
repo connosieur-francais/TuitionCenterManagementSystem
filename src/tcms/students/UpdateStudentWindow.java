@@ -21,6 +21,8 @@ import javax.swing.border.EmptyBorder;
 import tcms.custom_gui_components.CustomJButton;
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.students.subjectView;
+
 
 public class UpdateStudentWindow extends JFrame implements ActionListener {
 
@@ -28,7 +30,7 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 	private JPanel MainPanel;
 	private JPanel BottomLeft;
 
-	private JLabel usernameLabel, studentIDLabel, profilePictureLabel, email, contact;
+	private JLabel usernameLabel, studentIDLabel, profilePictureLabel, email, contact, subjectLabel, level;
 	private JButton notificationsBtn, logoutBtn, nextBtn, previousBtn;
 
 	private static UserManager um = new UserManager();
@@ -38,6 +40,8 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 
 	private String userCSVFile = "src/users.csv";
 	private String studentCSVFile = "src/students.csv";
+	private String subjectCSVFile = "src/subjects.csv";
+	
 	private Color darkGrey = new Color(34, 34, 34);
 	private Color blueAcc = new Color(70, 130, 180);
 
@@ -68,6 +72,7 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 
 		user = u;
 		student = sm.findStudentByUserID(u.getID());
+		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -118,6 +123,13 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 		usernameLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		usernameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		BottomLeft.add(usernameLabel);
+		
+		//SubjectLabel
+		subjectLabel = new JLabel("<subject>");
+		subjectLabel.setForeground(Color.WHITE);
+		subjectLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		subjectLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		BottomLeft.add(subjectLabel);
 
 		
 		updateStudentWindow(user, student);
@@ -131,5 +143,9 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 	public void updateStudentWindow(User u, Student s) {
 		usernameLabel.setText("Username: " + u.getUsername());
 		studentIDLabel.setText("Student ID: " + s.getStudentID());
+		
+		 String subject = subjectView.getSubjectByStudentId(s.getStudentID());
+		    subjectLabel.setText("Subject: " + subject);
+		
 	}
 }
