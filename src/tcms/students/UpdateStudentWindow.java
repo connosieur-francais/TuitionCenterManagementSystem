@@ -1,21 +1,17 @@
 package tcms.students;
 
-import java.awt.EventQueue;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import tcms.users.User;
-import tcms.users.UserManager;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 
 public class UpdateStudentWindow extends JFrame implements ActionListener {
@@ -60,23 +56,22 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 		Title.setBounds(425, 0, 101, 48);
 		contentPane.add(Title);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(52, 97, 133));
-		panel.setBounds(40, 58, 290, 279);
-		contentPane.add(panel);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		panel.add(lblNewLabel_1);
-		lblNewLabel_1.setIcon(new ImageIcon(UpdateStudentWindow.class.getResource("/tcms/resources/student_profile_picture.jpg")));
-		lblNewLabel_1.setFont(new Font("Arial Black", Font.BOLD, 14));
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		JLabel PFP = new JLabel("");
+		PFP.setBounds(61, 64, 258, 228);
+		contentPane.add(PFP);
+		ImageIcon x = new ImageIcon(UpdateStudentWindow.class.getResource("/tcms/resources/student_profile_picture.jpg"));
+		Image i = x.getImage().getScaledInstance(275,275, Image.SCALE_SMOOTH);
+		ImageIcon pfp = new ImageIcon(i);
+		PFP.setIcon(pfp);
+		PFP.setFont(new Font("Arial Black", Font.BOLD, 14));
+		PFP.setForeground(new Color(255, 255, 255));
 
 		
 
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
