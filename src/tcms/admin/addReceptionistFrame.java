@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import tcms.custom_gui_components.CustomJButton;
 import tcms.receptionists.ReceptionistManager;
 import tcms.users.UserManager;
+import tcms.custom_gui_components.CustomTextField;
 
 public class addReceptionistFrame extends JFrame implements ActionListener {
 
@@ -50,17 +51,65 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
         // === Content Panel ===
         contentPanel.setBackground(canvasColor);
         contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
+        contentPanel.setLayout(null);
 
         JLabel titleLabel = new JLabel("Add Receptionist");
+        titleLabel.setBounds(271, 20, 196, 28);
         titleLabel.setForeground(new Color(220, 221, 222));
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPanel.add(titleLabel);
         
         JLabel recepIDLabel = new JLabel("Receptionist ID: ");
+        recepIDLabel.setForeground(new Color(220, 221, 222));
+        recepIDLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        recepIDLabel.setBounds(100, 70, 125, 30);
         contentPanel.add(recepIDLabel);
+        
+        CustomTextField customTextField = new CustomTextField();
+        customTextField.setBounds(235, 70, 403, 30);
+        contentPanel.add(customTextField);
+        
+        JLabel recepNameLabel = new JLabel("Name :");
+        recepNameLabel.setForeground(new Color(220, 221, 222));
+        recepNameLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        recepNameLabel.setBounds(100, 120, 125, 30);
+        contentPanel.add(recepNameLabel);
+        
+        CustomTextField customTextField_1 = new CustomTextField();
+        customTextField_1.setBounds(235, 120, 403, 30);
+        contentPanel.add(customTextField_1);
+        
+        JLabel recepIDLabel_1_1 = new JLabel("Receptionist ID: ");
+        recepIDLabel_1_1.setForeground(new Color(220, 221, 222));
+        recepIDLabel_1_1.setFont(new Font("Arial", Font.BOLD, 16));
+        recepIDLabel_1_1.setBounds(100, 170, 125, 30);
+        contentPanel.add(recepIDLabel_1_1);
+        
+        CustomTextField customTextField_1_1 = new CustomTextField();
+        customTextField_1_1.setBounds(235, 170, 403, 30);
+        contentPanel.add(customTextField_1_1);
+        
+        JLabel recepIDLabel_1_1_1 = new JLabel("Receptionist ID: ");
+        recepIDLabel_1_1_1.setForeground(new Color(220, 221, 222));
+        recepIDLabel_1_1_1.setFont(new Font("Arial", Font.BOLD, 16));
+        recepIDLabel_1_1_1.setBounds(100, 220, 125, 30);
+        contentPanel.add(recepIDLabel_1_1_1);
+        
+        CustomTextField customTextField_1_1_1 = new CustomTextField();
+        customTextField_1_1_1.setBounds(235, 220, 403, 30);
+        contentPanel.add(customTextField_1_1_1);
+        
+        CustomTextField customTextField_1_1_1_1 = new CustomTextField();
+        customTextField_1_1_1_1.setBounds(235, 270, 403, 30);
+        contentPanel.add(customTextField_1_1_1_1);
+        
+        JLabel recepIDLabel_1_1_1_1 = new JLabel("Receptionist ID: ");
+        recepIDLabel_1_1_1_1.setForeground(new Color(220, 221, 222));
+        recepIDLabel_1_1_1_1.setFont(new Font("Arial", Font.BOLD, 16));
+        recepIDLabel_1_1_1_1.setBounds(100, 270, 125, 30);
+        contentPanel.add(recepIDLabel_1_1_1_1);
 
         // === Bottom Button Panel ===
         JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
