@@ -36,7 +36,7 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 	private JLabel manageReceptionistsLabel;
 
 	// === Buttons ===
-	private CustomJButton customJButton;
+	private CustomJButton addReceptionistBtn;
 
 	// === Scroll Pane ===
 	private JScrollPane scrollPane;
@@ -98,21 +98,22 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 		receptionistInfoPanel.setLayout(null);
 		add(receptionistInfoPanel);
 
-		customJButton = new CustomJButton();
-		customJButton.setFont(new Font("Arial", Font.BOLD, 16));
-		customJButton.setBounds(956, 10, 200, 40);
-		customJButton.setRadius(10);
-		customJButton.setText("+ Add Receptionist");
-		customJButton.setBackground(new Color(96, 76, 195));
-		customJButton.setForeground(new Color(255, 255, 255));
-		customJButton.setBorder(null);
-		customJButton.setColorClick(new Color(60, 69, 165));
-		customJButton.setColor(new Color(88, 101, 242));
-		customJButton.setColorOver(new Color(79, 82, 196));
-		customJButton.setBorderColor(new Color(43, 45, 49));
-		customJButton.setFocusPainted(false);
-		customJButton.setFocusable(true);
-		receptionistInfoPanel.add(customJButton);
+		addReceptionistBtn = new CustomJButton();
+		addReceptionistBtn.addActionListener(this);
+		addReceptionistBtn.setFont(new Font("Arial", Font.BOLD, 16));
+		addReceptionistBtn.setBounds(956, 10, 200, 40);
+		addReceptionistBtn.setRadius(10);
+		addReceptionistBtn.setText("+ Add Receptionist");
+		addReceptionistBtn.setBackground(new Color(96, 76, 195));
+		addReceptionistBtn.setForeground(new Color(255, 255, 255));
+		addReceptionistBtn.setBorder(null);
+		addReceptionistBtn.setColorClick(new Color(60, 69, 165));
+		addReceptionistBtn.setColor(new Color(88, 101, 242));
+		addReceptionistBtn.setColorOver(new Color(79, 82, 196));
+		addReceptionistBtn.setBorderColor(new Color(43, 45, 49));
+		addReceptionistBtn.setFocusPainted(false);
+		addReceptionistBtn.setFocusable(true);
+		receptionistInfoPanel.add(addReceptionistBtn);
 
 		receptionistLbl = new JLabel("Receptionists");
 		receptionistLbl.setHorizontalAlignment(SwingConstants.LEFT);
@@ -163,7 +164,9 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO: Add action logic here
+		if (e.getSource() == addReceptionistBtn) {
+			new addReceptionistFrame(userManager, receptionistManager);
+		}
 	}
 
 	public void refreshManageReceptionistsPanel() {
