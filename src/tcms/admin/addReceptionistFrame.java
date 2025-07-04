@@ -58,6 +58,9 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPanel.add(titleLabel);
+        
+        JLabel recepIDLabel = new JLabel("Receptionist ID: ");
+        contentPanel.add(recepIDLabel);
 
         // === Bottom Button Panel ===
         JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
