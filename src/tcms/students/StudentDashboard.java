@@ -143,7 +143,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
 		contentPane.add(profilePicturePanel);
 
 		profilePictureLabel = new JLabel();
-		ImageIcon origIcon = new ImageIcon("src\\tcms\\resources\\student_profile_picture.jpg");
+		ImageIcon origIcon = new ImageIcon("src\\tcms\\resources\\blank_profile.jpg");
 		Image scaledImg = origIcon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
 		profilePictureLabel.setIcon(new ImageIcon(scaledImg));
 		profilePicturePanel.add(profilePictureLabel);
