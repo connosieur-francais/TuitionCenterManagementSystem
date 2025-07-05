@@ -12,8 +12,10 @@ public class Constants {
     public static final Color RED_HOVER = new Color(200, 50, 52);
     public static final Color RED_CLICK = new Color(165, 30, 33);
     public static final Color TEXT_COLOR = Color.WHITE;
-    public static final Color BORDER_COLOR = new Color(43, 45, 49);
     public static final Color DARK_GRAY = new Color(43, 45, 49);
+    public static final Color NOT_QUITE_BLACK = new Color(35, 39, 42);
+    public static final Color DEEP_DARK = new Color(40, 43, 48);
+    public static final Color DARK_BUT_NOT_BLACK = new Color(44, 47, 51);
     
     public static final String LOGIN_PAGE_BACKGROUND_FILE = "src/tcms/resources/loginPageBackground.png";
     public static final String RECEPTIONIST_USER_ICON_FILE = "src/tcms/resources/receptionist_user_icon.png";

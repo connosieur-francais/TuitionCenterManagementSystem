@@ -5,20 +5,29 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import tcms.custom_gui_components.CustomJButton;
 import tcms.custom_gui_components.CustomRoundedPanel;
+import tcms.receptionists.Receptionist;
 import tcms.receptionists.ReceptionistManager;
+import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
+
+
 
 public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
@@ -48,6 +57,8 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 	// === Table ===
 	private JTable receptionistTable;
+	private String[] columnNames = {"Receptionist ID", "User ID", "Contact", "Email", "Address"};
+	private Object[][] data;
 
 	// Icon image files
 	private String user_icon_img = Constants.RECEPTIONIST_USER_ICON_FILE;
@@ -138,35 +149,73 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 		manageReceptionistsLabel.setFont(new Font("Arial", Font.BOLD, 32));
 		add(manageReceptionistsLabel);
 
-		// Get Data from CSV - Receptionist and User
-
 		// Create the table
 		receptionistTable = new JTable();
 		receptionistTable.setFillsViewportHeight(true);
 		receptionistTable.setRowHeight(28);
 		receptionistTable.setFont(new Font("Arial", Font.PLAIN, 14));
-		receptionistTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
-		receptionistTable.setBackground(new Color(54, 57, 63));
-		receptionistTable.setForeground(new Color(220, 221, 222));
-		receptionistTable.setGridColor(new Color(80, 80, 80));
-		receptionistTable.setShowGrid(true);
-
-		// Set header style
-		receptionistTable.getTableHeader().setBackground(new Color(64, 68, 75));
-		receptionistTable.getTableHeader().setForeground(Color.WHITE);
-		receptionistTable.setSelectionBackground(new Color(88, 101, 242));
+		receptionistTable.setBackground(Constants.CANVAS_COLOR);
+		receptionistTable.setForeground(Constants.TEXT_COLOR);
+		receptionistTable.setGridColor(Constants.DEEP_DARK);
+		receptionistTable.setSelectionBackground(Constants.BLURPLE);
 		receptionistTable.setSelectionForeground(Color.WHITE);
-		receptionistTable.setShowVerticalLines(false);
-
+		receptionistTable.setShowGrid(true);
+		
 		// Disable column reordering
 		receptionistTable.getTableHeader().setReorderingAllowed(false);
+		
+		// Insert Data into Table
+		loadReceptionistTableData();
+
+		// Set header style
+		JTableHeader tableHeader = receptionistTable.getTableHeader();
+		tableHeader.setFont(new Font("Arial", Font.BOLD, 14));
+		tableHeader.setBackground(Constants.CANVAS_COLOR);
+		tableHeader.setForeground(Constants.TEXT_COLOR);
+		tableHeader.setBorder(null); // REMOVE bevel
+		UIManager.put("TableHeader.cellBorder", BorderFactory.createLineBorder(Constants.DARK_GRAY));
+		tableHeader.setReorderingAllowed(false);
 
 		// Add table to scroll pane
 		scrollPane.setViewportView(receptionistTable);
 
 		refreshManageReceptionistsPanel();
 	}
+	
+	public Object[][] getData() {
+		List<Object[]> rows = new ArrayList<>();
+		List<Receptionist> receptionists = receptionistManager.getAllReceptionists();
 
+		for (Receptionist r : receptionists) {
+			User user = userManager.findUserByUserID(r.getUserID());
+			String name = user.getUsername();
+
+			rows.add(new Object[] {
+				r.getReceptionistID(),
+				r.getUserID(),
+				name,
+				r.getContact(),
+				r.getEmail(),
+				r.getAddress()
+			});
+		}
+		return rows.toArray(new Object[0][]);
+	}
+	
+	public void loadReceptionistTableData() {;
+
+		Object[][] data = getData();
+
+		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+
+		receptionistTable.setModel(model);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addReceptionistBtn) {
