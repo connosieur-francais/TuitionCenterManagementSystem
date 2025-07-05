@@ -30,6 +30,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import tcms.utils.Constants;
+
 public class IncomeChartPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -155,7 +157,7 @@ public class IncomeChartPanel extends JPanel {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/payments.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(Constants.PAYMENTS_CSV))) {
             String line = br.readLine(); // skip header
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");

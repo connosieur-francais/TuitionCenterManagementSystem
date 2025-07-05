@@ -27,6 +27,7 @@ import tcms.receptionists.Receptionist;
 import tcms.receptionists.ReceptionistManager;
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
 
 public class addReceptionistFrame extends JFrame implements ActionListener {
 
@@ -70,8 +71,8 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 	private CustomJButton cancelButton;
 	
 	// Filenames
-	private String receptionistsCSVFile = "src/receptionits.csv";
-	private String usersCSVFile = "src/users.csv";
+	private String receptionistsCSVFile = Constants.RECEPTIONISTS_CSV;
+	private String usersCSVFile = Constants.USERS_CSV;
 
 	// === Constructor ===
 	public addReceptionistFrame(UserManager um, ReceptionistManager rm) {

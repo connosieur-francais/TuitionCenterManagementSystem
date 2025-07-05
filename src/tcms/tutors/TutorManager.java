@@ -16,6 +16,7 @@ import java.util.Set;
 
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
 
 public class TutorManager {
 
@@ -152,7 +153,7 @@ public class TutorManager {
 		if (updated) {
 			// Sort tutors list by tutorID
 			tutors.sort(Comparator.comparingInt(Tutor::getTutorID));
-			saveTutors("src/tutors.csv");
+			saveTutors(Constants.TUTORS_CSV);
 		}
 	}
 

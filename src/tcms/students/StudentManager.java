@@ -6,9 +6,10 @@ import java.util.regex.Pattern;
 
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
 
 public class StudentManager {
-	
+
 	private int fieldLength = 7;
 	private static UserManager userManager;
 	private Map<Integer, Student> userIDStudentMap = new HashMap<>();
@@ -55,15 +56,9 @@ public class StudentManager {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 			bw.write("student_id,user_id,contact,email,address,level,enrollment_date\n");
 			for (Student student : students) {
-				bw.write(String.join(",",
-					String.valueOf(student.getStudentID()),
-					String.valueOf(student.getUserID()),
-					student.getContact(),
-					student.getEmail(),
-					student.getAddress(),
-					String.valueOf(student.getLevel()),
-					student.getEnrollment_date()
-				));
+				bw.write(String.join(",", String.valueOf(student.getStudentID()), String.valueOf(student.getUserID()),
+						student.getContact(), student.getEmail(), student.getAddress(),
+						String.valueOf(student.getLevel()), student.getEnrollment_date()));
 				bw.newLine();
 			}
 		} catch (IOException e) {
@@ -75,6 +70,7 @@ public class StudentManager {
 		userManager = um;
 		List<User> users = userManager.getAllUsers();
 		System.out.println("updateStudentsInCSV: Updating students in students.csv");
+		System.out.println("Total users: " + users.size());
 
 		Set<Integer> existingStudentUserIDs = new HashSet<>();
 		for (Student student : students) {
@@ -84,16 +80,18 @@ public class StudentManager {
 		boolean updated = false;
 
 		for (User user : users) {
-			if (user.getRole().equalsIgnoreCase("student") && !existingStudentUserIDs.contains(user.getID())) {
-				int newStudentID = nextAvailableStudentID();
-				Student newStudent = new Student(newStudentID, user.getID());
-				students.add(newStudent);
-				userIDStudentMap.put(user.getID(), newStudent);
-				studentIDStudentMap.put(newStudentID, newStudent);
-				System.out.println("Added new student: " + user.getUsername());
-				updated = true;
-			} else {
-				System.out.println("Student already exists: " + user.getUsername());
+			if (user.getRole().equalsIgnoreCase("student")) {
+				if (!existingStudentUserIDs.contains(user.getID())) {
+					int newStudentID = nextAvailableStudentID();
+					Student newStudent = new Student(newStudentID, user.getID());
+					students.add(newStudent);
+					userIDStudentMap.put(user.getID(), newStudent);
+					studentIDStudentMap.put(newStudentID, newStudent);
+					System.out.println("Added new student: " + user.getUsername());
+					updated = true;
+				} else {
+					System.out.println("Student account exists: " + user.getUsername());
+				}
 			}
 		}
 
@@ -110,7 +108,7 @@ public class StudentManager {
 
 		if (updated) {
 			students.sort(Comparator.comparingInt(Student::getStudentID));
-			saveStudents("src/students.csv");
+			saveStudents(Constants.STUDENTS_CSV);
 		}
 	}
 
@@ -148,7 +146,8 @@ public class StudentManager {
 	}
 
 	public boolean isValidEmail(String email) {
-		if (email == null || email.trim().isEmpty()) return false;
+		if (email == null || email.trim().isEmpty())
+			return false;
 		int at = email.indexOf('@');
 		int dot = email.lastIndexOf('.');
 		return at > 0 && dot > at + 1 && dot < email.length() - 1;
@@ -158,10 +157,5 @@ public class StudentManager {
 		String contactRegex = "^01[0-46-9]-\\d{3}-\\d{4}$";
 		return Pattern.matches(contactRegex, contact);
 	}
-	
 
-	
-	}
-
-	
-
+}

@@ -1,6 +1,6 @@
 package tcms.users;
 
-import java.util.Map;
+import java.util.List;
 
 public class User {
 	private int userID;
@@ -32,8 +32,8 @@ public class User {
 	
 	private int nextAvailableID() { // SPECIAL METHOD ( NOT TO BE USED BY OTHER CLASSES! )
 		um.loadUsers("src//users.csv");
-		Map<Integer, User> userMap = um.getUserMap();
-		int nextID = userMap.size() + 1;
+		List<User> users = um.getAllUsers();
+		int nextID = users.size() + 1;
 		return nextID;
 	}
 	

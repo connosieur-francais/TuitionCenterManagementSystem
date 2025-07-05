@@ -34,6 +34,7 @@ import tcms.receptionists.ReceptionistManager;
 import tcms.tutors.TutorManager;
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
 
 public class AdminPage extends JFrame implements ActionListener {
 
@@ -46,8 +47,8 @@ public class AdminPage extends JFrame implements ActionListener {
 
 	private static Admin admin;
 	private static User user;
-	private String adminCSVFile = "src//admins.csv";
-	private String userCSVFile = "src//users.csv";
+	private String adminCSVFile = Constants.ADMINS_CSV;
+	private String userCSVFile = Constants.USERS_CSV;
 
 	private static final long serialVersionUID = 1L;
 	private CustomRoundedPanel contentPane;

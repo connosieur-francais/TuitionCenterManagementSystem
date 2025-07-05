@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
 
 public class ReceptionistManager {
 
@@ -143,7 +144,7 @@ public class ReceptionistManager {
 		// Save only if changes were made
 		if (updated) {
 			receptionists.sort(Comparator.comparingInt(Receptionist::getReceptionistID));
-			saveReceptionists("src/receptionists.csv");
+			saveReceptionists(Constants.RECEPTIONISTS_CSV);
 		}
 	}
 

@@ -16,15 +16,15 @@ public class Constants {
     public static final Color DARK_GRAY = new Color(43, 45, 49);
 
     // File paths (relative to root folder or build path)
-    public static final String USERS_CSV = "tcms/data/users.csv";
-    public static final String RECEPTIONISTS_CSV = "tcms/data/receptionists.csv";
-    public static final String TUTORS_CSV = "tcms/data/tutors.csv";
-    public static final String STUDENTS_CSV = "tcms/data/students.csv";
-    public static final String ADMINS_CSV = "tcms/data/admins.csv";
-    public static final String PAYMENTS_CSV = "tcms/data/payments.csv";
-    public static final String CLASSES_CSV = "tcms/data/classes.csv";
-    public static final String ENROLLMENTS_CSV = "tcms/data/enrollments.csv";
-    public static final String LEVELS_CSV = "tcms/data/levels.csv";
-    public static final String SUBJECT_CHANGE_REQUESTS_CSV = "tcms/data/subject_change_requests.csv";
-    public static final String SUBJECTS_CSV = "tcms/data/subjects.csv";
+    public static final String USERS_CSV = "src/tcms/data/users.csv";
+    public static final String RECEPTIONISTS_CSV = "src/tcms/data/receptionists.csv";
+    public static final String TUTORS_CSV = "src/tcms/data/tutors.csv";
+    public static final String STUDENTS_CSV = "src/tcms/data/students.csv";
+    public static final String ADMINS_CSV = "src/tcms/data/admins.csv";
+    public static final String PAYMENTS_CSV = "src/tcms/data/payments.csv";
+    public static final String CLASSES_CSV = "src/tcms/data/classes.csv";
+    public static final String ENROLLMENTS_CSV = "src/tcms/data/enrollments.csv";
+    public static final String LEVELS_CSV = "src/tcms/data/levels.csv";
+    public static final String SUBJECT_CHANGE_REQUESTS_CSV = "src/tcms/data/subject_change_requests.csv";
+    public static final String SUBJECTS_CSV = "src/tcms/data/subjects.csv";
 }

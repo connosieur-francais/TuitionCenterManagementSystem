@@ -3,6 +3,8 @@ package tcms.users;
 import java.io.*;
 import java.util.*;
 
+import tcms.utils.Constants;
+
 public class UserManager {
 	
 	private int fieldLength = 6; // If CSV file changes, change this number
@@ -124,7 +126,7 @@ public class UserManager {
 	    user.setUsername(newUsername);
 	    usernameMap.put(newUsernameKey, user);
 	    // Save changes
-	    saveUsers("src/users.csv");
+	    saveUsers(Constants.USERS_CSV);
 	    System.out.println("renameUser: Username updated from '" + oldUsernameKey + "' to '" + newUsernameKey + "'");
 	    return true;
 	}
