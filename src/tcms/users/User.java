@@ -2,6 +2,8 @@ package tcms.users;
 
 import java.util.List;
 
+import tcms.utils.Constants;
+
 public class User {
 	private int userID;
 	private String username;
@@ -31,7 +33,7 @@ public class User {
 	}
 	
 	private int nextAvailableID() { // SPECIAL METHOD ( NOT TO BE USED BY OTHER CLASSES! )
-		um.loadUsers("src//users.csv");
+		um.loadUsers(Constants.USERS_CSV);
 		List<User> users = um.getAllUsers();
 		int nextID = users.size() + 1;
 		return nextID;

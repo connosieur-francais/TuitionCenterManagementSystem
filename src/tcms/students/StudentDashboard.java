@@ -24,6 +24,8 @@ import javax.swing.border.EmptyBorder;
 import tcms.custom_gui_components.CustomJButton;
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.GridLayout;
@@ -40,38 +42,26 @@ public class StudentDashboard extends JFrame implements ActionListener {
 	private CardLayout cardLayout;
 	private GroupLayout grpLayoutHeaderPanel;
 
-	private static UserManager um = new UserManager();
-	private static StudentManager sm = new StudentManager();
+	private static UserManager um;
+	private static StudentManager sm;
 	private static User user;
 	private static Student student;
 
-	private String userCSVFile = "src/users.csv";
-	private String studentCSVFile = "src/students.csv";
+	private String userCSVFile = Constants.USERS_CSV;
+	private String studentCSVFile = Constants.STUDENTS_CSV;
 	private Color darkGrey = new Color(34, 34, 34);
 	private Color blueAcc = new Color(70, 130, 180);
 	private Color whiteText = Color.WHITE;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new StudentDashboard(new User(2, "Gracious", "123", "student", 3, "active"));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	// YOU HAVE TO ACCESS THIS PAGE BY LOGGING IN!
 
 	/**
 	 * Create the frame.
 	 */
-	public StudentDashboard(User u) {
-		sm.loadStudents(studentCSVFile);
-		um.loadUsers(userCSVFile);
+	public StudentDashboard(User u, UserManager userManager, StudentManager studentManager) {
+		// Changed this - using an already loaded student manager, there is no need to load again
+		um = userManager;
+		sm = studentManager;
 
 		user = u;
 		student = sm.findStudentByUserID(u.getID());

@@ -257,7 +257,7 @@ public class LoginPage extends JFrame implements ActionListener {
                 break;
             case "student":
                 userManager.saveUsers(Constants.USERS_CSV);
-                new StudentDashboard(user);
+                new StudentDashboard(user, userManager, studentManager);
                 frame.dispose();
                 break;
             case "receptionist":

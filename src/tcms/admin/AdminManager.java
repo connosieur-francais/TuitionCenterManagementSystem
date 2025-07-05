@@ -20,7 +20,7 @@ import tcms.utils.Constants;
 
 public class AdminManager {
 
-	private int fieldLength = 5; // If CSV file fields change, change this number
+	private int fieldLength = 5;
 	private static UserManager userManager;
 	private Map<Integer, Admin> userIDAdminMap = new HashMap<>();
 	private Map<Integer, Admin> adminIDAdminMap = new HashMap<>();
@@ -29,9 +29,7 @@ public class AdminManager {
 	public void loadAdmins(String filename) {
 		admins.clear();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(filename))) { // Creates a list of users by
-																					// reading
-			// from admins.csv file
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 			String line;
 			boolean skipHeader = true;
 
@@ -52,7 +50,6 @@ public class AdminManager {
 					userIDAdminMap.put(userID, admin);
 					adminIDAdminMap.put(adminID, admin);
 
-					// Debug print
 					System.out.println("Loaded admin: " + admin);
 				}
 			}
@@ -99,9 +96,7 @@ public class AdminManager {
 		userManager = um;
 		List<User> users = userManager.getAllUsers();
 		System.out.println("updateAdminsInCSV: Updating admins in admins.csv");
-		System.out.println("Total users: " + users.size());
 
-		// Map current admin userIDs for faster lookup
 		Set<Integer> existingAdminUserIDs = new HashSet<>();
 		for (Admin admin : admins) {
 			existingAdminUserIDs.add(admin.getUserID());
@@ -109,7 +104,6 @@ public class AdminManager {
 
 		boolean updated = false;
 
-		// Add new admins from users.csv
 		for (User user : users) {
 			if (user.getRole().equalsIgnoreCase("admin")) {
 				if (!existingAdminUserIDs.contains(user.getID())) {
@@ -117,6 +111,8 @@ public class AdminManager {
 					int newAdminID = nextAvailableAdminID();
 					Admin newAdmin = new Admin(newAdminID, user.getID());
 					admins.add(newAdmin);
+					adminIDAdminMap.put(newAdminID, newAdmin);
+					userIDAdminMap.put(user.getID(), newAdmin);
 					updated = true;
 				} else {
 					System.out.println("Admin account exists: " + user.getUsername());
@@ -124,23 +120,28 @@ public class AdminManager {
 			}
 		}
 
-		// Remove admins who are no longer admins in users.csv
 		Iterator<Admin> iterator = admins.iterator();
 		while (iterator.hasNext()) {
 			Admin admin = iterator.next();
-			User user = userManager.findUserByUserID(admin.getUserID()); // Use consistent lookup
+			User user = userManager.findUserByUserID(admin.getUserID());
 
 			if (user == null || !user.getRole().equalsIgnoreCase("admin")) {
 				String username = (user == null) ? "Unknown/Deleted User" : user.getUsername();
+
+				if (user != null && user.getUsername().equalsIgnoreCase("admin")) {
+					System.out.println("Skipping removal of core admin user: " + user.getUsername());
+					continue;
+				}
+
 				System.out.println("Removing admin (no longer has admin role): " + username);
 				iterator.remove();
+				userIDAdminMap.remove(admin.getUserID());
+				adminIDAdminMap.remove(admin.getAdminID());
 				updated = true;
 			}
 		}
 
-		// Save only if changes were made
 		if (updated) {
-			// sort admins list by adminID
 			admins.sort(Comparator.comparingInt(Admin::getAdminID));
 			saveAdmins(Constants.ADMINS_CSV);
 		}
@@ -151,31 +152,22 @@ public class AdminManager {
 		for (Admin admin : admins) {
 			usedIDs.add(admin.getAdminID());
 		}
-
 		int id = 1;
 		while (usedIDs.contains(id)) {
 			id++;
 		}
 		return id;
 	}
+
 	public boolean isValidEmail(String email) {
-		// Check for null or empty string after trimming whitespace
 		if (email == null || email.trim().isEmpty()) {
 			return false;
 		}
-
-		// Find the position of '@' and the last '.'
 		int positionOfAt = email.indexOf('@');
 		int positionOfLastDot = email.lastIndexOf('.');
-
-		// Conditions for a valid email:
-		// 1. '@' must exist and not be the first character
-		// 2. '.' must come after '@'
-		// 3. '.' must not be the last character
 		boolean hasValidAt = positionOfAt > 0;
 		boolean hasDotAfterAt = positionOfLastDot > positionOfAt + 1;
 		boolean dotNotAtEnd = positionOfLastDot < email.length() - 1;
-
 		return hasValidAt && hasDotAfterAt && dotNotAtEnd;
 	}
 
