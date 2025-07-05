@@ -19,7 +19,14 @@ public class Constants {
     
     public static final String LOGIN_PAGE_BACKGROUND_FILE = "src/tcms/resources/loginPageBackground.png";
     public static final String RECEPTIONIST_USER_ICON_FILE = "src/tcms/resources/receptionist_user_icon.png";
-
+    public static final String STUDENT_USER_ICON_FILE = "src/tcms/resources/blank_profile.jpg";
+    
+    public static final String[] IMG_CAROUSEL = {
+    	    "src/tcms/resources/carousel_schedule.jpg",
+    	    "src/tcms/resources/carousel_briefing.png",
+    	    "src/tcms/resources/carousel_enroll.jpg"
+    	};
+    
     // File paths (relative to root folder or build path)
     public static final String USERS_CSV = "src/tcms/data/users.csv";
     public static final String RECEPTIONISTS_CSV = "src/tcms/data/receptionists.csv";
@@ -32,4 +39,4 @@ public class Constants {
     public static final String LEVELS_CSV = "src/tcms/data/levels.csv";
     public static final String SUBJECT_CHANGE_REQUESTS_CSV = "src/tcms/data/subject_change_requests.csv";
     public static final String SUBJECTS_CSV = "src/tcms/data/subjects.csv";
-}
+}  
