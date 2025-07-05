@@ -25,6 +25,8 @@ import tcms.custom_gui_components.CustomJButton;
 import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.*;
+import tcms.students.UpdateStudentWindow;
+
 
 
 public class StudentDashboard extends JFrame implements ActionListener {
@@ -244,7 +246,11 @@ public class StudentDashboard extends JFrame implements ActionListener {
                 case "Class Schedule" -> JOptionPane.showMessageDialog(this, "Loading Schedule...");
                 case "Requests" -> JOptionPane.showMessageDialog(this, "Opening Requests...");
                 case "Payment Status" -> JOptionPane.showMessageDialog(this, "Opening Payment Window...");
-                case "View Profile" -> JOptionPane.showMessageDialog(this, "Viewing Profile...");
+                case "View Profile" -> {
+                    new UpdateStudentWindow(user, um, sm).setVisible(true);  
+                    this.dispose();                                         
+                }
+
                 default -> {}
             }
         }
@@ -255,4 +261,21 @@ public class StudentDashboard extends JFrame implements ActionListener {
         usernameLabel.setText(user.getUsername());
         studentIDLabel.setText(String.valueOf(student.getStudentID()));
     }
+    public static void main(String[] args) {
+      
+        UserManager um = new UserManager();
+        StudentManager sm = new StudentManager();
+        um.loadUsers(Constants.USERS_CSV);
+        sm.loadStudents(Constants.STUDENTS_CSV);
+
+       
+        User demoUser = um.findUserByUsername("Gracious");   
+
+        if (demoUser != null) {
+            new StudentDashboard(demoUser, um, sm).setVisible(true);
+        } else {
+            System.out.println("Demo user not found. Check the username in users.csv.");
+        }
+    }
+    
 }
