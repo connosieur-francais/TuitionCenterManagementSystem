@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import tcms.custom_gui_components.CustomJButton;
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
 import tcms.students.subjectView;
 
 
@@ -38,9 +39,9 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 	private static User user;
 	private static Student student;
 
-	private String userCSVFile = "src/users.csv";
-	private String studentCSVFile = "src/students.csv";
-	private String subjectCSVFile = "src/subjects.csv";
+	private String userCSVFile = Constants.USERS_CSV;
+	private String studentCSVFile = Constants.STUDENTS_CSV;
+	private String subjectCSVFile = Constants.SUBJECTS_CSV;
 	
 	private Color darkGrey = new Color(34, 34, 34);
 	private Color blueAcc = new Color(70, 130, 180);

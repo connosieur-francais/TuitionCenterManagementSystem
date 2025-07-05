@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import tcms.utils.Constants;
+
 public class subjectView {
 	
 	    
 	    public static String getSubjectByStudentId(int studentID) {
-	        String filePath = "src/subjects.csv";  
+	        String filePath = Constants.SUBJECTS_CSV;  
 	        String line;
 
 	        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
