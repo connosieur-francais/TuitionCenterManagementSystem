@@ -1,22 +1,22 @@
 package tcms.students;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
@@ -24,246 +24,235 @@ import javax.swing.border.EmptyBorder;
 import tcms.custom_gui_components.CustomJButton;
 import tcms.users.User;
 import tcms.users.UserManager;
-import tcms.utils.Constants;
+import tcms.utils.*;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.GridLayout;
 
 public class StudentDashboard extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane, headerPanel;
-	private JPanel buttonPanel, carouselHolderPanel, whatsNewPanel, profilePicturePanel;
+    private static final long serialVersionUID = 1L;
 
-	private JLabel usernameLabel, idLabel, studentIDLabel, profilePictureLabel;
-	private JButton notificationsBtn, logoutBtn, nextBtn, previousBtn;
-	private CustomJButton btn1, btn2, btn3, btn4;
-	private CardLayout cardLayout;
-	private GroupLayout grpLayoutHeaderPanel;
+   
+    private final UserManager um;
+    private final StudentManager sm;
+    private final User user;
+    private final Student student;
 
-	private static UserManager um;
-	private static StudentManager sm;
-	private static User user;
-	private static Student student;
+    
+    private JPanel contentPane;
+    private JLabel usernameLabel;
+    private JLabel studentIDLabel;
+    private JButton notificationsBtn;
+    private JButton logoutBtn;
+    private JButton nextBtn;
+    private JButton previousBtn;
+    private CardLayout cardLayout;
+    private JPanel whatsNewPanel;
 
-	private String userCSVFile = Constants.USERS_CSV;
-	private String studentCSVFile = Constants.STUDENTS_CSV;
-	private Color darkGrey = new Color(34, 34, 34);
-	private Color blueAcc = new Color(70, 130, 180);
-	private Color whiteText = Color.WHITE;
+    
+    private static final Color DARK_GREY = new Color(34, 34, 34);
+    private static final Color BLUE_ACCENT = new Color(70, 130, 180);
+    private static final Color WHITE_TEXT = Color.WHITE;
 
-	// YOU HAVE TO ACCESS THIS PAGE BY LOGGING IN!
+   
+    public StudentDashboard(User u, UserManager userManager, StudentManager studentManager) {
+        this.um = userManager;
+        this.sm = studentManager;
+        this.user = u;
+        this.student = sm.findStudentByUserID(u.getID());
 
-	/**
-	 * Create the frame.
-	 */
-	public StudentDashboard(User u, UserManager userManager, StudentManager studentManager) {
-		// Changed this - using an already loaded student manager, there is no need to load again
-		um = userManager;
-		sm = studentManager;
+        buildUi();
+        updateDashboardInformation();
+    }
 
-		user = u;
-		student = sm.findStudentByUserID(u.getID());
+  
+    private void buildUi() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Student Dashboard");
+        setBounds(100, 100, 1200, 750);
+        setResizable(false); 
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Student Dashboard");
-		setBounds(100, 100, 1200, 750);
-		setResizable(false);
+        
+        contentPane = new JPanel();
+        contentPane.setBackground(DARK_GREY);
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(null);
+        setContentPane(contentPane);
 
-		contentPane = new JPanel();
-		contentPane.setForeground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setBackground(darkGrey);
+        buildHeader();
+        buildProfileSection();
+        buildCarouselSection();
+        buildButtonGrid();
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+        setVisible(true);
+    }
 
-		headerPanel = new JPanel();
-		headerPanel.setBackground(new Color(34, 34, 34));
-		headerPanel.setBounds(0, 0, 1186, 60);
-		contentPane.add(headerPanel);
+  
+    private void buildHeader() {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(DARK_GREY);
+        headerPanel.setBounds(0, 0, 1186, 60);
+        contentPane.add(headerPanel);
 
-		usernameLabel = new JLabel("<dynamic>");
-		usernameLabel.setForeground(new Color(255, 255, 255));
-		usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		usernameLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        usernameLabel = new JLabel();
+        usernameLabel.setForeground(WHITE_TEXT);
+        usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        usernameLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-		idLabel = new JLabel("| ID:");
-		idLabel.setForeground(new Color(255, 255, 255));
-		idLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        JLabel idLabel = new JLabel("| ID:");
+        idLabel.setForeground(WHITE_TEXT);
+        idLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-		studentIDLabel = new JLabel("<dynamic>");
-		studentIDLabel.setForeground(new Color(255, 255, 255));
-		studentIDLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        studentIDLabel = new JLabel();
+        studentIDLabel.setForeground(WHITE_TEXT);
+        studentIDLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-		notificationsBtn = new JButton("🔔");
-		notificationsBtn.setBackground(blueAcc);
-		notificationsBtn.setForeground(whiteText);
-		notificationsBtn.addActionListener(this);
-		notificationsBtn.setFocusPainted(false);
-		notificationsBtn.addActionListener(this);
+        notificationsBtn = new JButton("🔔");
+        notificationsBtn.setBackground(BLUE_ACCENT);
+        notificationsBtn.setForeground(WHITE_TEXT);
+        notificationsBtn.setFocusPainted(false);
+        notificationsBtn.addActionListener(this);
 
-		logoutBtn = new JButton("⍈ Logout");
-		logoutBtn.setBackground(blueAcc);
-		logoutBtn.setForeground(whiteText);
-		logoutBtn.setFocusPainted(false);
-		logoutBtn.addActionListener(this);
-		grpLayoutHeaderPanel = new GroupLayout(headerPanel);
-		grpLayoutHeaderPanel.setHorizontalGroup(grpLayoutHeaderPanel.createParallelGroup(Alignment.LEADING).addGroup(grpLayoutHeaderPanel
-				.createSequentialGroup().addGap(628)
-				.addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE).addGap(10)
-				.addComponent(idLabel, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE).addGap(10)
-				.addComponent(studentIDLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE).addGap(9)
-				.addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE).addGap(10)
-				.addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)));
-		grpLayoutHeaderPanel.setVerticalGroup(grpLayoutHeaderPanel.createParallelGroup(Alignment.LEADING).addGroup(grpLayoutHeaderPanel
-				.createSequentialGroup().addGap(10)
-				.addGroup(grpLayoutHeaderPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(idLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(studentIDLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))));
-		headerPanel.setLayout(grpLayoutHeaderPanel);
+        logoutBtn = new JButton("⍈ Logout");
+        logoutBtn.setBackground(BLUE_ACCENT);
+        logoutBtn.setForeground(WHITE_TEXT);
+        logoutBtn.setFocusPainted(false);
+        logoutBtn.addActionListener(this);
 
-		profilePicturePanel = new JPanel();
-		profilePicturePanel.setBackground(new Color(34, 34, 34));
-		profilePicturePanel.setBounds(90, 70, 500, 300);
-		contentPane.add(profilePicturePanel);
+        GroupLayout gl = new GroupLayout(headerPanel);
+        gl.setHorizontalGroup(gl.createParallelGroup(Alignment.LEADING)
+                .addGroup(gl.createSequentialGroup()
+                        .addGap(628)
+                        .addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+                        .addGap(10)
+                        .addComponent(idLabel)
+                        .addGap(10)
+                        .addComponent(studentIDLabel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+                        .addGap(10)
+                        .addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+                        .addGap(10)
+                        .addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)));
+        gl.setVerticalGroup(gl.createParallelGroup(Alignment.LEADING)
+                .addGroup(gl.createSequentialGroup().addGap(10)
+                        .addGroup(gl.createParallelGroup(Alignment.BASELINE)
+                                .addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(idLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(studentIDLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))));
+        headerPanel.setLayout(gl);
+    }
 
-		profilePictureLabel = new JLabel();
-		ImageIcon origIcon = new ImageIcon("src\\tcms\\resources\\blank_profile.jpg");
-		Image scaledImg = origIcon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
-		profilePictureLabel.setIcon(new ImageIcon(scaledImg));
-		profilePicturePanel.add(profilePictureLabel);
+    
+    private void buildProfileSection() {
+        JPanel profilePanel = new JPanel();
+        profilePanel.setBackground(DARK_GREY);
+        profilePanel.setBounds(90, 70, 500, 300);
+        contentPane.add(profilePanel);
 
-		// IMAGE CAROUSEL SECTION
-		cardLayout = new CardLayout();
-		whatsNewPanel = new JPanel(cardLayout);
-		whatsNewPanel.setBackground(darkGrey);
-		whatsNewPanel.setPreferredSize(new Dimension(300, 300));
+        
+        ImageIcon origIcon = new ImageIcon(Constants.STUDENT_USER_ICON_FILE);
+        Image scaledImg = origIcon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
 
-		String[] imagePaths = { "src\\tcms\\resources\\carousel_schedule.jpg",
-				"src\\tcms\\resources\\carousel_briefing.png", "src\\tcms\\resources\\carousel_enroll.jpg" };
+        JLabel profilePictureLabel = new JLabel(new ImageIcon(scaledImg));
+        profilePanel.add(profilePictureLabel);
+    }
 
-		for (int i = 0; i < imagePaths.length; i++) {
-			ImageIcon icon = new ImageIcon(imagePaths[i]);
-			Image scaled = icon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-			JLabel imageLabel = new JLabel(new ImageIcon(scaled), JLabel.RIGHT);
-			imageLabel.setHorizontalAlignment(JLabel.CENTER);
-			whatsNewPanel.add(imageLabel, "card" + i);
-		}
+    private void buildCarouselSection() {
+        cardLayout = new CardLayout();
+        whatsNewPanel = new JPanel(cardLayout);
+        whatsNewPanel.setBackground(DARK_GREY);
+        whatsNewPanel.setPreferredSize(new Dimension(300, 300));
 
-		Timer autoSlide = new Timer(4000, new ActionListener() {
-			int currentIndex = 0;
+        for (int i = 0; i < Constants.IMG_CAROUSEL.length; i++) {
+            ImageIcon icon = new ImageIcon(Constants.IMG_CAROUSEL[i]);
+            Image scaled = icon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+            JLabel imgLabel = new JLabel(new ImageIcon(scaled));
+            imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            whatsNewPanel.add(imgLabel, "card" + i);
+        }
 
-			public void actionPerformed(ActionEvent e) {
-				currentIndex = (currentIndex + 1) % imagePaths.length;
-				cardLayout.show(whatsNewPanel, "card" + currentIndex);
-			}
-		});
-		autoSlide.start();
+        Timer autoSlide = new Timer(4000, e -> {
+            cardLayout.next(whatsNewPanel);
+        });
+        autoSlide.start();
 
-		carouselHolderPanel = new JPanel();
-		carouselHolderPanel.setBounds(610, 70, 500, 300);
-		contentPane.add(carouselHolderPanel);
-		carouselHolderPanel.setLayout(new BorderLayout(0, 0));
-		carouselHolderPanel.add(whatsNewPanel, BorderLayout.CENTER);
+        JPanel holder = new JPanel();
+        holder.setBounds(610, 70, 500, 300);
+        holder.setLayout(new BorderLayout());
+        contentPane.add(holder);
 
-		previousBtn = new JButton("◀");
-		previousBtn.setMaximumSize(new Dimension(40, 20));
-		previousBtn.setFocusPainted(false);
-		carouselHolderPanel.add(previousBtn, BorderLayout.WEST);
+        previousBtn = new JButton("◀");
+        previousBtn.setFocusPainted(false);
+        previousBtn.addActionListener(this);
+        holder.add(previousBtn, BorderLayout.WEST);
 
-		nextBtn = new JButton("▶");
-		nextBtn.setMaximumSize(new Dimension(40, 20));
-		nextBtn.setFocusPainted(false);
-		carouselHolderPanel.add(nextBtn, BorderLayout.EAST);
+        holder.add(whatsNewPanel, BorderLayout.CENTER);
 
-		buttonPanel = new JPanel();
-		buttonPanel.setBackground(new Color(34, 34, 34));
-		buttonPanel.setBounds(100, 380, 1000, 300);
-		contentPane.add(buttonPanel);
-		buttonPanel.setLayout(new GridLayout(2, 2, 50, 50));
+        nextBtn = new JButton("▶");
+        nextBtn.setFocusPainted(false);
+        nextBtn.addActionListener(this);
+        holder.add(nextBtn, BorderLayout.EAST);
+    }
 
-		btn1 = new CustomJButton();
-		btn1.setForeground(new Color(255, 255, 255));
-		btn1.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-		btn1.setColor(new Color(70, 130, 180));
-		btn1.setRadius(30);
-		btn1.setText("Class Schedule");
-		btn1.setBackground(blueAcc);
-		btn1.addActionListener(this);
-		buttonPanel.add(btn1);
+    
+    private void buildButtonGrid() {
+        JPanel grid = new JPanel(new java.awt.GridLayout(2, 2, 50, 50));
+        grid.setBackground(DARK_GREY);
+        grid.setBounds(100, 380, 1000, 300);
+        contentPane.add(grid);
 
-		btn2 = new CustomJButton();
-		btn2.setForeground(new Color(255, 255, 255));
-		btn2.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-		btn2.setRadius(30);
-		btn2.setText("Requests");
-		btn2.setColor(blueAcc);
-		btn2.addActionListener(this);
-		buttonPanel.add(btn2);
+        CustomJButton btnSchedule = createTileButton("Class Schedule");
+        CustomJButton btnRequests = createTileButton("Requests");
+        CustomJButton btnPayments = createTileButton("Payment Status");
+        CustomJButton btnProfile = createTileButton("View Profile");
 
-		btn3 = new CustomJButton();
-		btn3.setForeground(new Color(255, 255, 255));
-		btn3.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-		btn3.setRadius(30);
-		btn3.setText("Payment Status");
-		btn3.setColor(blueAcc);
-		btn3.addActionListener(this);
-		buttonPanel.add(btn3);
+        grid.add(btnSchedule);
+        grid.add(btnRequests);
+        grid.add(btnPayments);
+        grid.add(btnProfile);
+    }
 
-		btn4 = new CustomJButton();
-		btn4.setForeground(new Color(255, 255, 255));
-		btn4.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-		btn4.setRadius(30);
-		btn4.setText("View Profile");
-		btn4.setColor(blueAcc);
-		btn4.addActionListener(this);
-		buttonPanel.add(btn4);
+    private CustomJButton createTileButton(String text) {
+        CustomJButton btn = new CustomJButton();
+        btn.setText(text);
+        btn.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
+        btn.setForeground(WHITE_TEXT);
+        btn.setColor(BLUE_ACCENT);
+        btn.setBackground(BLUE_ACCENT);
+        btn.setRadius(30);
+        btn.setFocusPainted(false);
+        btn.addActionListener(this);
+        return btn;
+    }
 
-		updateDashboardInformation(user, student);
+   
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object src = e.getSource();
 
-		setVisible(true);
-	}
+        if (src == notificationsBtn) {
+            JOptionPane.showMessageDialog(this, "No new notifications.");
+        } else if (src == logoutBtn) {
+            JOptionPane.showMessageDialog(this, "Logging Out...");
+            dispose();
+        } else if (src == nextBtn) {
+            cardLayout.next(whatsNewPanel); 
+        } else if (src == previousBtn) {
+            cardLayout.previous(whatsNewPanel); 
+        } else if (src instanceof CustomJButton btn) {
+            switch (btn.getText()) {
+                case "Class Schedule" -> JOptionPane.showMessageDialog(this, "Loading Schedule...");
+                case "Requests" -> JOptionPane.showMessageDialog(this, "Opening Requests...");
+                case "Payment Status" -> JOptionPane.showMessageDialog(this, "Opening Payment Window...");
+                case "View Profile" -> JOptionPane.showMessageDialog(this, "Viewing Profile...");
+                default -> {}
+            }
+        }
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// HEADER PANEL
-		if (e.getSource() == notificationsBtn) {
-			JOptionPane.showMessageDialog(this, "No new notifications.");
-		}
-		if (e.getSource() == logoutBtn) {
-			JOptionPane.showMessageDialog(this, "Logging Out...");
-			dispose();
-		}
-		// CAROUSEL PANEL
-		if (e.getSource() == nextBtn) {
-			cardLayout.previous(whatsNewPanel);
-		}
-		if (e.getSource() == previousBtn) {
-			cardLayout.next(whatsNewPanel);
-		}
 
-		// BUTTON PANEL
-		if (e.getSource() == btn1) {
-			JOptionPane.showMessageDialog(this, "Loading Schedule...");
-		}
-		if (e.getSource() == btn2) {
-			JOptionPane.showMessageDialog(this, "Opening Requests...");
-		}
-		if (e.getSource() == btn3) {
-			JOptionPane.showMessageDialog(this, "Opening Payment Window...");
-		}
-		if (e.getSource() == btn4) {
-			JOptionPane.showMessageDialog(this, "Viewing Profile...");
-		}
-	}
-
-	public void updateDashboardInformation(User u, Student s) {
-		usernameLabel.setText(u.getUsername());
-		studentIDLabel.setText(String.valueOf(s.getStudentID()));
-	}
+    private void updateDashboardInformation() {
+        usernameLabel.setText(user.getUsername());
+        studentIDLabel.setText(String.valueOf(student.getStudentID()));
+    }
 }

@@ -2,151 +2,142 @@ package tcms.students;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import tcms.custom_gui_components.CustomJButton;
 import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
-import tcms.students.subjectView;
 
 
 public class UpdateStudentWindow extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel MainPanel;
-	private JPanel BottomLeft;
+    private static final long serialVersionUID = 1L;
 
-	private JLabel usernameLabel, studentIDLabel, profilePictureLabel, email, contact, subjectLabel, level;
-	private JButton notificationsBtn, logoutBtn, nextBtn, previousBtn;
+    
+    private final UserManager um;
+    private final StudentManager sm;
+    private final User user;
+    private final Student student;
 
-	private static UserManager um = new UserManager();
-	private static StudentManager sm = new StudentManager();
-	private static User user;
-	private static Student student;
+   
+    private JPanel mainPanel;
+    private JLabel usernameLabel;
+    private JLabel studentIDLabel;
+    private JLabel subjectLabel;
 
-	private String userCSVFile = Constants.USERS_CSV;
-	private String studentCSVFile = Constants.STUDENTS_CSV;
-	private String subjectCSVFile = Constants.SUBJECTS_CSV;
-	
-	private Color darkGrey = new Color(34, 34, 34);
-	private Color blueAcc = new Color(70, 130, 180);
+    private static final Color DARK_GREY = new Color(34, 34, 34);
+    private static final Color WHITE = Color.WHITE;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UpdateStudentWindow frame = new UpdateStudentWindow(
-							new User(2, "Gracious", "123", "student", 3, "active"));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+   
+    public UpdateStudentWindow(User u, UserManager userManager, StudentManager studentManager) {
+        this.um = userManager;
+        this.sm = studentManager;
+        this.user = u;
+        this.student = sm.findStudentByUserID(u.getID());
 
-	/**
-	 * Create the frame.
-	 */
-	public UpdateStudentWindow(User u) {
+        buildUi();
+        populateDynamicFields();
+    }
 
-		sm.loadStudents(studentCSVFile);
-		um.loadUsers(userCSVFile);
+  
+    private void buildUi() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setBounds(100, 100, 1002, 599);
+        setTitle("Student | Edit Profile");
 
-		user = u;
-		student = sm.findStudentByUserID(u.getID());
-		
+        
+        mainPanel = new JPanel();
+        mainPanel.setBackground(DARK_GREY);
+        mainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        mainPanel.setLayout(null); 
+        setContentPane(mainPanel);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
-		setBounds(100, 100, 1002, 599);
 
-		MainPanel = new JPanel();
-		MainPanel.setBackground(darkGrey);
-		MainPanel.setForeground(darkGrey);
-		MainPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(MainPanel);
-		MainPanel.setLayout(null);
+        
+        JLabel title = new JLabel("PROFILE");
+        title.setForeground(WHITE);
+        title.setFont(new Font("Arial Black", Font.BOLD, 20));
+        title.setBounds(425, 0, 101, 48);
+        mainPanel.add(title);
 
-		JLabel Title = new JLabel("PROFILE");
-		Title.setForeground(Color.WHITE);
-		Title.setFont(new Font("Arial Black", Font.BOLD, 20));
-		Title.setBounds(425, 0, 101, 48);
-		MainPanel.add(Title);
+       
+        JLabel pfpLabel = new JLabel();
+        pfpLabel.setBounds(36, 120, 282, 199);
+        mainPanel.add(pfpLabel);
 
-		JLabel PFP = new JLabel("");
-		PFP.setBounds(70, 99, 282, 199);
-		MainPanel.add(PFP);
-		ImageIcon x = new ImageIcon(UpdateStudentWindow.class.getResource("/tcms/resources/blank_profile.jpg"));
-		Image i = x.getImage().getScaledInstance(275, 275, Image.SCALE_SMOOTH);
-		ImageIcon pfp = new ImageIcon(i);
-		PFP.setIcon(pfp);
-		PFP.setFont(new Font("Arial Black", Font.BOLD, 14));
-		PFP.setForeground(Color.WHITE);
+        ImageIcon raw = new ImageIcon(Constants.STUDENT_USER_ICON_FILE);
+        Image scaled = raw.getImage().getScaledInstance(275, 275, Image.SCALE_SMOOTH);
+        pfpLabel.setIcon(new ImageIcon(scaled));
 
-		// BottomLeft panel 
-		BottomLeft = new JPanel();
-		BottomLeft.setLayout(new BoxLayout(BottomLeft, BoxLayout.Y_AXIS));
-		BottomLeft.setBackground(darkGrey);
-		BottomLeft.setBounds(70, 356, 282, 175);
-		MainPanel.add(BottomLeft);
+        
+        JPanel bottomLeft = new JPanel();
+        bottomLeft.setLayout(new BoxLayout(bottomLeft, BoxLayout.Y_AXIS));
+        bottomLeft.setOpaque(false); 
+        bottomLeft.setBounds(36, 357, 282, 175);
+        mainPanel.add(bottomLeft);
 
-		// studentIDLabel
-		studentIDLabel = new JLabel("<studentID>");
-		studentIDLabel.setForeground(Color.WHITE);
-		studentIDLabel.setFont(new Font("Arial", Font.BOLD, 22));
-		studentIDLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		BottomLeft.add(studentIDLabel);
+        studentIDLabel = new JLabel();
+        studentIDLabel.setForeground(WHITE);
+        studentIDLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        studentIDLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        bottomLeft.add(studentIDLabel);
+        bottomLeft.add(Box.createVerticalStrut(8));
 
-		BottomLeft.add(Box.createVerticalStrut(8)); 
+        usernameLabel = new JLabel();
+        usernameLabel.setForeground(WHITE);
+        usernameLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        usernameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        bottomLeft.add(usernameLabel);
+        bottomLeft.add(Box.createVerticalStrut(8));
 
-		// usernameLabel
-		usernameLabel = new JLabel("<username>");
-		usernameLabel.setForeground(Color.WHITE);
-		usernameLabel.setFont(new Font("Arial", Font.BOLD, 20));
-		usernameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		BottomLeft.add(usernameLabel);
-		
-		//SubjectLabel
-		subjectLabel = new JLabel("<subject>");
-		subjectLabel.setForeground(Color.WHITE);
-		subjectLabel.setFont(new Font("Arial", Font.BOLD, 20));
-		subjectLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		BottomLeft.add(subjectLabel);
+        subjectLabel = new JLabel();
+        subjectLabel.setForeground(WHITE);
+        subjectLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        subjectLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        bottomLeft.add(subjectLabel);
+    }
 
-		
-		updateStudentWindow(user, student);
-	}
+   
+    private void populateDynamicFields() {
+        usernameLabel.setText("Username: " + user.getUsername());
+        studentIDLabel.setText("Student ID: " + student.getStudentID());
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-	}
+        String subject = subjectView.getSubjectByStudentId(student.getStudentID());
+        subjectLabel.setText("Subject: " + subject);
+    }
 
-	public void updateStudentWindow(User u, Student s) {
-		usernameLabel.setText("Username: " + u.getUsername());
-		studentIDLabel.setText("Student ID: " + s.getStudentID());
-		
-		 String subject = subjectView.getSubjectByStudentId(s.getStudentID());
-		    subjectLabel.setText("Subject: " + subject);
-		
-	}
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+      
+    }
+    public static void main(String[] args) {
+        
+        UserManager um = new UserManager();
+        StudentManager sm = new StudentManager();
+        um.loadUsers(Constants.USERS_CSV);
+        sm.loadStudents(Constants.STUDENTS_CSV);
+
+        User sampleUser = um.findUserByUsername("Gracious"); 
+        if (sampleUser != null) {
+            UpdateStudentWindow window = new UpdateStudentWindow(sampleUser, um, sm);
+            window.setVisible(true);
+        } else {
+            System.out.println("Test user not found.");
+        }
+    }
+
 }
