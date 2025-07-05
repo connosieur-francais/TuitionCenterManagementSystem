@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Insets;
 
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicTextFieldUI;
+import javax.swing.BorderFactory;
 
 public class CustomTextField extends JTextField {
 
@@ -17,11 +17,12 @@ public class CustomTextField extends JTextField {
 		setUI(new TextUI());
 		setOpaque(false);
 		setForeground(new Color(80, 80, 80));
-		setBorder(null);
 		setSelectedTextColor(new Color(255, 255, 255));
 		setSelectionColor(new Color(103, 209, 255));
 		setBackground(new Color(255, 255, 255));
-		setMargin(new Insets(5, 10, 5, 10)); // Add padding for text
+
+		// ✅ Asymmetric internal padding: top, left, bottom, right
+		setBorder(BorderFactory.createEmptyBorder(5, 10, 3, 8));
 	}
 
 	private boolean over;
@@ -85,7 +86,7 @@ public class CustomTextField extends JTextField {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		// Only draw background with rounded corners (no blocking border)
+		// Background fill with rounded corners
 		g2.setColor(getBackground());
 		g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
 
@@ -95,7 +96,7 @@ public class CustomTextField extends JTextField {
 	private class TextUI extends BasicTextFieldUI {
 		@Override
 		protected void paintBackground(Graphics g) {
-			// Do nothing — we handle background manually
+			// Background already handled in paintComponent()
 		}
 	}
 }

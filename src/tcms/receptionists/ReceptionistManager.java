@@ -159,32 +159,30 @@ public class ReceptionistManager {
 		}
 		return id;
 	}
+	
+	public void addReceptionist(Receptionist newReceptionist, User receptionistUserAccount) {
+		// Add to main user system
+		userManager.addUser(receptionistUserAccount);
 
-	public boolean isValidEmail(String email) {
-		// Check for null or empty string after trimming whitespace
-		if (email == null || email.trim().isEmpty()) {
-			return false;
-		}
-
-		// Find the position of '@' and the last '.'
-		int positionOfAt = email.indexOf('@');
-		int positionOfLastDot = email.lastIndexOf('.');
-
-		// Conditions for a valid email:
-		// 1. '@' must exist and not be the first character
-		// 2. '.' must come after '@'
-		// 3. '.' must not be the last character
-		boolean hasValidAt = positionOfAt > 0;
-		boolean hasDotAfterAt = positionOfLastDot > positionOfAt + 1;
-		boolean dotNotAtEnd = positionOfLastDot < email.length() - 1;
-
-		return hasValidAt && hasDotAfterAt && dotNotAtEnd;
+		// Add to receptionist-specific lists and maps
+		receptionists.add(newReceptionist);
+		userIDReceptionistMap.put(newReceptionist.getReceptionistID(), newReceptionist);
+		receptionistIDReceptionistMap.put(newReceptionist.getReceptionistID(), newReceptionist);
+	}
+	
+	public void removeReceptionist(Receptionist receptionist) {
+		if (receptionist == null) return;
+		Integer userID = Integer.valueOf(receptionist.getUserID());
+		Integer receptionistID = Integer.valueOf(receptionist.getReceptionistID());
+		// Remove from receptionist-specific structures
+		receptionists.remove(receptionist);
+		userIDReceptionistMap.remove(userID);
+		receptionistIDReceptionistMap.remove(receptionistID);
+		
+		User receptionistUserAccount = findUserByReceptionistID(receptionist.getReceptionistID());
+		userManager.removeUser(receptionistUserAccount);
 	}
 
-	public static boolean isValidContact(String contact) {
-		String contactRegex = "^01[0-46-9]-\\d{3}-\\d{4}$";
-		return Pattern.matches(contactRegex, contact);
-	}
 	
 	public Map<Integer, Receptionist> getUserIDReceptionistMap() {
 		return userIDReceptionistMap;

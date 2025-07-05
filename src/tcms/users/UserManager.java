@@ -147,6 +147,25 @@ public class UserManager {
 			return null;
 		}
 	}
+	
+	public void addUser(User newUser) {
+		// Adds user to existing user list and HashMaps
+		Integer userID = Integer.valueOf(newUser.getID());
+		String username = newUser.getUsername();
+		
+		users.add(newUser);
+		usernameMap.put(username, newUser);
+		userMap.put(userID, newUser);
+	}
+	
+	public void removeUser(User user) {
+		Integer userID = Integer.valueOf(user.getID());
+		String username = user.getUsername();
+		
+		users.remove(user);
+		userMap.remove(userID);
+		usernameMap.remove(username);
+	}
 
 	public void decrementLoginAttempts(User user) {
 		user.decreaseLoginAttempts();
