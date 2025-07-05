@@ -8,7 +8,7 @@ import tcms.users.User;
 import tcms.users.UserManager;
 
 public class StudentManager {
-
+	
 	private int fieldLength = 7;
 	private static UserManager userManager;
 	private Map<Integer, Student> userIDStudentMap = new HashMap<>();
