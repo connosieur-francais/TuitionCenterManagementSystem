@@ -5,12 +5,15 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,21 +30,18 @@ import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
 
-
-
 public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private static ReceptionistManager receptionistManager;
 	private static UserManager userManager;
-	
+
 	// === Frames ===
 	private addReceptionistFrame addReceptionistFrame = null;
 
 	// === Panels ===
 	private CustomRoundedPanel totalReceptionistsPanel;
 	private CustomRoundedPanel receptionistInfoPanel;
-	
 
 	// === Labels ===
 	private JLabel totalRecepLabel;
@@ -51,13 +51,14 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 	// === Buttons ===
 	private CustomJButton addReceptionistBtn;
+	private CustomJButton removeReceptionistBtn;
 
 	// === Scroll Pane ===
 	private JScrollPane scrollPane;
 
 	// === Table ===
 	private JTable receptionistTable;
-	private String[] columnNames = {"Receptionist ID", "User ID", "Contact", "Email", "Address"};
+	private String[] columnNames = { "Receptionist ID", "User ID", "Name", "Contact", "Email", "Address" };
 	private Object[][] data;
 
 	// Icon image files
@@ -160,10 +161,10 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 		receptionistTable.setSelectionBackground(Constants.BLURPLE);
 		receptionistTable.setSelectionForeground(Color.WHITE);
 		receptionistTable.setShowGrid(true);
-		
+
 		// Disable column reordering
 		receptionistTable.getTableHeader().setReorderingAllowed(false);
-		
+
 		// Insert Data into Table
 		loadReceptionistTableData();
 
@@ -179,10 +180,27 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 		// Add table to scroll pane
 		scrollPane.setViewportView(receptionistTable);
 
+		removeReceptionistBtn = new CustomJButton();
+		removeReceptionistBtn.setText("- Remove Receptionist");
+		removeReceptionistBtn.setRadius(10);
+		removeReceptionistBtn.setFont(new Font("Arial", Font.BOLD, 16));
+		removeReceptionistBtn.setForeground(Constants.TEXT_COLOR);
+		removeReceptionistBtn.setFocusable(true);
+		removeReceptionistBtn.setFocusPainted(false);
+		removeReceptionistBtn.setColor(Constants.RED_BUTTON);
+		removeReceptionistBtn.setColorOver(Constants.RED_BUTTON_HOVER);
+		removeReceptionistBtn.setColorClick(Constants.RED_BUTTON_CLICK);
+		removeReceptionistBtn.setBorderColor(Constants.RED_BUTTON_BORDER);
+		removeReceptionistBtn.setBackground(Constants.RED_BUTTON); // fallback
+		removeReceptionistBtn.setBorder(null);
+		removeReceptionistBtn.setBounds(746, 10, 200, 40);
+		removeReceptionistBtn.addActionListener(this);
+		receptionistInfoPanel.add(removeReceptionistBtn);
+
 		refreshManageReceptionistsPanel();
 	}
-	
-	public Object[][] getData() {
+
+	private Object[][] getData() {
 		List<Object[]> rows = new ArrayList<>();
 		List<Receptionist> receptionists = receptionistManager.getAllReceptionists();
 
@@ -190,23 +208,23 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 			User user = userManager.findUserByUserID(r.getUserID());
 			String name = user.getUsername();
 
-			rows.add(new Object[] {
-				r.getReceptionistID(),
-				r.getUserID(),
-				name,
-				r.getContact(),
-				r.getEmail(),
-				r.getAddress()
-			});
+			rows.add(new Object[] { r.getReceptionistID(), r.getUserID(), name, r.getContact(), r.getEmail(),
+					r.getAddress() });
 		}
 		return rows.toArray(new Object[0][]);
 	}
-	
-	public void loadReceptionistTableData() {;
 
-		Object[][] data = getData();
+	private void loadReceptionistTableData() {
+		;
+
+		data = getData();
 
 		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3791679638516387380L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -215,30 +233,41 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 		receptionistTable.setModel(model);
 	}
+
+	private void refreshManageReceptionistsPanel() {
+		int total_receptionists = receptionistManager.getAllReceptionists().size(); // Returns the total amount of
+		// elements in receptionists list
+		totalRecepNumberLbl.setText(String.valueOf(total_receptionists));
+	}
 	
+	private void showCreateReceptionistWindow() {
+		if (addReceptionistFrame != null && addReceptionistFrame.isDisplayable()) {
+			return; // Frame is already open
+		}
+
+		addReceptionistFrame = new addReceptionistFrame(userManager, receptionistManager);
+		addReceptionistBtn.setEnabled(false); // Prevent reopening
+
+		// Re-enable button when window closes
+		addReceptionistFrame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				addReceptionistBtn.setEnabled(true);
+				addReceptionistFrame = null; // Clear reference
+				refreshManageReceptionistsPanel(); // Update count
+			}
+		});
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addReceptionistBtn) {
-			if (addReceptionistFrame == null || !addReceptionistFrame.isDisplayable()) {
-				addReceptionistFrame = new addReceptionistFrame(userManager, receptionistManager);
-				addReceptionistBtn.setEnabled(false);
-
-				// Add a listener to re-enable the button when frame is closed
-				addReceptionistFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-					@Override
-					public void windowClosed(java.awt.event.WindowEvent e) {
-						addReceptionistBtn.setEnabled(true);
-						addReceptionistFrame = null; // reset the reference
-						refreshManageReceptionistsPanel(); // refresh the count in case a receptionist was added
-					}
-				});
-			}
+			showCreateReceptionistWindow();
+		}
+		
+		if (e.getSource() == removeReceptionistBtn) {
+			JOptionPane.showMessageDialog(null, "Successfully Removed Receptionist", "Removed Receptionist", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
-	public void refreshManageReceptionistsPanel() {
-		int total_receptionists = receptionistManager.getAllReceptionists().size(); // Returns the total amount of
-																					// elements in receptionists list
-		totalRecepNumberLbl.setText(String.valueOf(total_receptionists));
-	}
 }
