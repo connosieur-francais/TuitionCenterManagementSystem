@@ -14,6 +14,9 @@ public class Constants {
     public static final Color TEXT_COLOR = Color.WHITE;
     public static final Color BORDER_COLOR = new Color(43, 45, 49);
     public static final Color DARK_GRAY = new Color(43, 45, 49);
+    
+    public static final String LOGIN_PAGE_BACKGROUND_FILE = "src/tcms/resources/loginPageBackground.png";
+    public static final String RECEPTIONIST_USER_ICON_FILE = "src/tcms/resources/receptionist_user_icon.png";
 
     // File paths (relative to root folder or build path)
     public static final String USERS_CSV = "src/tcms/data/users.csv";

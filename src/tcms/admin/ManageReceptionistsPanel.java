@@ -18,6 +18,7 @@ import tcms.custom_gui_components.CustomJButton;
 import tcms.custom_gui_components.CustomRoundedPanel;
 import tcms.receptionists.ReceptionistManager;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
 
 public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
@@ -49,7 +50,7 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 	private JTable receptionistTable;
 
 	// Icon image files
-	private String user_icon_img = new File("src/tcms/resources/receptionist_user_icon.png").getAbsolutePath();
+	private String user_icon_img = Constants.RECEPTIONIST_USER_ICON_FILE;
 
 	/**
 	 * Create the panel.

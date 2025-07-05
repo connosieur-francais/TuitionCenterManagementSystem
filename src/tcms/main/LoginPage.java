@@ -79,22 +79,26 @@ public class LoginPage extends JFrame implements ActionListener {
         loginPanel.add(loginLabel);
 
         usernameLabel = new JLabel("Username");
+        usernameLabel.setBackground(new Color(220, 221, 222));
         usernameLabel.setForeground(Constants.TEXT_COLOR);
         usernameLabel.setFont(new Font("SansSerif", Font.BOLD, 15));
         usernameLabel.setBounds(70, 90, 80, 25);
         loginPanel.add(usernameLabel);
 
         passwordLabel = new JLabel("Password");
+        passwordLabel.setBackground(new Color(220, 221, 222));
         passwordLabel.setForeground(Constants.TEXT_COLOR);
         passwordLabel.setFont(new Font("SansSerif", Font.BOLD, 15));
         passwordLabel.setBounds(70, 140, 80, 25);
         loginPanel.add(passwordLabel);
 
         usernameTxtfield = new JTextField();
+        usernameTxtfield.setBackground(new Color(220, 221, 222));
         usernameTxtfield.setBounds(150, 90, 270, 25);
         loginPanel.add(usernameTxtfield);
 
         passwordField = new JPasswordField();
+        passwordField.setBackground(new Color(220, 221, 222));
         passwordField.setBounds(150, 140, 270, 25);
         passwordField.setEchoChar('*');
         loginPanel.add(passwordField);
@@ -146,14 +150,14 @@ public class LoginPage extends JFrame implements ActionListener {
         loginPanel.add(passwordErrorLabel);
 
         loginAttemptLabel = new JLabel("Attempts left:");
-        loginAttemptLabel.setForeground(Constants.TEXT_COLOR);
+        loginAttemptLabel.setForeground(new Color(235, 69, 158));
         loginAttemptLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
         loginAttemptLabel.setBounds(70, 205, 80, 15);
         loginAttemptLabel.setVisible(false);
         loginPanel.add(loginAttemptLabel);
 
         attemptsLeftLabel = new JLabel();
-        attemptsLeftLabel.setForeground(Constants.TEXT_COLOR);
+        attemptsLeftLabel.setForeground(new Color(235, 69, 158));
         attemptsLeftLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
         attemptsLeftLabel.setBounds(150, 205, 50, 15);
         attemptsLeftLabel.setVisible(false);
@@ -167,14 +171,14 @@ public class LoginPage extends JFrame implements ActionListener {
         loginPanel.add(loginDisabledLabel);
 
         decoPanel = new JPanel();
-        decoPanel.setBackground(Constants.BLURPLE);
+        decoPanel.setBackground(new Color(30, 33, 36));
         decoPanel.setBorder(null);
         decoPanel.setBounds(90, 70, 520, 270);
         contentPane.add(decoPanel);
 
         backgroundIconDeco = new JLabel();
         backgroundIconDeco.setBounds(0, 0, 686, 413);
-        backgroundIconDeco.setIcon(new ImageIcon("tcms/resources/loginPageBackground.png"));
+        backgroundIconDeco.setIcon(new ImageIcon(Constants.LOGIN_PAGE_BACKGROUND_FILE));
         contentPane.add(backgroundIconDeco);
 
         frame.getRootPane().setDefaultButton(loginBtn);
