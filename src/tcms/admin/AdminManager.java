@@ -16,6 +16,7 @@ import java.util.Set;
 
 import tcms.users.User;
 import tcms.users.UserManager;
+import tcms.utils.Constants;
 
 public class AdminManager {
 
@@ -30,7 +31,7 @@ public class AdminManager {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) { // Creates a list of users by
 																					// reading
-			// from src/admins.csv
+			// from admins.csv file
 			String line;
 			boolean skipHeader = true;
 
@@ -141,7 +142,7 @@ public class AdminManager {
 		if (updated) {
 			// sort admins list by adminID
 			admins.sort(Comparator.comparingInt(Admin::getAdminID));
-			saveAdmins("src/admins.csv");
+			saveAdmins(Constants.ADMINS_CSV);
 		}
 	}
 

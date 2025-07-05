@@ -24,10 +24,14 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private static ReceptionistManager receptionistManager;
 	private static UserManager userManager;
+	
+	// === Frames ===
+	private addReceptionistFrame addReceptionistFrame = null;
 
 	// === Panels ===
 	private CustomRoundedPanel totalReceptionistsPanel;
 	private CustomRoundedPanel receptionistInfoPanel;
+	
 
 	// === Labels ===
 	private JLabel totalRecepLabel;
@@ -165,7 +169,20 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addReceptionistBtn) {
-			new addReceptionistFrame(userManager, receptionistManager);
+			if (addReceptionistFrame == null || !addReceptionistFrame.isDisplayable()) {
+				addReceptionistFrame = new addReceptionistFrame(userManager, receptionistManager);
+				addReceptionistBtn.setEnabled(false);
+
+				// Add a listener to re-enable the button when frame is closed
+				addReceptionistFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+					@Override
+					public void windowClosed(java.awt.event.WindowEvent e) {
+						addReceptionistBtn.setEnabled(true);
+						addReceptionistFrame = null; // reset the reference
+						refreshManageReceptionistsPanel(); // refresh the count in case a receptionist was added
+					}
+				});
+			}
 		}
 	}
 

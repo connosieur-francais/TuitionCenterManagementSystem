@@ -161,13 +161,16 @@ public class ReceptionistManager {
 	}
 	
 	public void addReceptionist(Receptionist newReceptionist, User receptionistUserAccount) {
+		Integer recepID = Integer.valueOf(newReceptionist.getReceptionistID());
 		// Add to main user system
+		System.out.println("Added user: " + receptionistUserAccount.getUsername());
 		userManager.addUser(receptionistUserAccount);
 
 		// Add to receptionist-specific lists and maps
+		System.out.println("Adding receptionist with Email : " + newReceptionist.getEmail());
 		receptionists.add(newReceptionist);
-		userIDReceptionistMap.put(newReceptionist.getReceptionistID(), newReceptionist);
-		receptionistIDReceptionistMap.put(newReceptionist.getReceptionistID(), newReceptionist);
+		userIDReceptionistMap.put(recepID, newReceptionist);
+		receptionistIDReceptionistMap.put(recepID, newReceptionist);
 	}
 	
 	public void removeReceptionist(Receptionist receptionist) {

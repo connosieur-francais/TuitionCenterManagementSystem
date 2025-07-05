@@ -486,7 +486,9 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 		Receptionist receptionistAccount = new Receptionist(nextAvailableRecepID, nextAvailableUserID, contact, email, address);
 		
 		receptionistManager.addReceptionist(receptionistAccount, receptionistUserAccount);
-		receptionistManager.saveReceptionists(name);
+		userManager.saveUsers(usersCSVFile);
+		receptionistManager.saveReceptionists(receptionistsCSVFile);
+		
 	}
 
 	// ============= Button Action Listeners ================
@@ -505,7 +507,7 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 					JOptionPane.INFORMATION_MESSAGE);
 
 			// Add a new line in users.csv and also receptionist.csv for the new receptionist created
-			
+			createNewReceptionist();
 			this.dispose();
 
 		}
