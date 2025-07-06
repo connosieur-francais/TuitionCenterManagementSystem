@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import tcms.custom_gui_components.CustomJButton;
 import tcms.custom_gui_components.CustomTextField;
@@ -27,10 +27,9 @@ import tcms.receptionists.ReceptionistManager;
 import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
+import tcms.utils.Validators;
 
-public class addReceptionistFrame extends JFrame implements ActionListener {
+public class AddReceptionistFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -63,7 +62,7 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 	private String receptionistsCSVFile = Constants.RECEPTIONISTS_CSV;
 	private String usersCSVFile = Constants.USERS_CSV;
 
-	public addReceptionistFrame(UserManager um, ReceptionistManager rm) {
+	public AddReceptionistFrame(UserManager um, ReceptionistManager rm) {
 		setUndecorated(true);
 		setResizable(false);
 		setBounds(100, 100, 738, 600);
@@ -287,11 +286,11 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 
 			addMouseMotionListener(new MouseMotionAdapter() {
 				public void mouseDragged(MouseEvent e) {
-					int thisX = addReceptionistFrame.this.getLocation().x;
-					int thisY = addReceptionistFrame.this.getLocation().y;
+					int thisX = AddReceptionistFrame.this.getLocation().x;
+					int thisY = AddReceptionistFrame.this.getLocation().y;
 					int xMoved = e.getX() - initialClick.x;
 					int yMoved = e.getY() - initialClick.y;
-					addReceptionistFrame.this.setLocation(thisX + xMoved, thisY + yMoved);
+					AddReceptionistFrame.this.setLocation(thisX + xMoved, thisY + yMoved);
 				}
 			});
 		}
@@ -302,127 +301,6 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 		recepIDTxtfield.setText(String.valueOf(nextAvailableID));
 	}
 
-	// ============= Input Validators ====================
-	public boolean isValidName(String name) {
-		// Check if name is empty
-		if (name == null || name.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Name cannot be empty", "Invalid Name", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Checks if name is over 4 characters long
-		boolean isValid = name.length() >= 4;
-		if (!isValid) {
-			JOptionPane.showMessageDialog(null, "Name has to be over 4 characters long", "Invalid Name",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		return true;
-	}
-
-	public boolean isValidPassword(String password) {
-		// Check if password is empty
-		if (password == null || password.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Password cannot be empty", "Invalid Password",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Check length
-		if (password.length() < 8) {
-			JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long", "Invalid Password",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Check for digit
-		if (!password.matches(".*\\d.*")) {
-			JOptionPane.showMessageDialog(null, "Password must contain at least one digit", "Invalid Password",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Check for uppercase letter
-		if (!password.matches(".*[A-Z].*")) {
-			JOptionPane.showMessageDialog(null, "Password must contain at least one uppercase letter",
-					"Invalid Password", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Check for lowercase letter
-		if (!password.matches(".*[a-z].*")) {
-			JOptionPane.showMessageDialog(null, "Password must contain at least one lowercase letter",
-					"Invalid Password", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		return true;
-	}
-
-	public boolean isValidEmail(String email) {
-		// Check for null or empty string after trimming whitespace
-		if (email == null || email.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Email cannot be empty.", "Invalid Email", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Find the position of '@' and the last '.'
-		int positionOfAt = email.indexOf('@');
-		int positionOfLastDot = email.lastIndexOf('.');
-		// Conditions for a valid email:
-		boolean hasValidAt = positionOfAt > 0;
-		boolean hasDotAfterAt = positionOfLastDot > positionOfAt + 1;
-		boolean dotNotAtEnd = positionOfLastDot < email.length() - 1;
-
-		boolean isValid = hasValidAt && hasDotAfterAt && dotNotAtEnd;
-
-		if (!isValid) {
-			JOptionPane.showMessageDialog(null, "Email format is invalid. Please enter a valid email address.",
-					"Invalid Email", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		return true;
-	}
-
-	public boolean isValidContact(String contact) {
-		// Check if contact is empty
-		if (contact == null || contact.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Contact number cannot be empty.", "Invalid Contact",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Remove any spaces in the contact
-		contact = contact.trim();
-		// Make sure it only contains digits
-		if (!contact.matches("\\d+")) {
-			JOptionPane.showMessageDialog(null, "Contact number must contain only digits.", "Invalid Contact",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Make sure contact is 10 digits long
-		if (contact.length() != 10) {
-			JOptionPane.showMessageDialog(null, "Contact number must be exactly 10 digits long.", "Invalid Contact",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		return true;
-	}
-
-	public boolean isValidAddress(String address) {
-		// Check if address is empty
-		if (address == null || address.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Address cannot be empty", "Invalid Address",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		// Make sure address doesn't have commas
-		if (address.contains(",")) {
-			JOptionPane.showMessageDialog(null, "Address cannot contain commas", "Invalid Address",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-
-		if (!(address.length() >= 8)) {
-			JOptionPane.showMessageDialog(null, "Address has to be over 8 characters long", "Invalid Address",
-					JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
-		return true;
-	}
-
 	private boolean checkReceptionistDetails() {
 		String name = nameTxtfield.getText();
 		String password = passwordTxtfield.getText();
@@ -431,19 +309,19 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 		String address = addressTxtfield.getText();
 
 		// Only one dialog will show — first error encountered
-		if (!isValidName(name)) {
+		if (!Validators.isValidName(name)) {
 			return false;
 		}
-		if (!isValidPassword(password)) {
+		if (!Validators.isValidPassword(password)) {
 			return false;
 		}
-		if (!isValidEmail(email)) {
+		if (!Validators.isValidEmail(email)) {
 			return false;
 		}
-		if (!isValidContact(contact)) {
+		if (!Validators.isValidContact(contact)) {
 			return false;
 		}
-		if (!isValidAddress(address)) {
+		if (!Validators.isValidAddress(address)) {
 			return false;
 		}
 
@@ -459,7 +337,7 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 		String email = emailTxtfield.getText();
 		String address = addressTxtfield.getText();
 		String role = "receptionist"; // Hard coded because its creating a receptionist :P
-		
+
 		User receptionistUserAccount = new User(firstAvailableUserID, name, password, role);
 		int nextAvailableUserID = receptionistUserAccount.getID();
 
@@ -471,7 +349,7 @@ public class addReceptionistFrame extends JFrame implements ActionListener {
 		receptionistManager.saveReceptionists(receptionistsCSVFile);
 
 	}
-	
+
 	// ============= Button Action Listeners ================
 	@Override
 	public void actionPerformed(ActionEvent e) {

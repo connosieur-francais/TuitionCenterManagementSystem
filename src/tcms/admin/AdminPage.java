@@ -35,6 +35,7 @@ import tcms.tutors.TutorManager;
 import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
+import tcms.utils.Validators;
 
 public class AdminPage extends JFrame implements ActionListener {
 
@@ -72,7 +73,8 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JTextField contactTxtfield;
 
 	// MANAGE TUTORS PAGE ------------------------------------
-	private JPanel manageTutorsPanel;
+	private ManageTutorsPanel manageTutorsPanel;
+	private CustomJButton tutorReturnBtn;
 
 	// MANAGE RECEPTIONISTS PAGE ------------------------------
 	private JPanel manageReceptionistPanel;
@@ -358,19 +360,18 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		// MANAGE TUTORS ------------------------------------
 
-		manageTutorsPanel = new JPanel();
+		manageTutorsPanel = new ManageTutorsPanel(um, tm);
 		contentPanel.setLayer(manageTutorsPanel, 4);
 		manageTutorsPanel.setBorder(null);
-		manageTutorsPanel.setBackground(new Color(83, 92, 145));
-		manageTutorsPanel.setVisible(false);
-		contentPanel.add(manageTutorsPanel, "Manage Tutors");
 		manageTutorsPanel.setLayout(null);
+		contentPanel.add(manageTutorsPanel, "Manage Tutors");
+		
+		tutorReturnBtn = CustomComponents.createReturnBtn();
+		tutorReturnBtn.setBounds(10, 10, 150, 40);
+		tutorReturnBtn.addActionListener(this);
+		manageTutorsPanel.add(tutorReturnBtn);
 
-		JLabel manageTutorsLabel = new JLabel("MANAGE TUTORS");
-		manageTutorsLabel.setFont(new Font("Serif", Font.ITALIC, 28));
-		manageTutorsLabel.setBounds(91, 37, 502, 169);
-		manageTutorsPanel.add(manageTutorsLabel);
-
+		// Group layout for top header panel
 		contentPane.setLayout(null);
 		contentPane.add(headerPanel);
 		GroupLayout gl_headerPanel = new GroupLayout(headerPanel);
@@ -421,6 +422,10 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		// RETURN TO DASHBOARD SPECIAL
 		if (e.getSource() == updateProfileReturnBtn) {
+			returnToLandingPage();
+		}
+		
+		if (e.getSource() == tutorReturnBtn) {
 			returnToLandingPage();
 		}
 		
@@ -507,25 +512,17 @@ public class AdminPage extends JFrame implements ActionListener {
 			String newEmail = emailTxtfield.getText();
 			String newAddress = addressTxtfield.getText();
 
-			// Basic Validation (Checks for empty fields)
-			if (newUsername.isEmpty() || newPassword.isEmpty() || newEmail.isEmpty() || newAddress.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "All fields must be filled in.", "Input Error",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
+			// === Validations using Validators class ===
+			if (!Validators.isValidName(newUsername)) return;
+			if (!Validators.isValidPassword(newPassword)) return;
+			if (!Validators.isValidEmail(newEmail)) return;
+			if (!Validators.isValidContact(newContact)) return;
+			if (!Validators.isValidAddress(newAddress)) return;
 
-			if (!adminManager.isValidEmail(newEmail)) { // If email invalid, display error message
-				JOptionPane.showMessageDialog(this, "Please enter a valid email.", "Input error",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-
+			// === If all validations pass ===
 			updateUserDetails(admin, user, newUsername, newPassword, newContact, newEmail, newAddress);
-
 			JOptionPane.showMessageDialog(this, "Saved profile settings");
 			resetUpdateProfilePage();
-
-			return;
 		}
 
 	}

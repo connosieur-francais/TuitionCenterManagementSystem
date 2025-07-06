@@ -87,6 +87,7 @@ public class SystemInitializer {
 		userManager.loadUsers(Constants.USERS_CSV);
 		adminManager.loadAdmins(Constants.ADMINS_CSV);
 		tutorManager.loadTutors(Constants.TUTORS_CSV);
+		tutorManager.loadSubjects(Constants.SUBJECTS_CSV);
 		receptionistManager.loadReceptionists(Constants.RECEPTIONISTS_CSV);
 		studentManager.loadStudents(Constants.STUDENTS_CSV);
 

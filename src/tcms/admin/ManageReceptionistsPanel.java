@@ -38,7 +38,7 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 	private static UserManager userManager;
 
 	// === Frames ===
-	private addReceptionistFrame addReceptionistFrame = null;
+	private AddReceptionistFrame addReceptionistFrame = null;
 
 	// === Panels ===
 	private CustomRoundedPanel totalReceptionistsPanel;
@@ -202,7 +202,7 @@ public class ManageReceptionistsPanel extends JPanel implements ActionListener {
 
 	private void showCreateReceptionistWindow() {
 		if (addReceptionistFrame != null && addReceptionistFrame.isDisplayable()) return;
-		addReceptionistFrame = new addReceptionistFrame(userManager, receptionistManager);
+		addReceptionistFrame = new AddReceptionistFrame(userManager, receptionistManager);
 		addReceptionistBtn.setEnabled(false);
 		addReceptionistFrame.addWindowListener(new WindowAdapter() {
 			@Override

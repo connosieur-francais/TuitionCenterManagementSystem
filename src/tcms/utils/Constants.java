@@ -24,7 +24,7 @@ public class Constants {
     
     public static final String LOGIN_PAGE_BACKGROUND_FILE = "src/tcms/resources/loginPageBackground.png";
     public static final String RECEPTIONIST_USER_ICON_FILE = "src/tcms/resources/receptionist_user_icon.png";
-    public static final String TUTOR_USER_ICON_FILE = "src/tcms/resources/tutor_user_icon";
+    public static final String TUTOR_USER_ICON_FILE = "src/tcms/resources/tutor_user_icon.png";
     public static final String STUDENT_USER_ICON_FILE = "src/tcms/resources/blank_profile.jpg";
     
     public static final String[] IMG_CAROUSEL = {
