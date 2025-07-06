@@ -11,5 +11,4 @@ user_id,username,password,role,login_attempts,status
 10,Griff,123,receptionist,3,active
 11,Alice,123,student,3,active
 12,Bob,123,student,3,active
-13,Saturn,Saturn123,receptionist,3,active
-14,Tester,1232123eA,receptionist,3,active
+13,Cupcakke,oneOfMyBedbugs1,receptionist,3,active

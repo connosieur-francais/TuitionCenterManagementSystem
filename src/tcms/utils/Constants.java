@@ -13,6 +13,7 @@ public class Constants {
     public static final Color RED_CLICK = new Color(165, 30, 33);
     public static final Color TEXT_COLOR = Color.WHITE;
     public static final Color DARK_GRAY = new Color(43, 45, 49);
+    public static final Color SLATE = new Color(66, 69, 73);
     public static final Color NOT_QUITE_BLACK = new Color(35, 39, 42);
     public static final Color DEEP_DARK = new Color(40, 43, 48);
     public static final Color DARK_BUT_NOT_BLACK = new Color(44, 47, 51);
