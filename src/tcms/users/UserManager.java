@@ -3,6 +3,7 @@ package tcms.users;
 import java.io.*;
 import java.util.*;
 
+import tcms.receptionists.Receptionist;
 import tcms.utils.Constants;
 
 public class UserManager {
@@ -55,10 +56,15 @@ public class UserManager {
 	public void saveUsers(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 			bw.write("user_id,username,password,role,login_attempts,status\n");
-			for (User user : users) {
-				bw.write(user.toCSV());
-				bw.newLine();
-			}
+			
+			// Sort a copy of the list for saving only
+	        List<User> sortedUsers = new ArrayList<>(users);
+	        sortedUsers.sort(Comparator.comparingInt(User::getID));
+
+	        for (User user : sortedUsers) {
+	            bw.write(user.toCSV());
+	            bw.newLine();
+	        }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
