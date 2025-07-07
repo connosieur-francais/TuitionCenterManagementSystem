@@ -16,17 +16,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 import tcms.custom_gui_components.CustomJButton;
 import tcms.custom_gui_components.CustomTextField;
+import tcms.tutors.Level;
 import tcms.tutors.Subject;
 import tcms.tutors.Tutor;
 import tcms.tutors.TutorManager;
@@ -47,6 +50,8 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 	private DefaultListModel<String> subjectListModel;
 	private Map<String, Integer> subjectNameToIDMap = new HashMap<>();
 
+	private JComboBox<String> levelComboBox;
+	private Map<String, Integer> levelNameToIDMap = new HashMap<>();
 
 	// === Labels ===
 	private JLabel titleLabel;
@@ -68,6 +73,7 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 	// === Buttons ===
 	private CustomJButton createTutorBtn;
 	private CustomJButton cancelButton;
+	private JLabel levelLabel;
 
 	public AddTutorFrame(UserManager um, TutorManager tm) {
 		setUndecorated(true);
@@ -194,37 +200,73 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 		addressTxtfield.setRadius(10);
 		addressTxtfield.setBounds(165, 420, 210, 30);
 		contentPanel.add(addressTxtfield);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(385, 70, 300, 380);
 		panel.setBackground(Constants.CANVAS_COLOR);
 		contentPanel.add(panel);
 		panel.setLayout(null);
-		
+
 		loadSubjectsFromManager(); // Call before using subjectListModel
 
+		// Initialize components
+		levelComboBox = new JComboBox<>();
+		levelComboBox.setLocation(0, 30);
+		levelComboBox.setSize(300, 30);
+		levelComboBox.addItem("- Select Level -");
+		levelComboBox.setSelectedIndex(-1);
+
+		// Map levels
+		for (Level level : tutorManager.getAllLevels()) {
+			levelComboBox.addItem(level.getLevel());
+			levelNameToIDMap.put(level.getLevel(), level.getLevelID());
+		}
+		
+		// Add level selection listener
+		levelComboBox.addActionListener(this);
+
+		// Add components to your panel/frame
+		panel.add(levelComboBox);
+
+		JLabel subjectLabel = new JLabel("Choose up to 3 Subjects:");
+		subjectLabel.setForeground(Constants.TEXT_COLOR);
+		subjectLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		subjectLabel.setBounds(0, 70, 300, 30);
+
+		panel.add(subjectLabel);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 120, 300, 261);
+		panel.add(scrollPane);
+
 		subjectList = new JList<>(subjectListModel);
+		scrollPane.setViewportView(subjectList);
 		subjectList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		subjectList.setFont(new Font("Arial", Font.PLAIN, 14));
 		subjectList.setBackground(Constants.DEEP_DARK);
 		subjectList.setForeground(Constants.TEXT_COLOR);
 		subjectList.setBorder(new MatteBorder(1, 1, 1, 1, Constants.SLATE));
-		subjectList.setBounds(0, 40, 300, 320);
+
+		JLabel reminderLbl = new JLabel("CTRL + Click to select multiple!");
+		reminderLbl.setForeground(Constants.BLURPLE);
+		reminderLbl.setFont(new Font("Arial", Font.BOLD, 10));
+		reminderLbl.setBounds(0, 100, 300, 10);
+		panel.add(reminderLbl);
+
+		levelLabel = new JLabel("Select tutor level");
+		levelLabel.setForeground(Color.WHITE);
+		levelLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		levelLabel.setBounds(0, 0, 300, 30);
+		panel.add(levelLabel);
 
 		subjectList.addListSelectionListener(e -> {
-			if (subjectList.getSelectedIndices().length > 3) {
-				JOptionPane.showMessageDialog(this, "You can only select up to 3 subjects.", "Limit Exceeded", JOptionPane.WARNING_MESSAGE);
-				subjectList.clearSelection();
-			}
+		    if (subjectList.getSelectedIndices().length > 3) {
+		        JOptionPane.showMessageDialog(this, "You can only select up to 3 subjects.", "Limit Exceeded",
+		                JOptionPane.WARNING_MESSAGE);
+		        subjectList.clearSelection();
+		    }
 		});
 
-		JLabel subjectLabel = new JLabel("Choose up to 3 Subjects:");
-		subjectLabel.setForeground(Constants.TEXT_COLOR);
-		subjectLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		subjectLabel.setBounds(0, 0, 300, 30);
-
-		panel.add(subjectLabel);
-		panel.add(subjectList);
 
 		JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPane.setBorder(new MatteBorder(0, 5, 5, 5, (Color) Constants.SLATE));
@@ -276,7 +318,7 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 			setPreferredSize(new Dimension(getWidth(), 40));
 			setBackground(Constants.DARK_GRAY);
 
-			JLabel title = new JLabel("Add TUtor");
+			JLabel title = new JLabel("Add Tutor");
 			title.setForeground(Color.WHITE);
 			title.setFont(new Font("Arial", Font.BOLD, 14));
 			add(title, BorderLayout.WEST);
@@ -365,7 +407,7 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 
 		return true;
 	}
-	
+
 	private void loadSubjectsFromManager() {
 		subjectListModel = new DefaultListModel<>();
 		for (Subject subject : tutorManager.getAllSubjects()) {
@@ -374,7 +416,6 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 			subjectNameToIDMap.put(subjectName, subject.getSubjectID());
 		}
 	}
-	
 
 	private void createNewTutor() {
 		int firstAvailableUserID = userManager.getFirstAvailableUserID();
@@ -388,27 +429,42 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 
 		java.util.List<String> selectedNames = subjectList.getSelectedValuesList();
 		if (selectedNames.size() == 0 || selectedNames.size() > 3) {
-			JOptionPane.showMessageDialog(this, "Please select 1 to 3 subjects.", "Subject Selection Error", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Please select 1 to 3 subjects.", "Subject Selection Error",
+					JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 
 		// Convert subject names to IDs
-		int subject1 = 0, subject2 = 0, subject3 = 0;
-		if (selectedNames.size() >= 1) subject1 = subjectNameToIDMap.getOrDefault(selectedNames.get(0), 0);
-		if (selectedNames.size() >= 2) subject2 = subjectNameToIDMap.getOrDefault(selectedNames.get(1), 0);
-		if (selectedNames.size() >= 3) subject3 = subjectNameToIDMap.getOrDefault(selectedNames.get(2), 0);
-
-		// Default level, or let user choose later
-		int assignedLevel = 1;
+		int subjectID1 = 0, subjectID2 = 0, subjectID3 = 0;
+		if (selectedNames.size() >= 1)
+			subjectID1 = subjectNameToIDMap.getOrDefault(selectedNames.get(0), 0);
+		if (selectedNames.size() >= 2)
+			subjectID2 = subjectNameToIDMap.getOrDefault(selectedNames.get(1), 0);
+		if (selectedNames.size() >= 3)
+			subjectID3 = subjectNameToIDMap.getOrDefault(selectedNames.get(2), 0);
+		
+		String selectedLevel = (String) levelComboBox.getSelectedItem();
+		int assignedLevelID = levelNameToIDMap.getOrDefault(selectedLevel, 1);
 
 		User tutorUserAccount = new User(firstAvailableUserID, name, password, role);
-		Tutor tutorAccount = new Tutor(firstAvailableTutorID, firstAvailableUserID, contact, email, address, assignedLevel, subject1, subject2, subject3);
+		Tutor tutorAccount = new Tutor(firstAvailableTutorID, firstAvailableUserID, contact, email, address,
+				assignedLevelID, subjectID1, subjectID2, subjectID3);
 
 		tutorManager.addTutor(tutorAccount, tutorUserAccount);
 		userManager.saveUsers(Constants.USERS_CSV);
 		tutorManager.saveTutors(Constants.TUTORS_CSV);
 	}
-	
+
+	// Level section
+	private void updateSubjectListForLevel(int levelID) {
+		subjectListModel.clear();
+		for (Subject subject : tutorManager.getAllSubjects()) {
+			if (subject.getLevelID() == levelID) {
+				subjectListModel.addElement(subject.getSubjectName());
+			}
+		}
+	}
+
 	// ============= Button Action Listeners ================
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -416,7 +472,9 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(this, "Cancelled Tutor Creation", "Action Cancelled",
 					JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
-		} else if (e.getSource() == createTutorBtn) {
+		}
+
+		if (e.getSource() == createTutorBtn) {
 			if (!checkTutorDetails()) {
 				return;
 			}
@@ -429,6 +487,16 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 			createNewTutor();
 			this.dispose();
 
+		}
+
+		if (e.getSource() == levelComboBox) {
+		    String selectedLevel = (String) levelComboBox.getSelectedItem();
+		    if (selectedLevel == null || !levelNameToIDMap.containsKey(selectedLevel)) {
+		        JOptionPane.showMessageDialog(this, "Please select a level.", "Missing Level", JOptionPane.WARNING_MESSAGE);
+		        return;
+		    }
+		    int levelID = levelNameToIDMap.get(selectedLevel);
+		    updateSubjectListForLevel(levelID);
 		}
 	}
 }

@@ -21,14 +21,17 @@ import tcms.utils.Constants;
 
 public class TutorManager {
 
-	private final int subjectFieldLength = 2;
 	private final int fieldLength = 9;
+	private final int subjectFieldLength = 3;
+	private final int levelFieldLength = 2;
 	private static UserManager userManager;
 	private Map<Integer, Tutor> userIDTutorMap = new HashMap<>();
 	private Map<Integer, Tutor> tutorIDTutorMap = new HashMap<>();
 	private Map<Integer, Subject> subjectIDSubjectMap = new HashMap<>();
+	private Map<Integer, String> levelIDLevelMap = new HashMap<>();
 	private List<Tutor> tutors = new ArrayList<>();
 	private List<Subject> subjects = new ArrayList<>();
+	private List<Level> levels = new ArrayList<>();
 
 	public void loadTutors(String filename) {
 		tutors.clear();
@@ -224,8 +227,9 @@ public class TutorManager {
 					// Gather fields
 					int subjectID = Integer.parseInt(fields[0].trim());
 					String subjectName = fields[1];
+					int levelID = Integer.parseInt(fields[2].trim());
 					// Create subject object
-					Subject subject = new Subject(subjectID, subjectName);
+					Subject subject = new Subject(subjectID, subjectName, levelID);
 					// Add object to list and map
 					subjects.add(subject);
 					subjectIDSubjectMap.put(subjectID, subject);
@@ -248,7 +252,48 @@ public class TutorManager {
 		} else {
 			System.out.println("TutorManager -> findSubjectBySubjectID: Failed to locate subject with ID");
 			System.out.println("TutorManager -> findSubjectBySubjectID: Returning a subject with no name");
-			return new Subject(0, "Not Assigned");
+			return new Subject(0, "Not Assigned", 1);
+		}
+	}
+	
+	// LEVELS SECTION
+	
+	public void loadLevels(String filename) {
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+			
+			String line;
+			boolean skipHeader = true;
+			
+			while ((line = br.readLine()) != null) {
+				if (skipHeader) {
+					skipHeader = false;
+					continue;
+				}
+				
+				String [] fields = line.split(",");
+				
+				if (fields.length >= levelFieldLength) {
+					int levelID = Integer.parseInt(fields[0].trim());
+					String levelName = fields[1].trim();
+					
+					Level lvl = new Level(levelID, levelName);
+					levels.add(lvl);
+					levelIDLevelMap.put(levelID, levelName);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String findLevelNameByLevelID(int levelID) {
+		String levelName = levelIDLevelMap.get(levelID);
+		if (levelName != null) {
+			return levelName;
+		} else {
+			System.out.println("TutorManager -> findLevelNameByLevelID: Failed to locate level name");
+			System.out.println("TutorManager -> findLevelNameByLevelID: Returning default level (Form 1)");
+			return "Form 1";
 		}
 	}
 	
@@ -262,6 +307,14 @@ public class TutorManager {
 
 	public Map<Integer, Tutor> getTutorIDTutorMap() {
 		return tutorIDTutorMap;
+	}
+	
+	public Map<Integer, String> getLevelIDLevelMap() {
+		return levelIDLevelMap;
+	}
+	
+	public List<Level> getAllLevels() {
+		return levels;
 	}
 
 	public List<Tutor> getAllTutors() {
