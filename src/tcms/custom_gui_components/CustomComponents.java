@@ -3,6 +3,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.border.MatteBorder;
+import tcms.utils.Constants;
 
 public final class CustomComponents {
 	/** DO NOT REMOVE THIS COMMENT !!!
@@ -38,6 +39,42 @@ public final class CustomComponents {
 		customJButton.setBorderColor(new Color(43, 45, 49));
 		customJButton.setFocusPainted(false);
 		customJButton.setFocusable(true);
+		return customJButton;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static CustomJButton createAccountButton() {
+		CustomJButton customJButton = new CustomJButton();
+		customJButton.setFont(new Font("Arial", Font.BOLD, 16));
+		customJButton.setRadius(10);
+		customJButton.setBackground(new Color(96, 76, 195));
+		customJButton.setForeground(new Color(255, 255, 255));
+		customJButton.setBorder(null);
+		customJButton.setColorClick(new Color(60, 69, 165));
+		customJButton.setColor(new Color(88, 101, 242));
+		customJButton.setColorOver(new Color(79, 82, 196));
+		customJButton.setBorderColor(new Color(43, 45, 49));
+		customJButton.setFocusPainted(false);
+		customJButton.setFocusable(true);
+		return customJButton;
+	}
+	/**
+	 * @wbp.factory
+	 */
+	public static CustomJButton customRemoveButton() {
+		CustomJButton customJButton = new CustomJButton();
+		customJButton.setRadius(10);
+		customJButton.setFont(new Font("Arial", Font.BOLD, 16));
+		customJButton.setForeground(Constants.TEXT_COLOR);
+		customJButton.setFocusable(true);
+		customJButton.setFocusPainted(false);
+		customJButton.setColor(Constants.RED_BUTTON);
+		customJButton.setColorOver(Constants.RED_BUTTON_HOVER);
+		customJButton.setColorClick(Constants.RED_BUTTON_CLICK);
+		customJButton.setBorderColor(Constants.RED_BUTTON_BORDER);
+		customJButton.setBackground(Constants.RED_BUTTON);
+		customJButton.setBorder(null);
 		return customJButton;
 	}
 }

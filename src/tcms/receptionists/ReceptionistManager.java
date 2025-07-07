@@ -63,17 +63,22 @@ public class ReceptionistManager {
 	}
 
 	public void saveReceptionists(String filename) {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("receptionist_id,user_id,contact,email,address\n");
-			for (Receptionist receptionist : receptionists) {
-				bw.write(receptionist.toCSV());
-				bw.newLine();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+	        bw.write("receptionist_id,user_id,contact,email,address\n");
+
+	        // Sort a copy of the list for saving only
+	        List<Receptionist> sortedReceptionists = new ArrayList<>(receptionists);
+	        sortedReceptionists.sort(Comparator.comparingInt(Receptionist::getReceptionistID));
+
+	        for (Receptionist receptionist : sortedReceptionists) {
+	            bw.write(receptionist.toCSV());
+	            bw.newLine();
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
-	
+
 	public User findUserByReceptionistID(int receptionistID) {
 		if (receptionistIDReceptionistMap.containsKey(receptionistID)) {
 			Receptionist receptionist = receptionistIDReceptionistMap.get(receptionistID);
@@ -86,7 +91,7 @@ public class ReceptionistManager {
 			return null;
 		}
 	}
-	
+
 	public Receptionist findReceptionistByUserID(int userID) {
 		if (userIDReceptionistMap.containsKey(userID)) {
 			return userIDReceptionistMap.get(userID);
@@ -95,7 +100,7 @@ public class ReceptionistManager {
 			return null;
 		}
 	}
-	
+
 	public void updateReceptionistInCSV(UserManager um) {
 		userManager = um;
 		List<User> users = userManager.getAllUsers();
@@ -127,7 +132,8 @@ public class ReceptionistManager {
 			}
 		}
 
-		// Remove receptionists who are no longer in users.csv or no longer have the role
+		// Remove receptionists who are no longer in users.csv or no longer have the
+		// role
 		Iterator<Receptionist> iterator = receptionists.iterator();
 		while (iterator.hasNext()) {
 			Receptionist receptionist = iterator.next();
@@ -160,7 +166,7 @@ public class ReceptionistManager {
 		}
 		return id;
 	}
-	
+
 	public void addReceptionist(Receptionist newReceptionist, User receptionistUserAccount) {
 		Integer recepID = Integer.valueOf(newReceptionist.getReceptionistID());
 		// Add to main user system
@@ -173,21 +179,40 @@ public class ReceptionistManager {
 		userIDReceptionistMap.put(recepID, newReceptionist);
 		receptionistIDReceptionistMap.put(recepID, newReceptionist);
 	}
-	
+
 	public void removeReceptionist(Receptionist receptionist) {
-		if (receptionist == null) return;
+		if (receptionist == null) {
+			System.out.println("removeReceptionist: Null");
+			return;
+		}
+		// Gather info before removal
 		Integer userID = Integer.valueOf(receptionist.getUserID());
 		Integer receptionistID = Integer.valueOf(receptionist.getReceptionistID());
+		User receptionistUserAccount = findUserByReceptionistID(receptionist.getReceptionistID());
+
 		// Remove from receptionist-specific structures
 		receptionists.remove(receptionist);
 		userIDReceptionistMap.remove(userID);
 		receptionistIDReceptionistMap.remove(receptionistID);
-		
-		User receptionistUserAccount = findUserByReceptionistID(receptionist.getReceptionistID());
 		userManager.removeUser(receptionistUserAccount);
+
 	}
 
-	
+	public int getFirstAvailableReceptionistID() {
+		List<Integer> ids = new ArrayList<>();
+
+		for (Receptionist r : receptionists) {
+			ids.add(r.getReceptionistID());
+		}
+
+		int expected = 1;
+		for (int id : ids) {
+			if (id != expected) return expected;
+			expected++;
+		}
+		return expected;
+	}
+
 	public Map<Integer, Receptionist> getUserIDReceptionistMap() {
 		return userIDReceptionistMap;
 	}
@@ -195,7 +220,7 @@ public class ReceptionistManager {
 	public Map<Integer, Receptionist> getReceptionistIDReceptionistMap() {
 		return receptionistIDReceptionistMap;
 	}
-	
+
 	public List<Receptionist> getAllReceptionists() {
 		return receptionists;
 	}

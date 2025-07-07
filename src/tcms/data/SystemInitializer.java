@@ -87,6 +87,8 @@ public class SystemInitializer {
 		userManager.loadUsers(Constants.USERS_CSV);
 		adminManager.loadAdmins(Constants.ADMINS_CSV);
 		tutorManager.loadTutors(Constants.TUTORS_CSV);
+		tutorManager.loadSubjects(Constants.SUBJECTS_CSV);
+		tutorManager.loadLevels(Constants.LEVELS_CSV);
 		receptionistManager.loadReceptionists(Constants.RECEPTIONISTS_CSV);
 		studentManager.loadStudents(Constants.STUDENTS_CSV);
 
@@ -105,7 +107,8 @@ public class SystemInitializer {
 		var admin_list = adminManager.getAllAdmins();
 
 		if (admin_list.isEmpty() || admin_list.size() == 0) {
-			User newAdminUser = new User("admin", "123", "admin");
+			int first_id = userManager.getFirstAvailableUserID();
+			User newAdminUser = new User(first_id, "admin", "123", "admin");
 			userManager.addUser(newAdminUser);
 			userManager.saveUsers(Constants.USERS_CSV);
 			System.out.println("System Intializer -> No admins detected!");

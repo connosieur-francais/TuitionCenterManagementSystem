@@ -11,8 +11,6 @@ public class User {
 	private String role; // Admin, Receptionist, Tutor, Student
 	private int loginAttempts;
 	private String accountStatus; // active, locked
-	
-	private UserManager um = new UserManager(); // For next user id checking
 
 	public User(int id, String username, String password, String role, int loginAttempts, String accountStatus) {
 		setID(id);
@@ -23,20 +21,13 @@ public class User {
 		setAccountStatus(accountStatus);
 	}
 
-	public User(String username, String password, String role) { // Create new user ( With no set information)
-		setID(nextAvailableID());
+	public User(int nextID, String username, String password, String role) { // Create new user ( With no set information)
+		setID(nextID);
 		setUsername(username);
 		setPassword(password);
 		setRole(role);
 		setLoginAttempts(3);
 		setAccountStatus("active");
-	}
-	
-	private int nextAvailableID() { // SPECIAL METHOD ( NOT TO BE USED BY OTHER CLASSES! )
-		um.loadUsers(Constants.USERS_CSV);
-		List<User> users = um.getAllUsers();
-		int nextID = users.size() + 1;
-		return nextID;
 	}
 	
 	public void setID(int id) {
