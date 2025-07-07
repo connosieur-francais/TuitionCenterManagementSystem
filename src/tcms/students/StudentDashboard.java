@@ -39,6 +39,10 @@ public class StudentDashboard extends JFrame implements ActionListener {
     private final User user;
     private final Student student;
 
+    private CustomJButton btnSchedule;
+    private CustomJButton btnRequests;
+    private CustomJButton btnPayments;
+    private CustomJButton btnProfile;
     
     private JPanel contentPane;
     private JLabel usernameLabel;
@@ -84,7 +88,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
         buildProfileSection();
         buildCarouselSection();
         
-        CustomJButton btnSchedule = new CustomJButton();
+        btnSchedule = new CustomJButton();
         btnSchedule.setBounds(90, 380, 500, 128);
         btnSchedule.setText("Class Schedule");
         btnSchedule.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
@@ -96,7 +100,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
         btnSchedule.addActionListener(this);
         contentPane.add(btnSchedule);
 
-        CustomJButton btnRequests = new CustomJButton();
+        btnRequests = new CustomJButton();
         btnRequests.setBounds(90, 512, 500, 128);
         btnRequests.setText("Requests");
         btnRequests.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
@@ -108,7 +112,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
         btnRequests.addActionListener(this);
         contentPane.add(btnRequests);
 
-        CustomJButton btnPayments = new CustomJButton();
+        btnPayments = new CustomJButton();
         btnPayments.setBounds(670, 380, 500, 128);
         btnPayments.setText("Payment Status");
         btnPayments.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
@@ -120,7 +124,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
         btnPayments.addActionListener(this);
         contentPane.add(btnPayments);
 
-        CustomJButton btnProfile = new CustomJButton();
+        btnProfile = new CustomJButton();
         btnProfile.setBounds(670, 512, 500, 128);
         btnProfile.setText("View Profile");
         btnProfile.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
@@ -250,25 +254,29 @@ public class StudentDashboard extends JFrame implements ActionListener {
 
         if (src == notificationsBtn) {
             JOptionPane.showMessageDialog(this, "No new notifications.");
-        } else if (src == logoutBtn) {
+        }
+        if (src == logoutBtn) {
             JOptionPane.showMessageDialog(this, "Logging Out...");
             dispose();
-        } else if (src == nextBtn) {
+        }
+        if (src == nextBtn) {
             cardLayout.next(whatsNewPanel); 
-        } else if (src == previousBtn) {
+        }
+        if (src == previousBtn) {
             cardLayout.previous(whatsNewPanel); 
-        } else if (src instanceof CustomJButton btn) {
-            switch (btn.getText()) {
-                case "Class Schedule" -> JOptionPane.showMessageDialog(this, "Loading Schedule...");
-                case "Requests" -> JOptionPane.showMessageDialog(this, "Opening Requests...");
-                case "Payment Status" -> JOptionPane.showMessageDialog(this, "Opening Payment Window...");
-                case "View Profile" -> {
-                    new UpdateStudentWindow(user, um, sm).setVisible(true);  
-                    this.dispose();                                         
-                }
-
-                default -> {}
-            }
+        }
+        if (e.getSource() == btnRequests) {
+        	JOptionPane.showMessageDialog(this, "Opening Requests...");
+        }
+        if (e.getSource() == btnSchedule) {
+        	JOptionPane.showMessageDialog(this, "Loading Schedule...");
+        }
+        if (e.getSource() == btnPayments) {
+        	JOptionPane.showMessageDialog(this, "Opening Payment Window...");
+        }
+        if (e.getSource() == btnProfile) {
+        	new UpdateStudentWindow(user, um, sm).setVisible(true);
+        	this.dispose();
         }
     }
 
