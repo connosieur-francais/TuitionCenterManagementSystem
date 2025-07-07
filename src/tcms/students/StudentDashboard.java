@@ -26,6 +26,8 @@ import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.*;
 import tcms.students.UpdateStudentWindow;
+import javax.swing.border.MatteBorder;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 
@@ -58,6 +60,9 @@ public class StudentDashboard extends JFrame implements ActionListener {
     private static final Color DARK_GREY = new Color(34, 34, 34);
     private static final Color BLUE_ACCENT = new Color(70, 130, 180);
     private static final Color WHITE_TEXT = Color.WHITE;
+    private JLabel lblNewLabel_1;
+    private JPanel UpdateLog;
+    private JPanel StudentInfoLog;
 
    
     public StudentDashboard(User u, UserManager userManager, StudentManager studentManager) {
@@ -79,7 +84,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
 
         
         contentPane = new JPanel();
-        contentPane.setBackground(DARK_GREY);
+        contentPane.setBackground(new Color(43, 45, 49));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -88,53 +93,131 @@ public class StudentDashboard extends JFrame implements ActionListener {
         buildProfileSection();
         buildCarouselSection();
         
+        JPanel OptionsLog = new JPanel();
+        OptionsLog.setBorder(new MatteBorder(2, 3, 3, 3, (Color) new Color(70, 70, 70)));
+        OptionsLog.setBackground(new Color(37, 37, 37));
+        OptionsLog.setBounds(931, 151, 225, 520);
+        contentPane.add(OptionsLog);
+        OptionsLog.setLayout(null);
+        
         btnSchedule = new CustomJButton();
-        btnSchedule.setBounds(90, 380, 500, 128);
+        btnSchedule.setBounds(22, 44, 175, 53);
+        OptionsLog.add(btnSchedule);
         btnSchedule.setText("Class Schedule");
-        btnSchedule.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
+        btnSchedule.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
         btnSchedule.setForeground(WHITE_TEXT);
-        btnSchedule.setColor(BLUE_ACCENT);
-        btnSchedule.setBackground(BLUE_ACCENT);
+        btnSchedule.setColor(new Color(88, 101, 242));
+        btnSchedule.setBackground(new Color(70, 70, 70));
         btnSchedule.setRadius(30);
         btnSchedule.setFocusPainted(false);
+        
+                btnRequests = new CustomJButton();
+                btnRequests.setBounds(22, 166, 175, 53);
+                OptionsLog.add(btnRequests);
+                btnRequests.setText("Requests");
+                btnRequests.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
+                btnRequests.setForeground(WHITE_TEXT);
+                btnRequests.setColor(BLUE_ACCENT);
+                btnRequests.setBackground(new Color(70, 70, 70));
+                btnRequests.setRadius(30);
+                btnRequests.setFocusPainted(false);
+                
+                        btnPayments = new CustomJButton();
+                        btnPayments.setBounds(22, 285, 175, 53);
+                        OptionsLog.add(btnPayments);
+                        btnPayments.setText("Payment Status");
+                        btnPayments.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
+                        btnPayments.setForeground(WHITE_TEXT);
+                        btnPayments.setColor(BLUE_ACCENT);
+                        btnPayments.setBackground(new Color(70, 70, 70));
+                        btnPayments.setRadius(30);
+                        btnPayments.setFocusPainted(false);
+                        
+                                btnProfile = new CustomJButton();
+                                btnProfile.setBounds(22, 409, 175, 53);
+                                OptionsLog.add(btnProfile);
+                                btnProfile.setText("View Profile");
+                                btnProfile.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
+                                btnProfile.setForeground(WHITE_TEXT);
+                                btnProfile.setColor(BLUE_ACCENT);
+                                btnProfile.setBackground(new Color(70, 70, 70));
+                                btnProfile.setRadius(30);
+                                btnProfile.setFocusPainted(false);
+                                
+                                JPanel WelcomeLog = new JPanel();
+                                WelcomeLog.setBorder(new MatteBorder(3, 0, 3, 3, (Color) new Color(83, 101, 242)));
+                                WelcomeLog.setBackground(new Color(37, 37, 37));
+                                WelcomeLog.setBounds(204, 84, 652, 176);
+                                contentPane.add(WelcomeLog);
+                                WelcomeLog.setLayout(null);
+                                
+                                lblNewLabel_1 = new JLabel("WELCOME,");
+                                lblNewLabel_1.setForeground(new Color(255, 255, 255));
+                                lblNewLabel_1.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
+                                lblNewLabel_1.setBounds(41, 91, 158, 35);
+                                WelcomeLog.add(lblNewLabel_1);
+                                
+                                        usernameLabel = new JLabel();
+                                        usernameLabel.setBounds(171, 88, 134, 40);
+                                        WelcomeLog.add(usernameLabel);
+                                        usernameLabel.setForeground(WHITE_TEXT);
+                                        usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+                                        usernameLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 25));
+                                        
+                                                JLabel idLabel = new JLabel("| ID:");
+                                                idLabel.setBounds(531, 136, 44, 40);
+                                                WelcomeLog.add(idLabel);
+                                                idLabel.setForeground(WHITE_TEXT);
+                                                idLabel.setFont(new Font("Arial", Font.BOLD, 18));
+                                                
+                                                        studentIDLabel = new JLabel();
+                                                        studentIDLabel.setBounds(574, 136, 22, 40);
+                                                        WelcomeLog.add(studentIDLabel);
+                                                        studentIDLabel.setForeground(WHITE_TEXT);
+                                                        studentIDLabel.setFont(new Font("Arial", Font.BOLD, 18));
+                                                        
+                                                        JPanel panel_3 = new JPanel();
+                                                        panel_3.setBackground(new Color(40, 43, 48));
+                                                        panel_3.setBounds(0, 49, 1186, 40);
+                                                        contentPane.add(panel_3);
+                                                        panel_3.setLayout(null);
+                                                        
+                                                        JPanel QuickAccessLog = new JPanel();
+                                                        QuickAccessLog.setBounds(931, 91, 225, 58);
+                                                        contentPane.add(QuickAccessLog);
+                                                        QuickAccessLog.setBackground(new Color(88, 101, 242));
+                                                        QuickAccessLog.setLayout(null);
+                                                        
+                                                        JLabel lblNewLabel = new JLabel("QUICK ACCESS");
+                                                        lblNewLabel.setBounds(10, 16, 197, 32);
+                                                        QuickAccessLog.add(lblNewLabel);
+                                                        lblNewLabel.setBackground(new Color(30, 80, 130));
+                                                        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                                                        lblNewLabel.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 22));
+                                                        lblNewLabel.setForeground(new Color(255, 255, 255));
+                                                        
+                                                        UpdateLog = new JPanel();
+                                                        UpdateLog.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(83, 101, 242)));
+                                                        UpdateLog.setBackground(new Color(37, 37, 37));
+                                                        UpdateLog.setBounds(39, 344, 383, 50);
+                                                        contentPane.add(UpdateLog);
+                                                        UpdateLog.setLayout(null);
+                                                        
+                                                        JLabel lblNewLabel_2 = new JLabel("Important Updates!!");
+                                                        lblNewLabel_2.setBounds(87, 10, 223, 26);
+                                                        UpdateLog.add(lblNewLabel_2);
+                                                        lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+                                                        lblNewLabel_2.setForeground(new Color(255, 255, 255));
+                                                        lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 22));
+                                                        
+                                                        StudentInfoLog = new JPanel();
+                                                        StudentInfoLog.setBackground(new Color(37, 37, 37));
+                                                        StudentInfoLog.setBounds(519, 344, 337, 327);
+                                                        contentPane.add(StudentInfoLog);
+                                btnProfile.addActionListener(this);
+                        btnPayments.addActionListener(this);
+                btnRequests.addActionListener(this);
         btnSchedule.addActionListener(this);
-        contentPane.add(btnSchedule);
-
-        btnRequests = new CustomJButton();
-        btnRequests.setBounds(90, 512, 500, 128);
-        btnRequests.setText("Requests");
-        btnRequests.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-        btnRequests.setForeground(WHITE_TEXT);
-        btnRequests.setColor(BLUE_ACCENT);
-        btnRequests.setBackground(BLUE_ACCENT);
-        btnRequests.setRadius(30);
-        btnRequests.setFocusPainted(false);
-        btnRequests.addActionListener(this);
-        contentPane.add(btnRequests);
-
-        btnPayments = new CustomJButton();
-        btnPayments.setBounds(670, 380, 500, 128);
-        btnPayments.setText("Payment Status");
-        btnPayments.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-        btnPayments.setForeground(WHITE_TEXT);
-        btnPayments.setColor(BLUE_ACCENT);
-        btnPayments.setBackground(BLUE_ACCENT);
-        btnPayments.setRadius(30);
-        btnPayments.setFocusPainted(false);
-        btnPayments.addActionListener(this);
-        contentPane.add(btnPayments);
-
-        btnProfile = new CustomJButton();
-        btnProfile.setBounds(670, 512, 500, 128);
-        btnProfile.setText("View Profile");
-        btnProfile.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-        btnProfile.setForeground(WHITE_TEXT);
-        btnProfile.setColor(BLUE_ACCENT);
-        btnProfile.setBackground(BLUE_ACCENT);
-        btnProfile.setRadius(30);
-        btnProfile.setFocusPainted(false);
-        btnProfile.addActionListener(this);
-        contentPane.add(btnProfile);
 
         setVisible(true);
     }
@@ -142,69 +225,54 @@ public class StudentDashboard extends JFrame implements ActionListener {
   
     private void buildHeader() {
         JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(DARK_GREY);
-        headerPanel.setBounds(0, 0, 1186, 60);
+        headerPanel.setBackground(new Color(37, 37, 37));
+        headerPanel.setBounds(0, 0, 1186, 50);
         contentPane.add(headerPanel);
 
-        usernameLabel = new JLabel();
-        usernameLabel.setForeground(WHITE_TEXT);
-        usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        usernameLabel.setFont(new Font("Arial", Font.BOLD, 24));
-
-        JLabel idLabel = new JLabel("| ID:");
-        idLabel.setForeground(WHITE_TEXT);
-        idLabel.setFont(new Font("Arial", Font.BOLD, 24));
-
-        studentIDLabel = new JLabel();
-        studentIDLabel.setForeground(WHITE_TEXT);
-        studentIDLabel.setFont(new Font("Arial", Font.BOLD, 24));
-
         notificationsBtn = new JButton("🔔");
-        notificationsBtn.setBackground(BLUE_ACCENT);
+        notificationsBtn.setBackground(new Color(70, 70, 70));
         notificationsBtn.setForeground(WHITE_TEXT);
         notificationsBtn.setFocusPainted(false);
         notificationsBtn.addActionListener(this);
 
         logoutBtn = new JButton("⍈ Logout");
-        logoutBtn.setBackground(BLUE_ACCENT);
+        logoutBtn.setBackground(new Color(70, 70, 70));
         logoutBtn.setForeground(WHITE_TEXT);
         logoutBtn.setFocusPainted(false);
         logoutBtn.addActionListener(this);
 
         GroupLayout gl = new GroupLayout(headerPanel);
-        gl.setHorizontalGroup(gl.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl.createSequentialGroup()
-                        .addGap(628)
-                        .addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-                        .addGap(10)
-                        .addComponent(idLabel)
-                        .addGap(10)
-                        .addComponent(studentIDLabel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                        .addGap(10)
-                        .addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-                        .addGap(10)
-                        .addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)));
-        gl.setVerticalGroup(gl.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl.createSequentialGroup().addGap(10)
-                        .addGroup(gl.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(usernameLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(idLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(studentIDLabel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))));
+        gl.setHorizontalGroup(
+        	gl.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl.createSequentialGroup()
+        			.addGap(934)
+        			.addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+        			.addGap(30)
+        			.addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+        			.addGap(33))
+        );
+        gl.setVerticalGroup(
+        	gl.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl.createSequentialGroup()
+        			.addGap(10)
+        			.addGroup(gl.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+        );
         headerPanel.setLayout(gl);
     }
 
     
     private void buildProfileSection() {
         JPanel profilePanel = new JPanel();
+        profilePanel.setBorder(new MatteBorder(3, 3, 3, 3, (Color) new Color(83, 101, 242)));
         profilePanel.setBackground(DARK_GREY);
-        profilePanel.setBounds(90, 70, 500, 300);
+        profilePanel.setBounds(39, 84, 165, 176);
         contentPane.add(profilePanel);
 
         
         ImageIcon origIcon = new ImageIcon(Constants.STUDENT_USER_ICON_FILE);
-        Image scaledImg = origIcon.getImage().getScaledInstance(350, 350, Image.SCALE_SMOOTH);
+        Image scaledImg = origIcon.getImage().getScaledInstance(150, 159, Image.SCALE_SMOOTH);
 
         JLabel profilePictureLabel = new JLabel(new ImageIcon(scaledImg));
         profilePanel.add(profilePictureLabel);
@@ -230,7 +298,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
         autoSlide.start();
 
         JPanel holder = new JPanel();
-        holder.setBounds(610, 70, 500, 300);
+        holder.setBounds(39, 399, 382, 272);
         holder.setLayout(new BorderLayout());
         contentPane.add(holder);
 
@@ -301,5 +369,4 @@ public class StudentDashboard extends JFrame implements ActionListener {
             System.out.println("Demo user not found. Check the username in users.csv.");
         }
     }
-    
 }
