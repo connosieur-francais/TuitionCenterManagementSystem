@@ -75,17 +75,22 @@ public class TutorManager {
 	}
 
 	public void saveTutors(String filename) {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write(
-					"tutor_id,user_id,contact,email,address,assigned_level,assigned_subjectID_1,assigned_subjectID_2,assigned_subjectID_3\n");
-			for (Tutor tutor : tutors) {
-				bw.write(tutor.toCSV());
-				bw.newLine();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+	        bw.write("tutor_id,user_id,contact,email,address,assigned_level,assigned_subjectID_1,assigned_subjectID_2,assigned_subjectID_3\n");
+
+	        // Sort a copy of the list for saving only
+	        List<Tutor> sortedTutors = new ArrayList<>(tutors);
+	        sortedTutors.sort(Comparator.comparingInt(Tutor::getTutorID));
+
+	        for (Tutor tutor : sortedTutors) {
+	            bw.write(tutor.toCSV());
+	            bw.newLine();
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
+
 
 	public User findUserByTutorID(int tutorID) {
 		if (tutorIDTutorMap.get(tutorID) != null) {

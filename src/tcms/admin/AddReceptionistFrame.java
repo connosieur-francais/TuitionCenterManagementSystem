@@ -324,6 +324,9 @@ public class AddReceptionistFrame extends JFrame implements ActionListener {
 		if (!Validators.isValidAddress(address)) {
 			return false;
 		}
+		if (!Validators.isUsernameUnique(nameTxtfield.getText(), userManager, this)) {
+		    return false;
+		}
 
 		return true;
 	}

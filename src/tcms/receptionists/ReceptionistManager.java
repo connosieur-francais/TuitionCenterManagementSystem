@@ -63,15 +63,20 @@ public class ReceptionistManager {
 	}
 
 	public void saveReceptionists(String filename) {
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("receptionist_id,user_id,contact,email,address\n");
-			for (Receptionist receptionist : receptionists) {
-				bw.write(receptionist.toCSV());
-				bw.newLine();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+	        bw.write("receptionist_id,user_id,contact,email,address\n");
+
+	        // Sort a copy of the list for saving only
+	        List<Receptionist> sortedReceptionists = new ArrayList<>(receptionists);
+	        sortedReceptionists.sort(Comparator.comparingInt(Receptionist::getReceptionistID));
+
+	        for (Receptionist receptionist : sortedReceptionists) {
+	            bw.write(receptionist.toCSV());
+	            bw.newLine();
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	public User findUserByReceptionistID(int receptionistID) {

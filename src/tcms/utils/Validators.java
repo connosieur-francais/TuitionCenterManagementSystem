@@ -1,6 +1,12 @@
 package tcms.utils;
 
+import java.util.List;
+
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import tcms.users.User;
+import tcms.users.UserManager;
 
 public class Validators {
 	
@@ -20,6 +26,20 @@ public class Validators {
 		}
 		return true;
 	}
+	
+	public static boolean isUsernameUnique(String username, UserManager userManager, JFrame parent) {
+	    for (User user : userManager.getAllUsers()) {
+	        if (user.getUsername().equalsIgnoreCase(username)) {
+	            JOptionPane.showMessageDialog(parent,
+	                    "Username already exists. Please choose a different one.",
+	                    "Duplicate Username",
+	                    JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+
 
 	public static boolean isValidPassword(String password) {
 		// Check if password is empty
@@ -123,5 +143,16 @@ public class Validators {
 			return false;
 		}
 		return true;
+	}
+	
+	public static boolean hasValidSubjectSelection(List<String> selectedSubjects, JFrame parent) {
+	    if (selectedSubjects == null || selectedSubjects.size() < 1 || selectedSubjects.size() > 3) {
+	        JOptionPane.showMessageDialog(parent,
+	                "Please select at least 1 and at most 3 subjects.",
+	                "Invalid Subject Selection",
+	                JOptionPane.WARNING_MESSAGE);
+	        return false;
+	    }
+	    return true;
 	}
 }
