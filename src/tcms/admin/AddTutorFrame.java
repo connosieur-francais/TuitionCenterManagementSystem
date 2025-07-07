@@ -387,6 +387,7 @@ public class AddTutorFrame extends JFrame implements ActionListener {
 		String contact = contactTxtfield.getText();
 		String email = emailTxtfield.getText();
 		String address = addressTxtfield.getText();
+		
 
 		// Only one dialog will show — first error encountered
 		if (!Validators.isValidName(name)) {
