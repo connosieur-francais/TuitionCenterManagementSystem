@@ -83,7 +83,54 @@ public class StudentDashboard extends JFrame implements ActionListener {
         buildHeader();
         buildProfileSection();
         buildCarouselSection();
-        buildButtonGrid();
+        
+        CustomJButton btnSchedule = new CustomJButton();
+        btnSchedule.setBounds(90, 380, 500, 128);
+        btnSchedule.setText("Class Schedule");
+        btnSchedule.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
+        btnSchedule.setForeground(WHITE_TEXT);
+        btnSchedule.setColor(BLUE_ACCENT);
+        btnSchedule.setBackground(BLUE_ACCENT);
+        btnSchedule.setRadius(30);
+        btnSchedule.setFocusPainted(false);
+        btnSchedule.addActionListener(this);
+        contentPane.add(btnSchedule);
+
+        CustomJButton btnRequests = new CustomJButton();
+        btnRequests.setBounds(90, 512, 500, 128);
+        btnRequests.setText("Requests");
+        btnRequests.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
+        btnRequests.setForeground(WHITE_TEXT);
+        btnRequests.setColor(BLUE_ACCENT);
+        btnRequests.setBackground(BLUE_ACCENT);
+        btnRequests.setRadius(30);
+        btnRequests.setFocusPainted(false);
+        btnRequests.addActionListener(this);
+        contentPane.add(btnRequests);
+
+        CustomJButton btnPayments = new CustomJButton();
+        btnPayments.setBounds(670, 380, 500, 128);
+        btnPayments.setText("Payment Status");
+        btnPayments.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
+        btnPayments.setForeground(WHITE_TEXT);
+        btnPayments.setColor(BLUE_ACCENT);
+        btnPayments.setBackground(BLUE_ACCENT);
+        btnPayments.setRadius(30);
+        btnPayments.setFocusPainted(false);
+        btnPayments.addActionListener(this);
+        contentPane.add(btnPayments);
+
+        CustomJButton btnProfile = new CustomJButton();
+        btnProfile.setBounds(670, 512, 500, 128);
+        btnProfile.setText("View Profile");
+        btnProfile.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
+        btnProfile.setForeground(WHITE_TEXT);
+        btnProfile.setColor(BLUE_ACCENT);
+        btnProfile.setBackground(BLUE_ACCENT);
+        btnProfile.setRadius(30);
+        btnProfile.setFocusPainted(false);
+        btnProfile.addActionListener(this);
+        contentPane.add(btnProfile);
 
         setVisible(true);
     }
@@ -196,37 +243,6 @@ public class StudentDashboard extends JFrame implements ActionListener {
         holder.add(nextBtn, BorderLayout.EAST);
     }
 
-    
-    private void buildButtonGrid() {
-        JPanel grid = new JPanel(new java.awt.GridLayout(2, 2, 50, 50));
-        grid.setBackground(DARK_GREY);
-        grid.setBounds(100, 380, 1000, 300);
-        contentPane.add(grid);
-
-        CustomJButton btnSchedule = createTileButton("Class Schedule");
-        CustomJButton btnRequests = createTileButton("Requests");
-        CustomJButton btnPayments = createTileButton("Payment Status");
-        CustomJButton btnProfile = createTileButton("View Profile");
-
-        grid.add(btnSchedule);
-        grid.add(btnRequests);
-        grid.add(btnPayments);
-        grid.add(btnProfile);
-    }
-
-    private CustomJButton createTileButton(String text) {
-        CustomJButton btn = new CustomJButton();
-        btn.setText(text);
-        btn.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-        btn.setForeground(WHITE_TEXT);
-        btn.setColor(BLUE_ACCENT);
-        btn.setBackground(BLUE_ACCENT);
-        btn.setRadius(30);
-        btn.setFocusPainted(false);
-        btn.addActionListener(this);
-        return btn;
-    }
-
    
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -256,11 +272,11 @@ public class StudentDashboard extends JFrame implements ActionListener {
         }
     }
 
-
     private void updateDashboardInformation() {
         usernameLabel.setText(user.getUsername());
         studentIDLabel.setText(String.valueOf(student.getStudentID()));
     }
+    
     public static void main(String[] args) {
       
         UserManager um = new UserManager();
