@@ -7,8 +7,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
-import tcms.admin.AdminManager;
-import tcms.admin.AdminPage;
+import tcms.admin.backend.AdminManager;
+import tcms.admin.frontend.AdminPage;
 import tcms.data.SystemInitializer.ManagerBundle;
 import tcms.receptionists.ReceptionistManager;
 import tcms.students.StudentDashboard;

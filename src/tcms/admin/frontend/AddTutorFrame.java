@@ -1,4 +1,4 @@
-package tcms.admin;
+package tcms.admin.frontend;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

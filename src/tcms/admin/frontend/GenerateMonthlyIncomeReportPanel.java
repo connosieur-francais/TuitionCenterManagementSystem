@@ -1,4 +1,4 @@
-package tcms.admin;
+package tcms.admin.frontend;
 
 import java.awt.Color;
 import java.awt.Dimension;

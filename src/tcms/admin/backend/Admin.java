@@ -1,4 +1,4 @@
-package tcms.admin;
+package tcms.admin.backend;
 
 public class Admin {
 	

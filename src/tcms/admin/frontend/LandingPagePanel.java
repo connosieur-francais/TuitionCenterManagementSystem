@@ -1,4 +1,4 @@
-package tcms.admin;
+package tcms.admin.frontend;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 
+import tcms.admin.backend.Admin;
 import tcms.custom_gui_components.CustomJButton;
 import tcms.custom_gui_components.IncomeChartPanel;
 import tcms.users.User;

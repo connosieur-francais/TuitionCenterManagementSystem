@@ -1,4 +1,4 @@
-package tcms.admin;
+package tcms.admin.frontend;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -24,6 +24,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
+import tcms.admin.backend.Admin;
+import tcms.admin.backend.AdminManager;
 import tcms.custom_gui_components.CustomComponents;
 import tcms.custom_gui_components.CustomJButton;
 import tcms.custom_gui_components.CustomJToggleButton;

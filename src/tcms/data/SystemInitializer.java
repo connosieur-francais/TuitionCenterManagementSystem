@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import tcms.admin.AdminManager;
+import tcms.admin.backend.AdminManager;
 import tcms.receptionists.ReceptionistManager;
 import tcms.students.StudentManager;
 import tcms.tutors.TutorManager;
