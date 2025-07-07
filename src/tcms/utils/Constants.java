@@ -46,4 +46,5 @@ public class Constants {
 	public static final String LEVELS_CSV = "src/tcms/data/levels.csv";
 	public static final String SUBJECT_CHANGE_REQUESTS_CSV = "src/tcms/data/subject_change_requests.csv";
 	public static final String SUBJECTS_CSV = "src/tcms/data/subjects.csv";
+	public static final String RECEIPTS_CSV = "src/tcms/data/receipts.csv";
 }
