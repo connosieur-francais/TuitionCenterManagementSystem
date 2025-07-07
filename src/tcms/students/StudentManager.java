@@ -55,10 +55,12 @@ public class StudentManager {
 	public void saveStudents(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 			bw.write("student_id,user_id,contact,email,address,level,enrollment_date\n");
-			for (Student student : students) {
-				bw.write(String.join(",", String.valueOf(student.getStudentID()), String.valueOf(student.getUserID()),
-						student.getContact(), student.getEmail(), student.getAddress(),
-						String.valueOf(student.getLevel()), student.getEnrollment_date()));
+			
+			List<Student> sortedStudents = new ArrayList<>(students);
+			sortedStudents.sort(Comparator.comparingInt(Student::getStudentID));
+			
+			for (Student student : sortedStudents) {
+				bw.write(student.toCSV());
 				bw.newLine();
 			}
 		} catch (IOException e) {
