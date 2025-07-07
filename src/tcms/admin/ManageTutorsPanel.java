@@ -168,7 +168,22 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 		removeTutorsBtn.setBounds(746, 10, 200, 40);
 		removeTutorsBtn.addActionListener(this);
 		tutorInfoPanel.add(removeTutorsBtn);
-
+		
+		CustomJButton assignSubjectBtn = new CustomJButton();
+		assignSubjectBtn.setColor(Constants.GREEN_BUTTON);
+		assignSubjectBtn.setColorOver(Constants.GREEN_BUTTON_HOVER);
+		assignSubjectBtn.setColorClick(Constants.GREEN_BUTTON_CLICK);
+		assignSubjectBtn.setBorderColor(Constants.GREEN_BUTTON_BORDER);
+		assignSubjectBtn.setForeground(Constants.TEXT_COLOR);
+		assignSubjectBtn.setFocusable(true);
+		assignSubjectBtn.setRadius(10);
+		assignSubjectBtn.setFocusPainted(false);
+		assignSubjectBtn.setFont(new Font("Arial", Font.BOLD, 16));
+		assignSubjectBtn.setText("<html><div style='text-align: center;'>Assign Subjects to Tutor\r\n<span style='font-family: Segoe UI Emoji, Noto Color Emoji; font-size: 12px;'>📖</span>\r\n</div></html>");
+		assignSubjectBtn.setBounds(526, 10, 210, 40);
+		tutorInfoPanel.add(assignSubjectBtn);
+		
+		
 		refreshManageTutorsPanel();
 	}
 

@@ -6,10 +6,6 @@ user_id,username,password,role,login_attempts,status
 5,Adam,123,admin,3,active
 6,John Doe,123,admin,3,active
 7,Lily,123,tutor,3,active
-8,testing,tetsTing123,tutor,3,active
 9,Jenny,123,receptionist,3,active
-10,Griff,123,receptionist,3,active
 11,Alice,123,student,3,active
 12,Bob,123,student,3,active
-14,TutorTest,tutorPass213,tutor,3,active
-15,TutorTest2,Tester123,tutor,3,active

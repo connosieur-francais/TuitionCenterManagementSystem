@@ -28,7 +28,7 @@ import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
 
-public class landingPagePanel extends JPanel {
+public class LandingPagePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class landingPagePanel extends JPanel {
 
 	private JScrollPane scrollPane;
 
-	public landingPagePanel(UserManager um, Admin admin, User user) {
+	public LandingPagePanel(UserManager um, Admin admin, User user) {
 		SwingUtilities.invokeLater(() -> requestFocusInWindow());
 
 		setBackground(new Color(44, 47, 51));
@@ -173,11 +173,13 @@ public class landingPagePanel extends JPanel {
 		filterButton.setColorClick(new Color(60, 69, 165));
 		filterButton.setColorOver(new Color(79, 82, 196));
 		filterButton.setBorder(null);
+		filterButton.setFocusable(true);
 		filterButton.setFocusPainted(false);
 		filterButton.setBounds(163, 403, 117, 25);
 		add(filterButton);
 
 		JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu.setFocusable(true);
 		popupMenu.setBackground(new Color(35, 39, 42));
 		popupMenu.setBorder(null);
 
@@ -204,8 +206,10 @@ public class landingPagePanel extends JPanel {
 
 		JMenuItem clearFilter = new JMenuItem("Clear Filter");
 		clearFilter.setForeground(Color.LIGHT_GRAY);
+		clearFilter.setBorder(null);
 		clearFilter.setBackground(new Color(35, 39, 42));
 		clearFilter.setFont(new Font("Arial", Font.ITALIC, 12));
+		clearFilter.setFocusable(true);
 		clearFilter.addActionListener(e -> {
 			filterButton.setText("🔽 Filter");
 			sorter.setRowFilter(null);
@@ -217,7 +221,7 @@ public class landingPagePanel extends JPanel {
 			popupMenu.setPreferredSize(new Dimension(filterButton.getWidth(), popupMenu.getPreferredSize().height));
 			popupMenu.show(filterButton, 0, -popupMenu.getPreferredSize().height);
 		});
-
+		
 		loadUsersIntoTable(um);
 
 		IncomeChartPanel incomeChartPanel = new IncomeChartPanel();
@@ -230,6 +234,10 @@ public class landingPagePanel extends JPanel {
 	public void removeNotify() {
 		super.removeNotify();
 		if (searchTimer != null) searchTimer.stop();
+	}
+
+	public void reloadUserTableData(UserManager um) {
+	    loadUsersIntoTable(um); // Make sure 'userManager' is accessible
 	}
 
 	private void loadUsersIntoTable(UserManager um) {

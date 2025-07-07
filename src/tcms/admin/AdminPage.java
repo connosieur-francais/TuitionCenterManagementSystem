@@ -84,7 +84,7 @@ public class AdminPage extends JFrame implements ActionListener {
 	private JPanel viewMonthlyIncomePanel;
 
 	// LANDING PAGE ---------------------------------
-	private JPanel landingPagePanel;
+	private LandingPagePanel landingPagePanel;
 
 	/**
 	 * Create the frame.
@@ -406,7 +406,7 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		// LANDING PAGE PANEL --------------------------------
 
-		landingPagePanel = new landingPagePanel(um, admin, user);
+		landingPagePanel = new LandingPagePanel(um, admin, user);
 		contentPanel.setLayer(landingPagePanel, 2);
 		landingPagePanel.setBackground(new Color(44, 47, 51));
 		contentPanel.add(landingPagePanel, "Landing Page");
@@ -422,14 +422,17 @@ public class AdminPage extends JFrame implements ActionListener {
 
 		// RETURN TO DASHBOARD SPECIAL
 		if (e.getSource() == updateProfileReturnBtn) {
+			landingPagePanel.reloadUserTableData(userManager);
 			returnToLandingPage();
 		}
 		
 		if (e.getSource() == tutorReturnBtn) {
+			landingPagePanel.reloadUserTableData(userManager);
 			returnToLandingPage();
 		}
 		
 		if (e.getSource() == receptionistReturnBtn) {
+			landingPagePanel.reloadUserTableData(userManager);
 			returnToLandingPage();
 		}
 
