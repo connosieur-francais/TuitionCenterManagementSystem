@@ -106,7 +106,6 @@ public class StudentDashboard extends JFrame implements ActionListener {
         btnSchedule.setText("Class Schedule");
         btnSchedule.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
         btnSchedule.setForeground(WHITE_TEXT);
-        btnSchedule.setColor(new Color(88, 101, 242));
         btnSchedule.setBackground(new Color(70, 70, 70));
         btnSchedule.setRadius(30);
         btnSchedule.setFocusPainted(false);
@@ -117,7 +116,6 @@ public class StudentDashboard extends JFrame implements ActionListener {
                 btnRequests.setText("Requests");
                 btnRequests.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
                 btnRequests.setForeground(WHITE_TEXT);
-                btnRequests.setColor(BLUE_ACCENT);
                 btnRequests.setBackground(new Color(70, 70, 70));
                 btnRequests.setRadius(30);
                 btnRequests.setFocusPainted(false);
@@ -128,7 +126,6 @@ public class StudentDashboard extends JFrame implements ActionListener {
                         btnPayments.setText("Payment Status");
                         btnPayments.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
                         btnPayments.setForeground(WHITE_TEXT);
-                        btnPayments.setColor(BLUE_ACCENT);
                         btnPayments.setBackground(new Color(70, 70, 70));
                         btnPayments.setRadius(30);
                         btnPayments.setFocusPainted(false);
@@ -139,7 +136,6 @@ public class StudentDashboard extends JFrame implements ActionListener {
                                 btnProfile.setText("View Profile");
                                 btnProfile.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 18));
                                 btnProfile.setForeground(WHITE_TEXT);
-                                btnProfile.setColor(BLUE_ACCENT);
                                 btnProfile.setBackground(new Color(70, 70, 70));
                                 btnProfile.setRadius(30);
                                 btnProfile.setFocusPainted(false);
@@ -214,6 +210,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
                                                         StudentInfoLog.setBackground(new Color(37, 37, 37));
                                                         StudentInfoLog.setBounds(519, 344, 337, 327);
                                                         contentPane.add(StudentInfoLog);
+                                                        
                                 btnProfile.addActionListener(this);
                         btnPayments.addActionListener(this);
                 btnRequests.addActionListener(this);
