@@ -145,107 +145,105 @@ public class StudentDashboard extends JFrame implements ActionListener {
                                 WelcomeLog.setBackground(new Color(37, 37, 37));
                                 WelcomeLog.setBounds(204, 84, 652, 176);
                                 contentPane.add(WelcomeLog);
-                                WelcomeLog.setLayout(null);
-                                
-                                lblNewLabel_1 = new JLabel("WELCOME,");
-                                lblNewLabel_1.setForeground(new Color(255, 255, 255));
-                                lblNewLabel_1.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
-                                lblNewLabel_1.setBounds(41, 91, 158, 35);
-                                WelcomeLog.add(lblNewLabel_1);
-                                
-                                        usernameLabel = new JLabel();
-                                        usernameLabel.setBounds(171, 88, 134, 40);
-                                        WelcomeLog.add(usernameLabel);
-                                        usernameLabel.setForeground(WHITE_TEXT);
-                                        usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-                                        usernameLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 25));
-                                        
-                                                JLabel idLabel = new JLabel("| ID:");
-                                                idLabel.setBounds(531, 136, 44, 40);
-                                                WelcomeLog.add(idLabel);
-                                                idLabel.setForeground(WHITE_TEXT);
-                                                idLabel.setFont(new Font("Arial", Font.BOLD, 18));
-                                                
-                                                        studentIDLabel = new JLabel();
-                                                        studentIDLabel.setBounds(574, 136, 22, 40);
-                                                        WelcomeLog.add(studentIDLabel);
-                                                        studentIDLabel.setForeground(WHITE_TEXT);
-                                                        studentIDLabel.setFont(new Font("Arial", Font.BOLD, 18));
-                                                        
-                                                        JPanel panel_3 = new JPanel();
-                                                        panel_3.setBackground(new Color(40, 43, 48));
-                                                        panel_3.setBounds(0, 49, 1186, 40);
-                                                        contentPane.add(panel_3);
-                                                        panel_3.setLayout(null);
-                                                        
-                                                        JPanel QuickAccessLog = new JPanel();
-                                                        QuickAccessLog.setBounds(931, 91, 225, 58);
-                                                        contentPane.add(QuickAccessLog);
-                                                        QuickAccessLog.setBackground(new Color(88, 101, 242));
-                                                        QuickAccessLog.setLayout(null);
-                                                        
-                                                        JLabel lblNewLabel = new JLabel("QUICK ACCESS");
-                                                        lblNewLabel.setBounds(10, 16, 197, 32);
-                                                        QuickAccessLog.add(lblNewLabel);
-                                                        lblNewLabel.setBackground(new Color(30, 80, 130));
-                                                        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                                                        lblNewLabel.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 22));
-                                                        lblNewLabel.setForeground(new Color(255, 255, 255));
-                                                        
-                                                        UpdateLog = new JPanel();
-                                                        UpdateLog.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(83, 101, 242)));
-                                                        UpdateLog.setBackground(new Color(37, 37, 37));
-                                                        UpdateLog.setBounds(39, 344, 383, 50);
-                                                        contentPane.add(UpdateLog);
-                                                        UpdateLog.setLayout(null);
-                                                        
-                                                        JLabel lblNewLabel_2 = new JLabel("Important Updates!!");
-                                                        lblNewLabel_2.setBounds(87, 10, 223, 26);
-                                                        UpdateLog.add(lblNewLabel_2);
-                                                        lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-                                                        lblNewLabel_2.setForeground(new Color(255, 255, 255));
-                                                        lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 22));
-                                                        
-                                                        StudentInfoLog = new JPanel();
-                                                        StudentInfoLog.setBackground(new Color(37, 37, 37));
-                                                        StudentInfoLog.setBounds(519, 344, 337, 327);
-                                                        contentPane.add(StudentInfoLog);
-                                                        
-                                btnProfile.addActionListener(this);
-                        btnPayments.addActionListener(this);
-                btnRequests.addActionListener(this);
-        btnSchedule.addActionListener(this);
+								WelcomeLog.setLayout(null);
 
-        setVisible(true);
-    }
+								lblNewLabel_1 = new JLabel("WELCOME,");
+								lblNewLabel_1.setForeground(new Color(255, 255, 255));
+								lblNewLabel_1.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 24));
+								lblNewLabel_1.setBounds(41, 91, 158, 35);
+								WelcomeLog.add(lblNewLabel_1);
 
-  
-    private void buildHeader() {
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(new Color(37, 37, 37));
-        headerPanel.setBounds(0, 0, 1186, 50);
-        contentPane.add(headerPanel);
+								usernameLabel = new JLabel();
+								usernameLabel.setBounds(171, 88, 134, 40);
+								WelcomeLog.add(usernameLabel);
+								usernameLabel.setForeground(WHITE_TEXT);
+								usernameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+								usernameLabel.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 25));
 
-        notificationsBtn = new JButton("🔔");
-        notificationsBtn.setBackground(new Color(70, 70, 70));
-        notificationsBtn.setForeground(WHITE_TEXT);
-        notificationsBtn.setFocusPainted(false);
-        notificationsBtn.addActionListener(this);
+								JLabel idLabel = new JLabel("| ID:");
+								idLabel.setBounds(531, 136, 44, 40);
+								WelcomeLog.add(idLabel);
+								idLabel.setForeground(WHITE_TEXT);
+								idLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
-        logoutBtn = new JButton("⍈ Logout");
-        logoutBtn.setBackground(new Color(70, 70, 70));
-        logoutBtn.setForeground(WHITE_TEXT);
-        logoutBtn.setFocusPainted(false);
-        logoutBtn.addActionListener(this);
+								studentIDLabel = new JLabel();
+								studentIDLabel.setBounds(574, 136, 22, 40);
+								WelcomeLog.add(studentIDLabel);
+								studentIDLabel.setForeground(WHITE_TEXT);
+								studentIDLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
-        GroupLayout gl = new GroupLayout(headerPanel);
-        gl.setHorizontalGroup(
-        	gl.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl.createSequentialGroup()
-        			.addGap(934)
-        			.addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-        			.addGap(30)
-        			.addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+								JPanel panel_3 = new JPanel();
+								panel_3.setBackground(new Color(40, 43, 48));
+								panel_3.setBounds(0, 49, 1186, 40);
+								contentPane.add(panel_3);
+								panel_3.setLayout(null);
+
+								JPanel QuickAccessLog = new JPanel();
+								QuickAccessLog.setBounds(931, 91, 225, 58);
+								contentPane.add(QuickAccessLog);
+								QuickAccessLog.setBackground(new Color(88, 101, 242));
+								QuickAccessLog.setLayout(null);
+
+								JLabel lblNewLabel = new JLabel("QUICK ACCESS");
+								lblNewLabel.setBounds(10, 16, 197, 32);
+								QuickAccessLog.add(lblNewLabel);
+								lblNewLabel.setBackground(new Color(30, 80, 130));
+								lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+								lblNewLabel.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 22));
+								lblNewLabel.setForeground(new Color(255, 255, 255));
+
+								UpdateLog = new JPanel();
+								UpdateLog.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(83, 101, 242)));
+								UpdateLog.setBackground(new Color(37, 37, 37));
+								UpdateLog.setBounds(39, 344, 383, 50);
+								contentPane.add(UpdateLog);
+								UpdateLog.setLayout(null);
+
+								JLabel lblNewLabel_2 = new JLabel("Important Updates!!");
+								lblNewLabel_2.setBounds(87, 10, 223, 26);
+								UpdateLog.add(lblNewLabel_2);
+								lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+								lblNewLabel_2.setForeground(new Color(255, 255, 255));
+								lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 22));
+
+								StudentInfoLog = new JPanel();
+								StudentInfoLog.setBackground(new Color(37, 37, 37));
+								StudentInfoLog.setBounds(519, 344, 337, 327);
+								contentPane.add(StudentInfoLog);
+
+								btnProfile.addActionListener(this);
+								btnPayments.addActionListener(this);
+								btnRequests.addActionListener(this);
+								btnSchedule.addActionListener(this);
+
+								setVisible(true);
+							}
+
+							private void buildHeader() {
+								JPanel headerPanel = new JPanel();
+								headerPanel.setBackground(new Color(37, 37, 37));
+								headerPanel.setBounds(0, 0, 1186, 50);
+								contentPane.add(headerPanel);
+
+								notificationsBtn = new JButton("🔔");
+								notificationsBtn.setBackground(new Color(70, 70, 70));
+								notificationsBtn.setForeground(WHITE_TEXT);
+								notificationsBtn.setFocusPainted(false);
+								notificationsBtn.addActionListener(this);
+
+								logoutBtn = new JButton("⍈ Logout");
+								logoutBtn.setBackground(new Color(70, 70, 70));
+								logoutBtn.setForeground(WHITE_TEXT);
+								logoutBtn.setFocusPainted(false);
+								logoutBtn.addActionListener(this);
+
+								GroupLayout gl = new GroupLayout(headerPanel);
+								gl.setHorizontalGroup(gl.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl.createSequentialGroup().addGap(934)
+												.addComponent(notificationsBtn, GroupLayout.PREFERRED_SIZE, 64,
+														GroupLayout.PREFERRED_SIZE)
+												.addGap(30).addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 125,
+														GroupLayout.PREFERRED_SIZE)
         			.addGap(33))
         );
         gl.setVerticalGroup(
@@ -350,20 +348,20 @@ public class StudentDashboard extends JFrame implements ActionListener {
         studentIDLabel.setText(String.valueOf(student.getStudentID()));
     }
     
-    public static void main(String[] args) {
-      
-        UserManager um = new UserManager();
-        StudentManager sm = new StudentManager();
-        um.loadUsers(Constants.USERS_CSV);
-        sm.loadStudents(Constants.STUDENTS_CSV);
-
-       
-        User demoUser = um.findUserByUsername("Gracious");   
-
-        if (demoUser != null) {
-            new StudentDashboard(demoUser, um, sm).setVisible(true);
-        } else {
-            System.out.println("Demo user not found. Check the username in users.csv.");
-        }
-    }
+//    public static void main(String[] args) {
+//      
+//        UserManager um = new UserManager();
+//        StudentManager sm = new StudentManager();
+//        um.loadUsers(Constants.USERS_CSV);
+//        sm.loadStudents(Constants.STUDENTS_CSV);
+//
+//       
+//        User demoUser = um.findUserByUsername("Gracious");   
+//
+//        if (demoUser != null) {
+//            new StudentDashboard(demoUser, um, sm).setVisible(true);
+//        } else {
+//            System.out.println("Demo user not found. Check the username in users.csv.");
+//        }
+//    }
 }
