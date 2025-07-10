@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
+import tcms.utils.Validators;
 
 /**
  * Window that lets a student view / update their personal details.
@@ -152,10 +153,20 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 			String newEmail = emailField.getText().trim();
 			String newContact = contactField.getText().trim();
 
+			if (!Validators.isValidEmail(newEmail)) {
+				return;
+			}
+			
+
+			if (!Validators.isValidContact(newContact)) {
+				return;
+			}
+			
 			student.setEmail(newEmail);
 			student.setContact(newContact);
 
 			sm.saveStudents(Constants.STUDENTS_CSV);
+			um.saveUsers(Constants.USERS_CSV);
 
 			JOptionPane.showMessageDialog(this, "Profile updated successfully.");
 		}

@@ -35,10 +35,10 @@ public class CustomJButton extends JButton {
 		setContentAreaFilled(false);
 
 		// Default colors
-		setColor(new Color(247, 247, 247));
-		setBorderColor(new Color(57, 62, 70));
-		setColorClick(new Color(146, 154, 171));
-		setColorOver(new Color(238, 238, 238));
+		setColor(new Color(70, 70, 70));
+		setBorderColor(new Color(37, 37, 37));
+		setColorClick(new Color(37, 37, 37));
+		setColorOver(new Color(37, 37, 37));
 
 		// Mouse interaction
 		addMouseListener(new MouseAdapter() {
