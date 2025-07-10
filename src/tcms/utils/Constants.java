@@ -6,6 +6,7 @@ public class Constants {
 	// Color Scheme
 	public static final Color CANVAS_COLOR = new Color(30, 33, 36);
 	public static final Color BLURPLE = new Color(88, 101, 242);
+	public static final Color LIGHT_GREY = new Color(70, 70, 70);
 	public static final Color BLURPLE_HOVER = new Color(79, 82, 196);
 	public static final Color BLURPLE_CLICK = new Color(60, 69, 165);
 	public static final Color RED = new Color(237, 66, 69);

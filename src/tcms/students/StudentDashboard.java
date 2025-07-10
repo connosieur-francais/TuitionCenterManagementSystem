@@ -28,6 +28,7 @@ import tcms.utils.*;
 import tcms.students.UpdateStudentWindow;
 import javax.swing.border.MatteBorder;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.*;
 
 
 
@@ -40,6 +41,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
     private final StudentManager sm;
     private final User user;
     private final Student student;
+    private final SubjectChangeRequestManager requestManager;
 
     private CustomJButton btnSchedule;
     private CustomJButton btnRequests;
@@ -70,7 +72,9 @@ public class StudentDashboard extends JFrame implements ActionListener {
         this.sm = studentManager;
         this.user = u;
         this.student = sm.findStudentByUserID(u.getID());
-
+        this.requestManager = new SubjectChangeRequestManager();
+        this.requestManager.loadRequests(Constants.SUBJECT_CHANGE_REQUESTS_CSV);
+        
         buildUi();
         updateDashboardInformation();
     }
@@ -329,7 +333,7 @@ public class StudentDashboard extends JFrame implements ActionListener {
             cardLayout.previous(whatsNewPanel); 
         }
         if (e.getSource() == btnRequests) {
-        	JOptionPane.showMessageDialog(this, "Opening Requests...");
+        	 SwingUtilities.invokeLater(() -> new SubjectChangeRequestWindow(student, requestManager).setVisible(true));
         }
         if (e.getSource() == btnSchedule) {
         	JOptionPane.showMessageDialog(this, "Loading Schedule...");
@@ -348,20 +352,18 @@ public class StudentDashboard extends JFrame implements ActionListener {
         studentIDLabel.setText(String.valueOf(student.getStudentID()));
     }
     
-//    public static void main(String[] args) {
-//      
-//        UserManager um = new UserManager();
-//        StudentManager sm = new StudentManager();
-//        um.loadUsers(Constants.USERS_CSV);
-//        sm.loadStudents(Constants.STUDENTS_CSV);
-//
-//       
-//        User demoUser = um.findUserByUsername("Gracious");   
-//
-//        if (demoUser != null) {
-//            new StudentDashboard(demoUser, um, sm).setVisible(true);
-//        } else {
-//            System.out.println("Demo user not found. Check the username in users.csv.");
-//        }
-//    }
+  public static void main(String[] args) {
+    
+       UserManager um = new UserManager();
+        StudentManager sm = new StudentManager();
+        um.loadUsers(Constants.USERS_CSV);
+       sm.loadStudents(Constants.STUDENTS_CSV);
+       User demoUser = um.findUserByUsername("Gracious");   
+
+       if (demoUser != null) {
+           new StudentDashboard(demoUser, um, sm).setVisible(true);
+       } else {
+           System.out.println("Demo user not found. Check the username in users.csv.");
+        }
+    }
 }
