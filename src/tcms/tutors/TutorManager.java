@@ -76,7 +76,7 @@ public class TutorManager {
 
 	public void saveTutors(String filename) {
 	    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-	        bw.write("tutor_id,user_id,contact,email,address,assigned_level,assigned_subjectID_1,assigned_subjectID_2,assigned_subjectID_3\n");
+	        bw.write(Constants.TUTORS_CSV_HEADER);
 
 	        // Sort a copy of the list for saving only
 	        List<Tutor> sortedTutors = new ArrayList<>(tutors);

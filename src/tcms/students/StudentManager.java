@@ -54,7 +54,7 @@ public class StudentManager {
 
 	public void saveStudents(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("student_id,user_id,contact,email,address,level,enrollment_date\n");
+			bw.write(Constants.STUDENTS_CSV_HEADER);
 			
 			List<Student> sortedStudents = new ArrayList<>(students);
 			sortedStudents.sort(Comparator.comparingInt(Student::getStudentID));

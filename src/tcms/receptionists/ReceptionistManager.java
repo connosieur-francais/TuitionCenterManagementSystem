@@ -13,8 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
+import tcms.tutors.Tutor;
 import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
@@ -68,7 +68,7 @@ public class ReceptionistManager {
 
 	public void saveReceptionists(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("receptionist_id,user_id,contact,email,address\n");
+			bw.write(Constants.RECEPTIONISTS_CSV_HEADER);
 
 			// Sort a copy of the list for saving only
 			List<Receptionist> sortedReceptionists = new ArrayList<>(receptionists);
@@ -252,22 +252,36 @@ public class ReceptionistManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void savePayments(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			
+
+			bw.write(Constants.PAYMENTS_CSV_HEADER);
+
+			List<Payment> sortedPayments = new ArrayList<>(payments);
+			sortedPayments.sort(Comparator.comparingInt(Payment::getPaymentID));
+
+			for (Payment payment : sortedPayments) {
+				String line = payment.toCSV();
+				bw.write(line);
+				bw.newLine();
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Payment findPaymentByPaymentID(int paymentID) {
 		Payment payment_record = paymentIDPaymentMap.get(paymentID);
 		if (payment_record == null) {
-			System.out.println("ReceptionistManager -> findPaymentByPaymentID: Failed to find payment record with paymentID" + paymentID);
+			System.out.println(
+					"ReceptionistManager -> findPaymentByPaymentID: Failed to find payment record with paymentID"
+							+ paymentID);
 			return null;
 		}
-		System.out.println("ReceptionistManager -> findPaymentByPaymentID: Found payment record with paymentID " + paymentID);
+		System.out.println(
+				"ReceptionistManager -> findPaymentByPaymentID: Found payment record with paymentID " + paymentID);
 		return payment_record;
 	}
 

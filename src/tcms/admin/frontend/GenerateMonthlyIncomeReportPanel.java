@@ -39,9 +39,7 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 	private JPopupMenu monthSelectionMenu;
 	private JMenuItem item1, item2;
 
-	public GenerateMonthlyIncomeReportPanel(String m, int y) {
-		month = m;
-		year = y;
+	public GenerateMonthlyIncomeReportPanel() {
 		setBackground(new Color(35, 39, 42));
 		setSize(1186, 628);
 		setLayout(null);
