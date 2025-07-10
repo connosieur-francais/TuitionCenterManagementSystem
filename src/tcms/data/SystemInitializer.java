@@ -84,13 +84,14 @@ public class SystemInitializer {
 				}
 			}
 		}
-
+		
 		userManager.loadUsers(Constants.USERS_CSV);
 		adminManager.loadAdmins(Constants.ADMINS_CSV);
 		tutorManager.loadTutors(Constants.TUTORS_CSV);
 		tutorManager.loadSubjects(Constants.SUBJECTS_CSV);
 		tutorManager.loadLevels(Constants.LEVELS_CSV);
 		receptionistManager.loadReceptionists(Constants.RECEPTIONISTS_CSV);
+		receptionistManager.loadPayments(Constants.PAYMENTS_CSV);
 		studentManager.loadStudents(Constants.STUDENTS_CSV);
 
 		createDefaultAdminIfMissing();

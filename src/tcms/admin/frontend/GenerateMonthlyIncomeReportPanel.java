@@ -30,7 +30,8 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 	private JButton downloadBtn;
 	private JLabel lblNewLabel;
 	private JScrollPane scrollPane;
-
+	
+	private double income;
 	private String month;
 	private int year;
 
@@ -38,7 +39,9 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 	private JPopupMenu monthSelectionMenu;
 	private JMenuItem item1, item2;
 
-	public GenerateMonthlyIncomeReportPanel() {
+	public GenerateMonthlyIncomeReportPanel(String m, int y) {
+		month = m;
+		year = y;
 		setBackground(new Color(35, 39, 42));
 		setSize(1186, 628);
 		setLayout(null);
@@ -87,8 +90,12 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		reportContainer.setLayout(new BoxLayout(reportContainer, BoxLayout.Y_AXIS));
 		scrollPane.setViewportView(reportContainer);
 
-		addHeaderSection();
+		addHeaderSection(month, year, income);
 		addBodySections();
+	}
+	
+	private double getTotalIncome() {
+		
 	}
 
 	private JPopupMenu createMonthSelectionMenu() {
@@ -179,7 +186,7 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		return yearSelectionMenu;
 	}
 
-	private void addHeaderSection() {
+	private void addHeaderSection(String month, int year, double income) {
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBackground(new Color(54, 57, 63));
 		headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -192,13 +199,14 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		headerPanel.add(titleLabel);
 
 		JLabel subtitleLabel = new JLabel();
-		subtitleLabel.setText(String.format("for the month ended %s, %s", month, year));
-		subtitleLabel.setBounds(10, 43, 262, 22);
+		subtitleLabel.setText(String.format("for the month ended %s, %s", month, String.valueOf(year)));
+		subtitleLabel.setBounds(10, 43, 430, 22);
 		subtitleLabel.setForeground(new Color(220, 221, 222));
 		subtitleLabel.setFont(new Font("Arial", Font.PLAIN, 18));
 		headerPanel.add(subtitleLabel);
 
-		JLabel totalLabel = new JLabel("Total Income: RM 2330.00");
+		JLabel totalLabel = new JLabel();
+		totalLabel.setText(String.format("Total Income: %s", income));
 		totalLabel.setBounds(10, 65, 242, 24);
 		totalLabel.setForeground(new Color(0, 255, 128));
 		totalLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -208,30 +216,44 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 	}
 
 	private void addBodySections() {
-		reportContainer.add(createSectionPanel("Breakdown by Subject"));
-		reportContainer.add(createSectionPanel("Breakdown by Level"));
-		reportContainer.add(createSectionPanel("Breakdown by Student"));
-	}
+		JPanel subjectBreakdownPanel = new JPanel();
+		subjectBreakdownPanel.setBackground(new Color(64, 68, 75));
+		subjectBreakdownPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		subjectBreakdownPanel.setLayout(null);
 
-	private JPanel createSectionPanel(String title) {
-		JPanel section = new JPanel();
-		section.setBackground(new Color(64, 68, 75));
-		section.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		section.setLayout(null);
-
-		JLabel titleLabel = new JLabel(title);
+		JLabel titleLabel = new JLabel("Breakdown by Subject");
 		titleLabel.setBounds(10, 10, 199, 22);
 		titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
 		titleLabel.setForeground(new Color(255, 255, 255));
-		section.add(titleLabel);
+		subjectBreakdownPanel.add(titleLabel);
 
 		JLabel placeholder = new JLabel(" - data goes here -");
 		placeholder.setBounds(10, 32, 86, 13);
 		placeholder.setForeground(new Color(200, 200, 200));
-		section.add(placeholder);
+		subjectBreakdownPanel.add(placeholder);
 
-		section.setAlignmentX(LEFT_ALIGNMENT);
-		return section;
+		subjectBreakdownPanel.setAlignmentX(LEFT_ALIGNMENT);
+		
+		JPanel levelBreakdownPanel = new JPanel();
+		levelBreakdownPanel.setBackground(new Color(64, 68, 75));
+		levelBreakdownPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		levelBreakdownPanel.setLayout(null);
+
+		JLabel levelBreakdownLabel = new JLabel("Breakdown By Level");
+		levelBreakdownLabel.setBounds(10, 10, 199, 22);
+		levelBreakdownLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		levelBreakdownLabel.setForeground(new Color(255, 255, 255));
+		levelBreakdownPanel.add(levelBreakdownLabel);
+
+		JLabel test = new JLabel(" - data goes here -");
+		test.setBounds(10, 32, 86, 13);
+		test.setForeground(new Color(200, 200, 200));
+		levelBreakdownPanel.add(test);
+
+		levelBreakdownPanel.setAlignmentX(LEFT_ALIGNMENT);
+		
+		reportContainer.add(subjectBreakdownPanel);
+		reportContainer.add(levelBreakdownPanel);
 	}
 
 	@Override

@@ -22,10 +22,14 @@ import tcms.utils.Constants;
 public class ReceptionistManager {
 
 	private int fieldLength = 5;
+	private int paymentFieldLength = 6;
 	private static UserManager userManager;
 	private Map<Integer, Receptionist> userIDReceptionistMap = new HashMap<>();
 	private Map<Integer, Receptionist> receptionistIDReceptionistMap = new HashMap<>();
 	private List<Receptionist> receptionists = new ArrayList<>();
+
+	private Map<Integer, Payment> paymentIDPaymentMap = new HashMap<>();
+	private List<Payment> payments = new ArrayList<>();
 
 	public void loadReceptionists(String filename) {
 
@@ -63,20 +67,20 @@ public class ReceptionistManager {
 	}
 
 	public void saveReceptionists(String filename) {
-	    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-	        bw.write("receptionist_id,user_id,contact,email,address\n");
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+			bw.write("receptionist_id,user_id,contact,email,address\n");
 
-	        // Sort a copy of the list for saving only
-	        List<Receptionist> sortedReceptionists = new ArrayList<>(receptionists);
-	        sortedReceptionists.sort(Comparator.comparingInt(Receptionist::getReceptionistID));
+			// Sort a copy of the list for saving only
+			List<Receptionist> sortedReceptionists = new ArrayList<>(receptionists);
+			sortedReceptionists.sort(Comparator.comparingInt(Receptionist::getReceptionistID));
 
-	        for (Receptionist receptionist : sortedReceptionists) {
-	            bw.write(receptionist.toCSV());
-	            bw.newLine();
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+			for (Receptionist receptionist : sortedReceptionists) {
+				bw.write(receptionist.toCSV());
+				bw.newLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public User findUserByReceptionistID(int receptionistID) {
@@ -207,10 +211,68 @@ public class ReceptionistManager {
 
 		int expected = 1;
 		for (int id : ids) {
-			if (id != expected) return expected;
+			if (id != expected)
+				return expected;
 			expected++;
 		}
 		return expected;
+	}
+
+	// For Payments.csv
+	public void loadPayments(String filename) {
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+			String line;
+			boolean skipHeader = true;
+
+			while ((line = br.readLine()) != null) {
+				if (skipHeader) {
+					skipHeader = false;
+					continue;
+				}
+				String[] fields = line.split(",");
+
+				if (fields.length >= paymentFieldLength) {
+					int paymentID = Integer.parseInt(fields[0].trim());
+					int studentID = Integer.parseInt(fields[1].trim());
+					int subjectID = Integer.parseInt(fields[2].trim());
+					double amount = Double.parseDouble(fields[3].trim());
+					String date = fields[4].trim();
+					int receiptID = Integer.parseInt(fields[5].trim());
+
+					Payment payment_record = new Payment(paymentID, studentID, subjectID, amount, date, receiptID);
+
+					payments.add(payment_record);
+					paymentIDPaymentMap.put(paymentID, payment_record);
+					// Debug print
+					System.out.println("ReceptionistManager -> Loaded payment record" + payment_record);
+				}
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void savePayments(String filename) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Payment findPaymentByPaymentID(int paymentID) {
+		Payment payment_record = paymentIDPaymentMap.get(paymentID);
+		if (payment_record == null) {
+			System.out.println("ReceptionistManager -> findPaymentByPaymentID: Failed to find payment record with paymentID" + paymentID);
+			return null;
+		}
+		System.out.println("ReceptionistManager -> findPaymentByPaymentID: Found payment record with paymentID " + paymentID);
+		return payment_record;
+	}
+
+	public Map<Integer, Payment> getPaymentIDPaymentMap() {
+		return paymentIDPaymentMap;
 	}
 
 	public Map<Integer, Receptionist> getUserIDReceptionistMap() {
@@ -223,6 +285,10 @@ public class ReceptionistManager {
 
 	public List<Receptionist> getAllReceptionists() {
 		return receptionists;
+	}
+
+	public List<Payment> getAllPayments() {
+		return payments;
 	}
 
 }

@@ -55,7 +55,7 @@ public class UserManager {
 
 	public void saveUsers(String filename) {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
-			bw.write("user_id,username,password,role,login_attempts,status\n");
+			bw.write(Constants.USERS_CSV_HEADER);
 			
 			// Sort a copy of the list for saving only
 	        List<User> sortedUsers = new ArrayList<>(users);
