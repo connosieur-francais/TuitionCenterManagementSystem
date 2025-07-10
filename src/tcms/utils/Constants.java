@@ -27,6 +27,7 @@ public class Constants {
 	public static final Color GREEN_BUTTON_CLICK = new Color(50, 140, 80); // Even darker click
 	public static final Color GREEN_BUTTON_BORDER = new Color(35, 100, 60); // Deep green for border
 
+	// Image file paths
 	public static final String LOGIN_PAGE_BACKGROUND_FILE = "src/tcms/resources/loginPageBackground.png";
 	public static final String RECEPTIONIST_USER_ICON_FILE = "src/tcms/resources/receptionist_user_icon.png";
 	public static final String TUTOR_USER_ICON_FILE = "src/tcms/resources/tutor_user_icon.png";
@@ -35,7 +36,7 @@ public class Constants {
 	public static final String[] IMG_CAROUSEL = { "src/tcms/resources/carousel_schedule.jpg",
 			"src/tcms/resources/carousel_briefing.png", "src/tcms/resources/carousel_enroll.jpg" };
 
-	// File paths (relative to root folder or build path)
+	// Data File paths (relative to root folder or build path)
 	public static final String USERS_CSV = "src/tcms/data/users.csv";
 	public static final String RECEPTIONISTS_CSV = "src/tcms/data/receptionists.csv";
 	public static final String TUTORS_CSV = "src/tcms/data/tutors.csv";
@@ -48,4 +49,12 @@ public class Constants {
 	public static final String SUBJECT_CHANGE_REQUESTS_CSV = "src/tcms/data/subject_change_requests.csv";
 	public static final String SUBJECTS_CSV = "src/tcms/data/subjects.csv";
 	public static final String RECEIPTS_CSV = "src/tcms/data/receipts.csv";
+
+	// CSV File Headers
+	public static final String USERS_CSV_HEADER = "user_id,username,password,role,login_attempts,status\n";
+	public static final String RECEPTIONISTS_CSV_HEADER = "receptionist_id,user_id,contact,email,address\n";
+	public static final String TUTORS_CSV_HEADER = "tutor_id,user_id,contact,email,address,assigned_level,assigned_subjectID_1,assigned_subjectID_2,assigned_subjectID_3\n";
+	public static final String STUDENTS_CSV_HEADER = "student_id,user_id,contact,email,address,level,enrollment_date\n";
+	public static final String ADMINS_CSV_HEADER = "admin_id,user_id,contact,email,address\n";
+	public static final String PAYMENTS_CSV_HEADER = "payment_id,student_id,subject_id,amount_paid,payment_date,receipt_id\n";
 }

@@ -356,8 +356,9 @@ public class AdminPage extends JFrame implements ActionListener {
 		manageReceptionistPanel.add(receptionistReturnBtn);
 		
 		// VIEW MONTHLY INCOME PANEL ------------------------------------------
-
+		
 		viewMonthlyIncomePanel = new GenerateMonthlyIncomeReportPanel();
+		viewMonthlyIncomePanel.setVisible(false);
 		contentPanel.add(viewMonthlyIncomePanel, "View Monthly Income");
 
 		// MANAGE TUTORS ------------------------------------

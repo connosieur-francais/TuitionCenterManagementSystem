@@ -54,14 +54,15 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 	// === Buttons ===
 	private CustomJButton addTutorBtn;
 	private CustomJButton removeTutorsBtn;
+	private CustomJButton assignSubjectBtn;
 
 	// === Scroll Pane ===
 	private JScrollPane scrollPane;
 
 	// === Table ===
 	private JTable tutorTable;
-	private String[] columnNames = { "Tutor ID", "User ID", "Name", "Contact", "Email", "Address", "Level",
-			"Subject 1", "Subject 2", "Subject 3"};
+	private String[] columnNames = { "Tutor ID", "User ID", "Name", "Contact", "Email", "Address", "Level", "Subject 1",
+			"Subject 2", "Subject 3" };
 	private Object[][] data;
 
 	// Icon image files
@@ -168,8 +169,8 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 		removeTutorsBtn.setBounds(746, 10, 200, 40);
 		removeTutorsBtn.addActionListener(this);
 		tutorInfoPanel.add(removeTutorsBtn);
-		
-		CustomJButton assignSubjectBtn = new CustomJButton();
+
+		assignSubjectBtn = new CustomJButton();
 		assignSubjectBtn.setColor(Constants.GREEN_BUTTON);
 		assignSubjectBtn.setColorOver(Constants.GREEN_BUTTON_HOVER);
 		assignSubjectBtn.setColorClick(Constants.GREEN_BUTTON_CLICK);
@@ -179,14 +180,16 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 		assignSubjectBtn.setRadius(10);
 		assignSubjectBtn.setFocusPainted(false);
 		assignSubjectBtn.setFont(new Font("Arial", Font.BOLD, 16));
-		assignSubjectBtn.setText("<html><div style='text-align: center;'>Assign Subjects to Tutor\r\n<span style='font-family: Segoe UI Emoji, Noto Color Emoji; font-size: 12px;'>📖</span>\r\n</div></html>");
+		assignSubjectBtn.setText(
+				"<html><div style='text-align: center;'>Assign Subjects to Tutor\r\n<span style='font-family: Segoe UI Emoji, Noto Color Emoji; font-size: 12px;'>📖</span>\r\n</div></html>");
 		assignSubjectBtn.setBounds(526, 10, 210, 40);
+		assignSubjectBtn.addActionListener(this);
 		tutorInfoPanel.add(assignSubjectBtn);
-		
 		
 		refreshManageTutorsPanel();
 	}
-
+	
+	// =========== Methods for Tutor Table =============
 	private Object[][] getData() {
 		List<Object[]> rows = new ArrayList<>();
 		List<Tutor> tutors = tutorManager.getAllTutors();
@@ -197,9 +200,10 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 			Subject assignedSubject1 = tutorManager.findSubjectBySubjectID(t.getAssigned_subjectID_1());
 			Subject assignedSubject2 = tutorManager.findSubjectBySubjectID(t.getAssigned_subjectID_2());
 			Subject assignedSubject3 = tutorManager.findSubjectBySubjectID(t.getAssigned_subjectID_3());
-			
-			rows.add(new Object[] { t.getTutorID(), t.getUserID(), name, t.getContact(), t.getEmail(), t.getAddress(), t.getAssigned_level(),
-					assignedSubject1.getSubjectName(), assignedSubject2.getSubjectName(), assignedSubject3.getSubjectName()});
+
+			rows.add(new Object[] { t.getTutorID(), t.getUserID(), name, t.getContact(), t.getEmail(), t.getAddress(),
+					t.getAssigned_level(), assignedSubject1.getSubjectName(), assignedSubject2.getSubjectName(),
+					assignedSubject3.getSubjectName() });
 		}
 		return rows.toArray(new Object[0][]);
 	}
@@ -208,12 +212,17 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 		data = getData();
 		DefaultTableModel model = new DefaultTableModel(data, columnNames) {
 			private static final long serialVersionUID = 3791679638516387380L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
 		tutorTable.setModel(model);
+	}
+	
+	public void refreshTutorTable() {
+	    loadTutorTableData();
 	}
 
 	private void refreshManageTutorsPanel() {
@@ -222,8 +231,11 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 		loadTutorTableData();
 	}
 
+	// ======== Create & Delete Tutor ==============
+
 	private void showCreateTutorWindow() {
-		if (addTutorFrame != null && addTutorFrame.isDisplayable()) return;
+		if (addTutorFrame != null && addTutorFrame.isDisplayable())
+			return;
 		addTutorFrame = new AddTutorFrame(userManager, tutorManager);
 		addTutorBtn.setEnabled(false);
 		addTutorFrame.addWindowListener(new WindowAdapter() {
@@ -239,7 +251,8 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 	private void deleteTutor() {
 		int selected_row = tutorTable.getSelectedRow();
 		if (selected_row == -1) {
-			JOptionPane.showMessageDialog(this, "Please select a tutor from the table to remove.", "No Selection", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Please select a tutor from the table to remove.", "No Selection",
+					JOptionPane.WARNING_MESSAGE);
 			return;
 		}
 
@@ -250,8 +263,9 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 		String email = (String) tutorTable.getValueAt(selected_row, 4);
 		String address = (String) tutorTable.getValueAt(selected_row, 5);
 
-		String message = String.format("Are you sure you want to delete this tutor?\n\nID: %d\nUserID: %d\nName: %s\nContact: %s\nEmail: %s\nAddress: %s",
-			tutorID, userID, name, contact, email, address);
+		String message = String.format(
+				"Are you sure you want to delete this tutor?\n\nID: %d\nUserID: %d\nName: %s\nContact: %s\nEmail: %s\nAddress: %s",
+				tutorID, userID, name, contact, email, address);
 		int confirm = JOptionPane.showConfirmDialog(this, message, "Confirm Delete", JOptionPane.YES_NO_OPTION);
 		if (confirm == JOptionPane.YES_OPTION) {
 			Tutor selected_tutor = tutorManager.findTutorByUserID(userID);
@@ -259,16 +273,35 @@ public class ManageTutorsPanel extends JPanel implements ActionListener {
 			tutorManager.saveTutors(Constants.TUTORS_CSV);
 			userManager.saveUsers(Constants.USERS_CSV);
 			refreshManageTutorsPanel();
-			JOptionPane.showMessageDialog(this, "Tutor deleted successfully.", "Deleted", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Tutor deleted successfully.", "Deleted",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
+	// =============== Assign subject to tutor ==============
+	private void assignSubjectToTutor() {
+		int selected_index = tutorTable.getSelectedRow();
+		
+		if (selected_index == -1) {
+			JOptionPane.showMessageDialog(this, "Please select a tutor in the table","No tutor selected", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		int tutorID = (int) tutorTable.getValueAt(selected_index, 1);
+		Tutor selected_tutor = tutorManager.findTutorByUserID(tutorID);
+		
+		new AssignTutorSubjectFrame(tutorManager, userManager, selected_tutor, this);
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addTutorBtn) {
 			showCreateTutorWindow();
-		} else if (e.getSource() == removeTutorsBtn) {
+		}
+		if (e.getSource() == removeTutorsBtn) {
 			deleteTutor();
+		}
+		if (e.getSource() == assignSubjectBtn) {
+			assignSubjectToTutor();
 		}
 	}
 }
