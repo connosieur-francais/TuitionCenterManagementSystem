@@ -357,13 +357,13 @@ public class AdminPage extends JFrame implements ActionListener {
 		
 		// VIEW MONTHLY INCOME PANEL ------------------------------------------
 		
-		viewMonthlyIncomePanel = new GenerateMonthlyIncomeReportPanel();
+		viewMonthlyIncomePanel = new GenerateMonthlyIncomeReportPanel(receptionistManager);
 		viewMonthlyIncomePanel.setVisible(false);
 		contentPanel.add(viewMonthlyIncomePanel, "View Monthly Income");
 
 		// MANAGE TUTORS ------------------------------------
 
-		manageTutorsPanel = new ManageTutorsPanel(um, tm);
+		manageTutorsPanel = new ManageTutorsPanel(userManager, tutorManager);
 		contentPanel.setLayer(manageTutorsPanel, 4);
 		manageTutorsPanel.setBorder(null);
 		manageTutorsPanel.setLayout(null);
@@ -374,7 +374,7 @@ public class AdminPage extends JFrame implements ActionListener {
 		tutorReturnBtn.addActionListener(this);
 		manageTutorsPanel.add(tutorReturnBtn);
 
-		// Group layout for top header panel
+		// ========== Header Panel Components ==========
 		contentPane.setLayout(null);
 		contentPane.add(headerPanel);
 		GroupLayout gl_headerPanel = new GroupLayout(headerPanel);

@@ -155,8 +155,6 @@ public class IncomeChartPanel extends JPanel {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         Map<Integer, Double> dayToAmountMap = new TreeMap<>();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
         try (BufferedReader br = new BufferedReader(new FileReader(Constants.PAYMENTS_CSV))) {
             String line = br.readLine(); // skip header
             while ((line = br.readLine()) != null) {
@@ -164,7 +162,7 @@ public class IncomeChartPanel extends JPanel {
                 if (data.length < 6) continue;
 
                 try {
-                    LocalDate paymentDate = LocalDate.parse(data[4].trim(), formatter);
+                    LocalDate paymentDate = LocalDate.parse(data[4].trim(), Constants.CSV_DATE_FORMAT);
                     if (paymentDate.getMonthValue() == selectedMonth && paymentDate.getYear() == selectedYear) {
                         int day = paymentDate.getDayOfMonth();
                         double amount = Double.parseDouble(data[3].trim());

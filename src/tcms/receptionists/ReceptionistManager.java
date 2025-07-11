@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -236,11 +238,12 @@ public class ReceptionistManager {
 					int studentID = Integer.parseInt(fields[1].trim());
 					int subjectID = Integer.parseInt(fields[2].trim());
 					double amount = Double.parseDouble(fields[3].trim());
-					String date = fields[4].trim();
+					String payment_date = fields[4].trim();
+					LocalDate localDate = LocalDate.parse(payment_date, Constants.CSV_DATE_FORMAT);
 					int receiptID = Integer.parseInt(fields[5].trim());
 
-					Payment payment_record = new Payment(paymentID, studentID, subjectID, amount, date, receiptID);
-
+					Payment payment_record = new Payment(paymentID, studentID, subjectID, amount, localDate, receiptID);
+					
 					payments.add(payment_record);
 					paymentIDPaymentMap.put(paymentID, payment_record);
 					// Debug print

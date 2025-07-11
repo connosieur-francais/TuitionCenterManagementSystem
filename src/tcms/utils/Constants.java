@@ -1,8 +1,10 @@
 package tcms.utils;
 
 import java.awt.Color;
+import java.time.format.DateTimeFormatter;
 
 public class Constants {
+
 	// Color Scheme
 	public static final Color CANVAS_COLOR = new Color(30, 33, 36);
 	public static final Color BLURPLE = new Color(88, 101, 242);
@@ -57,4 +59,7 @@ public class Constants {
 	public static final String STUDENTS_CSV_HEADER = "student_id,user_id,contact,email,address,level,enrollment_date\n";
 	public static final String ADMINS_CSV_HEADER = "admin_id,user_id,contact,email,address\n";
 	public static final String PAYMENTS_CSV_HEADER = "payment_id,student_id,subject_id,amount_paid,payment_date,receipt_id\n";
+
+	// CSV DATE FORMAT
+	public static final DateTimeFormatter CSV_DATE_FORMAT = DateTimeFormatter.ofPattern("d/M/yyyy");
 }
