@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,9 +20,14 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import tcms.receptionists.Payment;
+import tcms.receptionists.ReceptionistManager;
+
 public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static ReceptionistManager receptionistManager;
 
 	private JPanel reportContainer;
 	private JButton monthSelectBtn;
@@ -39,7 +45,8 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 	private JPopupMenu monthSelectionMenu;
 	private JMenuItem item1, item2;
 
-	public GenerateMonthlyIncomeReportPanel() {
+	public GenerateMonthlyIncomeReportPanel(ReceptionistManager rm) {
+		receptionistManager = rm;
 		setBackground(new Color(35, 39, 42));
 		setSize(1186, 628);
 		setLayout(null);
@@ -87,13 +94,43 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		reportContainer.setBackground(new Color(54, 57, 63));
 		reportContainer.setLayout(new BoxLayout(reportContainer, BoxLayout.Y_AXIS));
 		scrollPane.setViewportView(reportContainer);
-
+		
+		income = getTotalIncome();
 		addHeaderSection(month, year, income);
 		addBodySections();
 	}
 	
+	private int monthStringToNumber(String monthName) {
+		return switch (monthName.toLowerCase()) {
+			case "january" -> 1;
+			case "february" -> 2;
+			case "march" -> 3;
+			case "april" -> 4;
+			case "may" -> 5;
+			case "june" -> 6;
+			case "july" -> 7;
+			case "august" -> 8;
+			case "september" -> 9;
+			case "october" -> 10;
+			case "november" -> 11;
+			case "december" -> 12;
+			default -> 0;
+		};
+	}
+	
 	private double getTotalIncome() {
-		
+		if (month == null || year == 0) return 0;
+
+		int selectedMonth = monthStringToNumber(month); // e.g. "January" → 1
+		List<Payment> payments = receptionistManager.getAllPayments();
+		double total = 0;
+
+		for (Payment p : payments) {
+			if (p.getDate().getMonthValue() == selectedMonth && p.getDate().getYear() == year) {
+				total += p.getAmount();
+			}
+		}
+		return total;
 	}
 
 	private JPopupMenu createMonthSelectionMenu() {
@@ -253,6 +290,15 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		reportContainer.add(subjectBreakdownPanel);
 		reportContainer.add(levelBreakdownPanel);
 	}
+	
+	private void refreshReport() {
+		reportContainer.removeAll();
+		income = getTotalIncome();
+		addHeaderSection(month, year, income);
+		addBodySections();
+		reportContainer.revalidate();
+		reportContainer.repaint();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -263,6 +309,9 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		if (e.getSource() == monthSelectBtn) {
 			monthSelectionMenu.setPreferredSize(new Dimension(monthSelectBtn.getWidth(), monthSelectionMenu.getPreferredSize().height));
 			monthSelectionMenu.show(monthSelectBtn, 0, monthSelectBtn.getHeight());
+		}
+		if (e.getSource() == generateReportBtn) {
+			refreshReport();
 		}
 	}
 }
