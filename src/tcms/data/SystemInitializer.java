@@ -69,7 +69,8 @@ public class SystemInitializer {
 			Constants.PAYMENTS_CSV, 
 			Constants.SUBJECT_CHANGE_REQUESTS_CSV,
 			Constants.SUBJECTS_CSV,
-			Constants.RECEIPTS_CSV};
+			Constants.RECEIPTS_CSV,
+			Constants.STUDENT_CLASSES_CSV};
 
 	public static ManagerBundle initialize() {
 		for (String filePath : FILES) {

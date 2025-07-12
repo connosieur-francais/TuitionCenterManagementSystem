@@ -51,6 +51,7 @@ public class Constants {
 	public static final String SUBJECT_CHANGE_REQUESTS_CSV = "src/tcms/data/subject_change_requests.csv";
 	public static final String SUBJECTS_CSV = "src/tcms/data/subjects.csv";
 	public static final String RECEIPTS_CSV = "src/tcms/data/receipts.csv";
+	public static final String STUDENT_CLASSES_CSV = "src/tcms/data/student_classes.csv";
 
 	// CSV File Headers
 	public static final String USERS_CSV_HEADER = "user_id,username,password,role,login_attempts,status\n";
