@@ -19,6 +19,7 @@ import tcms.users.User;
 import tcms.users.UserManager;
 import tcms.utils.Constants;
 import tcms.utils.Validators;
+import javax.swing.border.MatteBorder;
 
 /**
  * Window that lets a student view / update their personal details.
@@ -68,68 +69,89 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 		JLabel title = new JLabel("UPDATE PROFILE");
 		title.setForeground(WHITE);
 		title.setFont(new Font("Arial Black", Font.BOLD, 20));
-		title.setBounds(373, 10, 250, 48);
+		title.setBounds(415, 10, 208, 48);
 		mainPanel.add(title);
 
 		JLabel pfpLabel = new JLabel();
-		pfpLabel.setBounds(28, 244, 282, 199);
+		pfpLabel.setBounds(44, 77, 269, 199);
 		ImageIcon raw = new ImageIcon(Constants.STUDENT_USER_ICON_FILE);
-		Image scaled = raw.getImage().getScaledInstance(275, 275, Image.SCALE_SMOOTH);
+		Image scaled = raw.getImage().getScaledInstance(260, 260, Image.SCALE_SMOOTH);
 		pfpLabel.setIcon(new ImageIcon(scaled));
 		mainPanel.add(pfpLabel);
 
 		JPanel bottomLeft = new JPanel();
+		bottomLeft.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(41, 41, 41)));
 		bottomLeft.setLayout(null);
 		bottomLeft.setOpaque(false);
-		bottomLeft.setBounds(400, 100, 500, 250);
+		bottomLeft.setBounds(403, 123, 506, 313);
 		mainPanel.add(bottomLeft);
 
 		emailField = new JTextField();
-		emailField.setBounds(200, 21, 300, 45);
+		emailField.setBounds(190, 112, 300, 56);
 		bottomLeft.add(emailField);
 
 		contactField = new JTextField();
-		contactField.setBounds(200, 119, 300, 38);
+		contactField.setBounds(190, 37, 300, 51);
 		bottomLeft.add(contactField);
 
 		saveButton = new JButton("Save Changes");
-		saveButton.setBounds(340, 222, 160, 28);
+		saveButton.setBackground(new Color(125, 185, 117));
+		saveButton.setBounds(347, 199, 143, 28);
 		saveButton.addActionListener(this);
 		bottomLeft.add(saveButton);
 
 		JLabel lblNewLabel = new JLabel("Email:");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 16));
-		lblNewLabel.setBounds(10, 30, 102, 13);
+		lblNewLabel.setFont(new Font("Arial Black", Font.BOLD, 16));
+		lblNewLabel.setBounds(98, 125, 64, 13);
 		bottomLeft.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Contact number");
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
-		lblNewLabel_1.setFont(new Font("Arial Black", Font.BOLD | Font.ITALIC, 16));
-		lblNewLabel_1.setBounds(10, 131, 152, 26);
+		lblNewLabel_1.setFont(new Font("Arial Black", Font.BOLD, 16));
+		lblNewLabel_1.setBounds(10, 52, 152, 26);
 		bottomLeft.add(lblNewLabel_1);
-		
-		usernameLabel = new JLabel();
-		usernameLabel.setBounds(28, 79, 259, 24);
-		mainPanel.add(usernameLabel);
-		usernameLabel.setForeground(WHITE);
-		usernameLabel.setFont(new Font("Arial", Font.BOLD, 20));
 
-		studentIDLabel = new JLabel();
-		studentIDLabel.setBounds(26, 129, 400, 26);
-		mainPanel.add(studentIDLabel);
-		studentIDLabel.setForeground(WHITE);
-		studentIDLabel.setFont(new Font("Arial", Font.BOLD, 22));
-
-		subjectLabel = new JLabel();
-		subjectLabel.setBounds(26, 186, 400, 24);
-		mainPanel.add(subjectLabel);
-		subjectLabel.setForeground(WHITE);
-		subjectLabel.setFont(new Font("Arial", Font.BOLD, 20));
-
-		JButton backButton = new JButton("Back to Dashboard");
-		backButton.setBounds(720, 476, 180, 28);
+		JButton backButton = new JButton("<~Back to Dashboard");
+		backButton.setBackground(new Color(167, 167, 167));
+		backButton.setBounds(727, 486, 180, 48);
 		mainPanel.add(backButton);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(41, 41, 41));
+		panel.setBounds(44, 310, 269, 199);
+		mainPanel.add(panel);
+		panel.setLayout(null);
+		
+				subjectLabel = new JLabel();
+				subjectLabel.setBounds(10, 161, 282, 24);
+				panel.add(subjectLabel);
+				subjectLabel.setForeground(WHITE);
+				subjectLabel.setFont(new Font("Arial", Font.BOLD, 20));
+				
+						studentIDLabel = new JLabel();
+						studentIDLabel.setBounds(13, 111, 259, 26);
+						panel.add(studentIDLabel);
+						studentIDLabel.setForeground(WHITE);
+						studentIDLabel.setFont(new Font("Arial", Font.BOLD, 20));
+						
+						usernameLabel = new JLabel();
+						usernameLabel.setBounds(10, 62, 259, 24);
+						panel.add(usernameLabel);
+						usernameLabel.setForeground(WHITE);
+						usernameLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		
+		JLabel lblNewLabel_2 = new JLabel("Your Information");
+		lblNewLabel_2.setFont(new Font("Arial Black", Font.BOLD, 18));
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setBounds(63, 0, 176, 31);
+		panel.add(lblNewLabel_2);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(41, 41, 41));
+		panel_1.setBounds(346, 77, 10, 432);
+		mainPanel.add(panel_1);
+		panel_1.setLayout(null);
 		backButton.addActionListener(e -> {
 			new StudentDashboard(user, um, sm).setVisible(true);
 			this.dispose();
