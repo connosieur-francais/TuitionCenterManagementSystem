@@ -75,7 +75,19 @@ public class Payment {
 			String.valueOf(studentID),
 			String.valueOf(subjectID), 
 			String.valueOf(amount),
-			date.format(Constants.CSV_DATE_FORMAT),  // format to dd/MM/yyyy
+			date.format(Constants.CSV_DATE_FORMAT),  
 			String.valueOf(receiptID));
 	}
+	@Override
+	public String toString() {
+	    return "PaymentID: " + paymentID +
+	           " | StudentID: " + studentID +
+	           " | SubjectID: " + subjectID +
+	           " | Amount: RM" + amount +
+	           " | Date: " + date.format(Constants.CSV_DATE_FORMAT) +  
+	           " | " + (receiptID == 0 ? "Status: Unpaid" : "Status: Paid");
+	}
+
+	
+
 }

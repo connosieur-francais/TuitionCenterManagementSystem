@@ -287,6 +287,16 @@ public class ReceptionistManager {
 				"ReceptionistManager -> findPaymentByPaymentID: Found payment record with paymentID " + paymentID);
 		return payment_record;
 	}
+	
+	public List<Payment> getPaymentsForStudent(int studentID) {
+	    List<Payment> studentPayments = new ArrayList<>();
+	    for (Payment payment : payments) {
+	        if (payment.getStudentID() == studentID) {
+	            studentPayments.add(payment);
+	        }
+	    }
+	    return studentPayments;
+	}
 
 	public Map<Integer, Payment> getPaymentIDPaymentMap() {
 		return paymentIDPaymentMap;

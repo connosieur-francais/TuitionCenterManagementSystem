@@ -83,7 +83,7 @@ public class SubjectChangeRequestWindow extends JFrame implements ActionListener
         panel.add(subjectLabel);
 
         // Dropdown 
-        String[] subjects = {"-- Select Subject --", "Computer Science", "Business", "Engineering", "Accounting", "Design", "Law"};
+        String[] subjects = {"-- Select Subject --", "Mathematics", "Science", "English", "History", "Geography", "Physics", "Chemistry", "Biology","Add Math", "Economics", "Information Tech", "Moral Edu", "Visual Arts"};
         newSubjectDropdown = new JComboBox<>(subjects);
         newSubjectDropdown.setBounds(137, 350, 300, 25);
         panel.add(newSubjectDropdown);
