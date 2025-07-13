@@ -1,1 +1,4 @@
-class_id	tutor_id	subject_id	class_name	time_start	time_end
+studentID,tutor_id,classID,subjectName,day,time,location
+2,1,1,Mathematics,Monday,11:00,Level 4
+2,2,3,Add Math,Thursday,17:45,Level1
+2,1,1,Mathematics,Friday,8:30,Level6
