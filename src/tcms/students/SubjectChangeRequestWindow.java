@@ -69,7 +69,7 @@ public class SubjectChangeRequestWindow extends JFrame implements ActionListener
         header.setFont(new Font("Arial Black", Font.BOLD, 14));
 
         JScrollPane tableScrollPane = new JScrollPane(requestTable);
-        tableScrollPane.setBounds(137, 70, 873, 250);
+        tableScrollPane.setBounds(132, 70, 833, 250);
         panel.add(tableScrollPane);
         tableScrollPane.getViewport().setBackground(Constants.DARK_GRAY);
         requestTable.setGridColor(Constants.LIGHT_GREY);
@@ -115,6 +115,11 @@ public class SubjectChangeRequestWindow extends JFrame implements ActionListener
         deleteButton.setBounds(373, 532, 220, 30);
         deleteButton.addActionListener(this);
         panel.add(deleteButton);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBackground(new Color(41, 41, 41));
+        panel_1.setBounds(0, 0, 1059, 60);
+        panel.add(panel_1);
         
         
     }

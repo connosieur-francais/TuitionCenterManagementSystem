@@ -37,7 +37,7 @@ public class StudentPaymentWindow extends JFrame {
         titleLabel.setBackground(new Color(88, 101, 242));
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 36));
         titleLabel.setForeground(new Color(255, 255, 255));
-        titleLabel.setBounds(350, 30, 312, 50);
+        titleLabel.setBounds(348, 10, 312, 50);
         getContentPane().add(titleLabel);
 
         // Text Area inside Scroll Pane
@@ -60,6 +60,11 @@ public class StudentPaymentWindow extends JFrame {
         closeButton.setBounds(425, 580, 150, 40);
         closeButton.addActionListener(e -> dispose());
         getContentPane().add(closeButton);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(41, 41, 41));
+        panel.setBounds(0, 0, 986, 70);
+        getContentPane().add(panel);
 
         // Load payment
         loadPayments();
