@@ -1,5 +1,8 @@
 package tcms.students;
 
+import tcms.tutors.*;
+import tcms.receptionists.*;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -336,14 +339,27 @@ public class StudentDashboard extends JFrame implements ActionListener {
         	 SwingUtilities.invokeLater(() -> new SubjectChangeRequestWindow(student, requestManager).setVisible(true));
         }
         if (e.getSource() == btnSchedule) {
-        	JOptionPane.showMessageDialog(this, "Loading Schedule...");
+        	if (e.getSource() == btnSchedule) {
+        	    ScheduleManager scheduleManager = new ScheduleManager();
+        	    scheduleManager.loadSchedule(Constants.CLASSES_CSV); // path to your CSV
+        	    SwingUtilities.invokeLater(() -> new ScheduleViewer(student.getStudentID(), scheduleManager));
+        	}
+
         }
         if (e.getSource() == btnPayments) {
-        	JOptionPane.showMessageDialog(this, "Opening Payment Window...");
+        	if (e.getSource() == btnPayments) {
+        		SwingUtilities.invokeLater(() -> {
+        		    ReceptionistManager rm = new ReceptionistManager();
+        		    rm.loadPayments(Constants.PAYMENTS_CSV);  // Load the payment records
+        		    new StudentPaymentWindow(rm, student.getStudentID());
+        		});
+;
+        	}
+
         }
         if (e.getSource() == btnProfile) {
         	new UpdateStudentWindow(user, um, sm).setVisible(true);
-        	this.dispose();
+        	
         }
     }
 

@@ -20,12 +20,12 @@ public class StudentPaymentWindow extends JFrame {
         this.studentID = studentID;
 
         setTitle("View My Payments");
-        setSize(1000, 700); // Default size
-        setLocationRelativeTo(null); // Center on screen
-        setResizable(true); // ✅ Allow window resizing
+        setSize(1000, 700); 
+        setLocationRelativeTo(null); 
+        setResizable(true); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setBackground(new Color(34, 34, 34));
-        getContentPane().setLayout(null); // Absolute positioning
+        getContentPane().setLayout(null);
 
         buildUI();
         setVisible(true);
@@ -61,7 +61,7 @@ public class StudentPaymentWindow extends JFrame {
         closeButton.addActionListener(e -> dispose());
         getContentPane().add(closeButton);
 
-        // Load payment data into text area
+        // Load payment
         loadPayments();
     }
 
@@ -86,12 +86,12 @@ public class StudentPaymentWindow extends JFrame {
         }
     }
 
-    // ✅ Test Main Method
+   
     public static void main(String[] args) {
         ReceptionistManager receptionistManager = new ReceptionistManager();
-        receptionistManager.loadPayments(Constants.PAYMENTS_CSV); // Adjust path if needed
+        receptionistManager.loadPayments(Constants.PAYMENTS_CSV); 
 
-        int testStudentID = 2; // Replace with a valid student ID from your CSV
+        int testStudentID = 2; 
 
         SwingUtilities.invokeLater(() -> {
             new StudentPaymentWindow(receptionistManager, testStudentID);
