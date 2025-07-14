@@ -67,7 +67,6 @@ public class StudentDashboard extends JFrame implements ActionListener {
     private static final Color WHITE_TEXT = Color.WHITE;
     private JLabel lblNewLabel_1;
     private JPanel UpdateLog;
-    private JPanel StudentInfoLog;
 
    
     public StudentDashboard(User u, UserManager userManager, StudentManager studentManager) {
@@ -213,17 +212,22 @@ public class StudentDashboard extends JFrame implements ActionListener {
 								lblNewLabel_2.setForeground(new Color(255, 255, 255));
 								lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 22));
 
-								StudentInfoLog = new JPanel();
-								StudentInfoLog.setBackground(new Color(37, 37, 37));
-								StudentInfoLog.setBounds(519, 344, 337, 327);
-								contentPane.add(StudentInfoLog);
-
 								btnProfile.addActionListener(this);
 								btnPayments.addActionListener(this);
 								btnRequests.addActionListener(this);
 								btnSchedule.addActionListener(this);
+								
+								ScheduleManager scheduleManager = new ScheduleManager();
+								scheduleManager.loadSchedule(Constants.CLASSES_CSV);  
+
+								UpcomingClassesPanel dailyPanel = new UpcomingClassesPanel(student.getStudentID(), scheduleManager);
+								dailyPanel.setSize(334, 327);
+								dailyPanel.setLocation(495, 344);
+								contentPane.add(dailyPanel);
+
 
 								setVisible(true);
+									
 							}
 
 							private void buildHeader() {

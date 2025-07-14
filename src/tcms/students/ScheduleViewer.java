@@ -5,67 +5,108 @@ import tcms.utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ScheduleViewer extends JFrame {
     private int studentID;
     private ScheduleManager scheduleManager;
 
     public ScheduleViewer(int studentID, ScheduleManager scheduleManager) {
-    	getContentPane().setBackground(new Color(34, 34, 34));
         this.studentID = studentID;
         this.scheduleManager = scheduleManager;
 
-        setTitle("Student Class Schedule");
-        setSize(972, 574); 
+        setTitle("My Weekly Class Schedule");
+        setSize(950, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(null); 
+        getContentPane().setBackground(new Color(34, 34, 34));
+        getContentPane().setLayout(null);
 
         buildUI();
         setVisible(true);
     }
 
     private void buildUI() {
-        JLabel header = new JLabel("Class Schedule for Student ID: " + studentID);
-        header.setFont(new Font("Arial", Font.BOLD, 22));
-        header.setForeground(new Color(255, 255, 255)); 
-        header.setBounds(30, 20, 500, 30);
+        // Header label
+        JLabel header = new JLabel("My Weekly Class Schedule");
+        header.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 28));
+        header.setForeground(Color.WHITE);
+        header.setBounds(50, 30, 600, 40);
         getContentPane().add(header);
 
-        //schedule info
-        JPanel schedulePanel = new JPanel();
-        schedulePanel.setLayout(null); 
-        schedulePanel.setBounds(76, 88, 742, 366); 
-        schedulePanel.setBackground(new Color(41, 41, 41)); 
-        schedulePanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        
+        JPanel scheduleContainer = new JPanel();
+        scheduleContainer.setLayout(new BoxLayout(scheduleContainer, BoxLayout.Y_AXIS));
+        scheduleContainer.setBackground(new Color(41, 41, 41));
 
         List<ClassSchedule> schedules = scheduleManager.getScheduleForStudent(studentID);
-        int y = 20;
 
         if (schedules.isEmpty()) {
-            JLabel label = new JLabel("No classes scheduled.");
-            label.setFont(new Font("Arial", Font.ITALIC, 16));
-            label.setForeground(new Color(34, 34, 34));
-            label.setBounds(20, y, 500, 25);
-            schedulePanel.add(label);
+            JLabel noData = new JLabel("No classes scheduled.");
+            noData.setFont(new Font("Arial", Font.ITALIC, 18));
+            noData.setForeground(Color.LIGHT_GRAY);
+            noData.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            scheduleContainer.add(noData);
         } else {
-            for (ClassSchedule cs : schedules) {
-                JLabel label = new JLabel("• " + cs.getDay() + " - " + cs.toString());
-                label.setFont(new Font("Arial", Font.PLAIN, 16));
-                label.setForeground(new Color(255, 255, 255)); 
-                label.setBounds(20, y, 680, 25);
-                schedulePanel.add(label);
-                y += 35;
+            
+            Map<String, List<ClassSchedule>> grouped = schedules.stream()
+                .collect(Collectors.groupingBy(ClassSchedule::getDay, TreeMap::new, Collectors.toList()));
+
+            
+            List<String> orderedDays = Arrays.asList(
+                "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+            );
+
+            for (String day : orderedDays) {
+                List<ClassSchedule> dayClasses = grouped.get(day);
+                if (dayClasses != null) {
+                   
+                    JLabel dayHeader = new JLabel(day);
+                    dayHeader.setFont(new Font("Arial Black", Font.BOLD, 22));
+                    dayHeader.setForeground(new Color(255, 255, 255));
+                    dayHeader.setBorder(BorderFactory.createEmptyBorder(15, 10, 5, 10));
+                    scheduleContainer.add(dayHeader);
+
+                    for (ClassSchedule cs : dayClasses) {
+                        JPanel classCard = new JPanel();
+                        classCard.setLayout(new BoxLayout(classCard, BoxLayout.Y_AXIS));
+                        classCard.setBackground(new Color(54, 57, 63));
+                        classCard.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+                        classCard.setMaximumSize(new Dimension(800, 100));
+
+                        JLabel subject = new JLabel(cs.getSubjectName());
+                        subject.setFont(new Font("Arial Black", Font.BOLD, 18));
+                        subject.setForeground(Color.WHITE);
+
+                        JLabel details = new JLabel(cs.getTime() + " | " + cs.getLocation() + " | Class ID: " + cs.getClassID());
+                        details.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+                        details.setForeground(Color.LIGHT_GRAY);
+                        details.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+
+                        classCard.add(subject);
+                        classCard.add(details);
+
+                        scheduleContainer.add(classCard);
+                        scheduleContainer.add(Box.createRigidArea(new Dimension(0, 10)));
+                    }
+                }
             }
         }
 
-        getContentPane().add(schedulePanel); 
+       
+        JScrollPane scrollPane = new JScrollPane(scheduleContainer);
+        scrollPane.setBounds(50, 100, 820, 420);
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        getContentPane().add(scrollPane);
     }
 
+   
     public static void main(String[] args) {
         ScheduleManager sm = new ScheduleManager();
-        sm.loadSchedule(Constants.CLASSES_CSV); 
+        sm.loadSchedule(Constants.CLASSES_CSV);
         new ScheduleViewer(2, sm); 
     }
 }
