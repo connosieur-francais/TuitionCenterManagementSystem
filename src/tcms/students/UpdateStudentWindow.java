@@ -57,7 +57,7 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 	private void buildUi() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 1002, 599);
+		setBounds(100, 100, 1200, 750);
 		setTitle("Student | Edit Profile");
 
 		mainPanel = new JPanel();
