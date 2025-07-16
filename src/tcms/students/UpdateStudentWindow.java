@@ -55,7 +55,7 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 	}
 
 	private void buildUi() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setBounds(100, 100, 1002, 599);
 		setTitle("Student | Edit Profile");
@@ -116,44 +116,43 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 		backButton.setBackground(new Color(167, 167, 167));
 		backButton.setBounds(727, 486, 180, 48);
 		mainPanel.add(backButton);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(41, 41, 41));
 		panel.setBounds(44, 310, 269, 199);
 		mainPanel.add(panel);
 		panel.setLayout(null);
-		
-				subjectLabel = new JLabel();
-				subjectLabel.setBounds(10, 161, 282, 24);
-				panel.add(subjectLabel);
-				subjectLabel.setForeground(WHITE);
-				subjectLabel.setFont(new Font("Arial", Font.BOLD, 20));
-				
-						studentIDLabel = new JLabel();
-						studentIDLabel.setBounds(13, 111, 259, 26);
-						panel.add(studentIDLabel);
-						studentIDLabel.setForeground(WHITE);
-						studentIDLabel.setFont(new Font("Arial", Font.BOLD, 20));
-						
-						usernameLabel = new JLabel();
-						usernameLabel.setBounds(10, 62, 259, 24);
-						panel.add(usernameLabel);
-						usernameLabel.setForeground(WHITE);
-						usernameLabel.setFont(new Font("Arial", Font.BOLD, 20));
-		
+
+		subjectLabel = new JLabel();
+		subjectLabel.setBounds(10, 161, 282, 24);
+		panel.add(subjectLabel);
+		subjectLabel.setForeground(WHITE);
+		subjectLabel.setFont(new Font("Arial", Font.BOLD, 20));
+
+		studentIDLabel = new JLabel();
+		studentIDLabel.setBounds(13, 111, 259, 26);
+		panel.add(studentIDLabel);
+		studentIDLabel.setForeground(WHITE);
+		studentIDLabel.setFont(new Font("Arial", Font.BOLD, 20));
+
+		usernameLabel = new JLabel();
+		usernameLabel.setBounds(10, 62, 259, 24);
+		panel.add(usernameLabel);
+		usernameLabel.setForeground(WHITE);
+		usernameLabel.setFont(new Font("Arial", Font.BOLD, 20));
+
 		JLabel lblNewLabel_2 = new JLabel("Your Information");
 		lblNewLabel_2.setFont(new Font("Arial Black", Font.BOLD, 18));
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setBounds(63, 0, 176, 31);
 		panel.add(lblNewLabel_2);
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(41, 41, 41));
 		panel_1.setBounds(346, 77, 10, 432);
 		mainPanel.add(panel_1);
 		panel_1.setLayout(null);
 		backButton.addActionListener(e -> {
-			new StudentDashboard(user, um, sm).setVisible(true);
 			this.dispose();
 		});
 	}
@@ -178,12 +177,11 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 			if (!Validators.isValidEmail(newEmail)) {
 				return;
 			}
-			
 
 			if (!Validators.isValidContact(newContact)) {
 				return;
 			}
-			
+
 			student.setEmail(newEmail);
 			student.setContact(newContact);
 
