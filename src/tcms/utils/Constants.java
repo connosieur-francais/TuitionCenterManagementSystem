@@ -28,6 +28,7 @@ public class Constants {
 	public static final Color GREEN_BUTTON_HOVER = new Color(60, 170, 95); // Slightly darker hover
 	public static final Color GREEN_BUTTON_CLICK = new Color(50, 140, 80); // Even darker click
 	public static final Color GREEN_BUTTON_BORDER = new Color(35, 100, 60); // Deep green for border
+	public static final Color FUCHSIA = new Color(235, 69, 158);
 
 	// Image file paths
 	public static final String LOGIN_PAGE_BACKGROUND_FILE = "src/tcms/resources/loginPageBackground.png";
