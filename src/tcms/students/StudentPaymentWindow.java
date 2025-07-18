@@ -20,7 +20,7 @@ public class StudentPaymentWindow extends JFrame {
         this.studentID = studentID;
 
         setTitle("View My Payments");
-        setSize(1000, 700); 
+        setBounds(100, 100, 1200, 750); 
         setLocationRelativeTo(null); 
         setResizable(true); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

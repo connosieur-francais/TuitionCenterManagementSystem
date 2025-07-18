@@ -35,7 +35,7 @@ public class SubjectChangeRequestWindow extends JFrame implements ActionListener
 
     private void buildUI() {
         setTitle("Subject Change Requests");
-        setSize(1059, 642);
+        setBounds(100, 100, 1200, 750);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
