@@ -1,15 +1,21 @@
 package tcms.admin.frontend;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import tcms.custom_gui_components.CustomRoundedPanel;
+import tcms.receptionists.Payment;
 import tcms.receptionists.ReceptionistManager;
+import tcms.tutors.Subject;
 import tcms.tutors.TutorManager;
 import tcms.utils.Constants;
 
@@ -26,11 +32,11 @@ public class IncomeReportPanel extends JPanel {
 	private JLabel totalIncomeLabel;
 	private CustomRoundedPanel breakdownBySubjectPanel;
 	private JLabel lblBreakdownBySubject;
-	private JList subjectList;
 
 	private CustomRoundedPanel breakdownByLevelPanel;
 	private JLabel lblBreakdownByLevel;
-	private JList levelList;
+	private JTable subjectTable;
+	private JTable levelTable;
 
 	/**
 	 * Create the panel.
@@ -80,10 +86,12 @@ public class IncomeReportPanel extends JPanel {
 		lblBreakdownBySubject.setFont(new Font("Arial", Font.PLAIN, 20));
 		lblBreakdownBySubject.setBounds(10, 10, 402, 30);
 		breakdownBySubjectPanel.add(lblBreakdownBySubject);
-
-		subjectList = new JList();
-		subjectList.setBounds(10, 50, 550, 340);
-		breakdownBySubjectPanel.add(subjectList);
+		
+		subjectTable = new JTable();
+		subjectTable.setBounds(10, 50, 550, 340);
+		subjectTable.setBackground(Constants.SLATE);
+		subjectTable.setForeground(Constants.TEXT_COLOR);
+		breakdownBySubjectPanel.add(subjectTable);
 
 		// Breakdown By Level Panel
 		breakdownByLevelPanel = new CustomRoundedPanel();
@@ -101,9 +109,108 @@ public class IncomeReportPanel extends JPanel {
 		lblBreakdownByLevel.setFont(new Font("Arial", Font.PLAIN, 20));
 		lblBreakdownByLevel.setBounds(10, 10, 402, 30);
 		breakdownByLevelPanel.add(lblBreakdownByLevel);
+		
+		levelTable = new JTable();
+		levelTable.setBounds(10, 50, 550, 340);
+		levelTable.setBackground(Constants.SLATE);
+		levelTable.setForeground(Constants.TEXT_COLOR);
+		breakdownByLevelPanel.add(levelTable);
+		
+		// ========== Level Breakdown ============
+		// Column Names for Breakdown By Level
+		String[] levelColumnNames = { "Level Name", "Amount Paid (RM)" };
 
-		levelList = new JList();
-		levelList.setBounds(10, 50, 550, 340);
-		breakdownByLevelPanel.add(levelList);
+		// Step 1: Aggregate payments per level ID
+		Map<Integer, Double> incomePerLevel = new HashMap<>();
+		for (Payment payment : receptionistManager.getAllPayments()) {
+		    LocalDate date = payment.getDate();
+		    if (date.getYear() == year && date.getMonthValue() == monthStringToNumber(month)) {
+		        int subjectID = payment.getSubjectID();
+		        Subject subject = tutorManager.findSubjectBySubjectID(subjectID); // You must implement this method
+		        int levelID = subject.getLevelID();
+		        double amount = payment.getAmount();
+		        incomePerLevel.put(levelID, incomePerLevel.getOrDefault(levelID, 0.0) + amount);
+		    }
+		}
+
+		// Step 2: Convert to JTable format
+		Object[][] levelTableData = new Object[incomePerLevel.size()][2];
+		int rowL = 0;
+		for (Map.Entry<Integer, Double> entry : incomePerLevel.entrySet()) {
+		    int levelID = entry.getKey();
+		    String levelName = tutorManager.findLevelNameByLevelID(levelID); // You must implement this
+		    double totalAmount = entry.getValue();
+
+		    levelTableData[rowL][0] = levelName;
+		    levelTableData[rowL][1] = String.format("RM %.2f", totalAmount);
+		    rowL++;
+		}
+
+		// Step 3: Build and set table model
+		DefaultTableModel levelModel = new DefaultTableModel(levelTableData, levelColumnNames) {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+		levelTable.setModel(levelModel);
+		
+		// ========== Subject Breakdown =============
+		// Column Names
+		String[] subjectColumnNames = { "Subject Name", "Amount Paid (RM)" };
+
+		// Step 1: Aggregate payments per subject ID
+		Map<Integer, Double> incomePerSubject = new HashMap<>();
+		for (Payment payment : receptionistManager.getAllPayments()) {
+		    LocalDate date = payment.getDate();
+		    if (date.getYear() == year && date.getMonthValue() == monthStringToNumber(month)) {
+		        int subjectID = payment.getSubjectID();
+		        double amount = payment.getAmount();
+		        incomePerSubject.put(subjectID, incomePerSubject.getOrDefault(subjectID, 0.0) + amount);
+		    }
+		}
+
+		// Step 2: Convert to JTable format
+		Object[][] subjectTableData = new Object[incomePerSubject.size()][2];
+		int row = 0;
+		for (Map.Entry<Integer, Double> entry : incomePerSubject.entrySet()) {
+		    int subjectID = entry.getKey();
+		    Subject subject = tutorManager.findSubjectBySubjectID(subjectID); // You must implement this
+		    String subjectName = subject.getSubjectName();
+		    double totalAmount = entry.getValue();
+
+		    subjectTableData[row][0] = subjectName;
+		    subjectTableData[row][1] = String.format("RM %.2f", totalAmount);
+		    row++;
+		}
+
+		// Step 3: Build and set table model
+		DefaultTableModel subjectModel = new DefaultTableModel(subjectTableData, subjectColumnNames) {
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+
+		subjectTable.setModel(subjectModel);
 	}
+	
+	public int monthStringToNumber(String monthName) {
+		return switch (monthName.toLowerCase()) {
+			case "january" -> 1;
+			case "february" -> 2;
+			case "march" -> 3;
+			case "april" -> 4;
+			case "may" -> 5;
+			case "june" -> 6;
+			case "july" -> 7;
+			case "august" -> 8;
+			case "september" -> 9;
+			case "october" -> 10;
+			case "november" -> 11;
+			case "december" -> 12;
+			default -> 0;
+		};
+	}
+	
 }

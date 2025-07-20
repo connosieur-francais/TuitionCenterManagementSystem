@@ -9,7 +9,7 @@ import tcms.users.User;
 import tcms.users.UserManager;
 
 public class Validators {
-	
+
 	// ============= Input Validators ====================
 	public static boolean isValidName(String name) {
 		// Check if name is empty
@@ -26,20 +26,17 @@ public class Validators {
 		}
 		return true;
 	}
-	
-	public static boolean isUsernameUnique(String username, UserManager userManager, JFrame parent) {
-	    for (User user : userManager.getAllUsers()) {
-	        if (user.getUsername().equalsIgnoreCase(username)) {
-	            JOptionPane.showMessageDialog(parent,
-	                    "Username already exists. Please choose a different one.",
-	                    "Duplicate Username",
-	                    JOptionPane.ERROR_MESSAGE);
-	            return false;
-	        }
-	    }
-	    return true;
-	}
 
+	public static boolean isUsernameUnique(String username, UserManager userManager, JFrame parent) {
+		for (User user : userManager.getAllUsers()) {
+			if (user.getUsername().equalsIgnoreCase(username)) {
+				JOptionPane.showMessageDialog(parent, "Username already exists. Please choose a different one.",
+						"Duplicate Username", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public static boolean isValidPassword(String password) {
 		// Check if password is empty
@@ -144,37 +141,44 @@ public class Validators {
 		}
 		return true;
 	}
-	
+
 	public static boolean hasValidSubjectSelection(List<String> selectedSubjects, JFrame parent) {
-	    if (selectedSubjects == null || selectedSubjects.size() < 1 || selectedSubjects.size() > 3) {
-	        JOptionPane.showMessageDialog(parent,
-	                "Please select at least 1 and at most 3 subjects.",
-	                "Invalid Subject Selection",
-	                JOptionPane.WARNING_MESSAGE);
-	        return false;
-	    }
-	    return true;
+		if (selectedSubjects == null || selectedSubjects.size() < 1 || selectedSubjects.size() > 3) {
+			JOptionPane.showMessageDialog(parent, "Please select at least 1 and at most 3 subjects.",
+					"Invalid Subject Selection", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		return true;
 	}
-	
+
 	public static boolean isValidIncome(double income) {
 		if (income != 0) {
 			return true;
 		}
-		JOptionPane.showMessageDialog(null,
-				"The date selected has no income to be reported.",
-				"Report Generation Failed", 
-				JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "The date selected has no income to be reported.",
+				"Report Generation Failed", JOptionPane.INFORMATION_MESSAGE);
 		return false;
 	}
-	
+
 	public static boolean isMonthSelected(String month) {
-		if (month != null) {
+		if (!month.equalsIgnoreCase("Select Month")) {
 			return true;
+		} else {
+			JOptionPane.showMessageDialog(null, "Select a month before generating the report.",
+					"Report Generation Failed", JOptionPane.WARNING_MESSAGE);
+			return false;
 		}
-		JOptionPane.showMessageDialog(null,
-				"Select a month before generating the report!",
-				"Report Generation Failed",
-				JOptionPane.WARNING_MESSAGE);
-		return false;
+	}
+
+	public static boolean isYearSelected(String year) {
+		if (!year.equalsIgnoreCase("Select Year")) {
+			return true;
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Select a year before generating the report.",
+					"Report Generation Failed",
+					JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
 	}
 }

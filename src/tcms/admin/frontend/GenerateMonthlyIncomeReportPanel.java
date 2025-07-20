@@ -5,13 +5,19 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.event.ChangeEvent;
@@ -21,22 +27,22 @@ import tcms.receptionists.Payment;
 import tcms.receptionists.ReceptionistManager;
 import tcms.tutors.TutorManager;
 import tcms.utils.Constants;
+import tcms.utils.Validators;
 
 public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static ReceptionistManager receptionistManager;
 	private static TutorManager tutorManager;
 
 	private JButton monthSelectBtn;
 	private JButton yearSelectBtn;
 	private JButton generateReportBtn;
-	private JButton downloadBtn;
 	private JLabel lblNewLabel;
-	
+
 	private JPanel placeholderPanel;
-	
+
 	private double income;
 	private String month;
 	private int year;
@@ -83,44 +89,41 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		generateReportBtn.addActionListener(this);
 		add(generateReportBtn);
 
-		downloadBtn = new JButton("Download Report");
-		downloadBtn.setBounds(1026, 70, 150, 25);
-		add(downloadBtn);
-		
 		placeholderPanel = new JPanel();
 		placeholderPanel.setBackground(Constants.CANVAS_COLOR);
 		placeholderPanel.setBounds(10, 105, 1166, 513);
 		add(placeholderPanel);
-		
+
 		JLabel placeholderPanelLabel = new JLabel();
 		placeholderPanelLabel.setText("Select a month and year to generate report ");
 		placeholderPanelLabel.setFont(Constants.TITLE_TEXT_FONT);
-		placeholderPanelLabel.setForeground(Constants.TEXT_COLOR);
+		placeholderPanelLabel.setForeground(Constants.FUCHSIA);
 		placeholderPanel.add(placeholderPanelLabel);
-		
+
 		income = getTotalIncome();
 	}
-	
-	private int monthStringToNumber(String monthName) {
+
+	public int monthStringToNumber(String monthName) {
 		return switch (monthName.toLowerCase()) {
-			case "january" -> 1;
-			case "february" -> 2;
-			case "march" -> 3;
-			case "april" -> 4;
-			case "may" -> 5;
-			case "june" -> 6;
-			case "july" -> 7;
-			case "august" -> 8;
-			case "september" -> 9;
-			case "october" -> 10;
-			case "november" -> 11;
-			case "december" -> 12;
-			default -> 0;
+		case "january" -> 1;
+		case "february" -> 2;
+		case "march" -> 3;
+		case "april" -> 4;
+		case "may" -> 5;
+		case "june" -> 6;
+		case "july" -> 7;
+		case "august" -> 8;
+		case "september" -> 9;
+		case "october" -> 10;
+		case "november" -> 11;
+		case "december" -> 12;
+		default -> 0;
 		};
 	}
-	
+
 	private double getTotalIncome() {
-		if (month == null || year == 0) return 0;
+		if (month == null || year == 0)
+			return 0;
 
 		int selectedMonth = monthStringToNumber(month); // e.g. "January" → 1
 		List<Payment> payments = receptionistManager.getAllPayments();
@@ -209,9 +212,9 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 					}
 				}
 			});
-			
+
 			item2.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					yearSelectBtn.setText(year);
@@ -221,23 +224,33 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		}
 		return yearSelectionMenu;
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == yearSelectBtn) {
-			yearSelectionMenu.setPreferredSize(new Dimension(yearSelectBtn.getWidth(), yearSelectionMenu.getPreferredSize().height));
+			yearSelectionMenu.setPreferredSize(
+					new Dimension(yearSelectBtn.getWidth(), yearSelectionMenu.getPreferredSize().height));
 			yearSelectionMenu.show(yearSelectBtn, 0, yearSelectBtn.getHeight());
 		}
 		if (e.getSource() == monthSelectBtn) {
-			monthSelectionMenu.setPreferredSize(new Dimension(monthSelectBtn.getWidth(), monthSelectionMenu.getPreferredSize().height));
+			monthSelectionMenu.setPreferredSize(
+					new Dimension(monthSelectBtn.getWidth(), monthSelectionMenu.getPreferredSize().height));
 			monthSelectionMenu.show(monthSelectBtn, 0, monthSelectBtn.getHeight());
 		}
 		if (e.getSource() == generateReportBtn) {
-			// Update internal values based on current selections
+			// Validate month and year selection
+			if (!Validators.isMonthSelected(monthSelectBtn.getText()))
+				return;
+			if (!Validators.isYearSelected(yearSelectBtn.getText()))
+				return;
+
+			// Update internal values based on user selections
 			month = monthSelectBtn.getText();
 			year = Integer.parseInt(yearSelectBtn.getText());
 
 			income = getTotalIncome();
+			if (!Validators.isValidIncome(income))
+				return;
 
 			// Remove old panel and add new one
 			remove(placeholderPanel);
