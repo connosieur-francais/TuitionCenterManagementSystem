@@ -20,18 +20,22 @@ import javax.swing.event.ChangeListener;
 import tcms.receptionists.Payment;
 import tcms.receptionists.ReceptionistManager;
 import tcms.tutors.TutorManager;
+import tcms.utils.Constants;
 
 public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
 	private static ReceptionistManager receptionistManager;
+	private static TutorManager tutorManager;
 
 	private JButton monthSelectBtn;
 	private JButton yearSelectBtn;
 	private JButton generateReportBtn;
 	private JButton downloadBtn;
 	private JLabel lblNewLabel;
+	
+	private JPanel placeholderPanel;
 	
 	private double income;
 	private String month;
@@ -43,6 +47,7 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 
 	public GenerateMonthlyIncomeReportPanel(ReceptionistManager rm, TutorManager tm) {
 		receptionistManager = rm;
+		tutorManager = tm;
 		setBackground(new Color(35, 39, 42));
 		setSize(1186, 628);
 		setLayout(null);
@@ -75,15 +80,23 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 
 		generateReportBtn = new JButton("Generate Report");
 		generateReportBtn.setBounds(280, 70, 175, 25);
+		generateReportBtn.addActionListener(this);
 		add(generateReportBtn);
 
 		downloadBtn = new JButton("Download Report");
 		downloadBtn.setBounds(1026, 70, 150, 25);
 		add(downloadBtn);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(10, 105, 1166, 513);
-		add(panel);
+		placeholderPanel = new JPanel();
+		placeholderPanel.setBackground(Constants.CANVAS_COLOR);
+		placeholderPanel.setBounds(10, 105, 1166, 513);
+		add(placeholderPanel);
+		
+		JLabel placeholderPanelLabel = new JLabel();
+		placeholderPanelLabel.setText("Select a month and year to generate report ");
+		placeholderPanelLabel.setFont(Constants.TITLE_TEXT_FONT);
+		placeholderPanelLabel.setForeground(Constants.TEXT_COLOR);
+		placeholderPanel.add(placeholderPanelLabel);
 		
 		income = getTotalIncome();
 	}
@@ -208,6 +221,7 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 		}
 		return yearSelectionMenu;
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == yearSelectBtn) {
@@ -219,7 +233,20 @@ public class GenerateMonthlyIncomeReportPanel extends JPanel implements ActionLi
 			monthSelectionMenu.show(monthSelectBtn, 0, monthSelectBtn.getHeight());
 		}
 		if (e.getSource() == generateReportBtn) {
-			// TO - DO
+			// Update internal values based on current selections
+			month = monthSelectBtn.getText();
+			year = Integer.parseInt(yearSelectBtn.getText());
+
+			income = getTotalIncome();
+
+			// Remove old panel and add new one
+			remove(placeholderPanel);
+			placeholderPanel = new IncomeReportPanel(income, year, month, tutorManager, receptionistManager);
+			placeholderPanel.setBounds(10, 105, 1166, 513);
+			add(placeholderPanel);
+
+			revalidate();
+			repaint();
 		}
 	}
 }

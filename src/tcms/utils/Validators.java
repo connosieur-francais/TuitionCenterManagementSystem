@@ -155,4 +155,26 @@ public class Validators {
 	    }
 	    return true;
 	}
+	
+	public static boolean isValidIncome(double income) {
+		if (income != 0) {
+			return true;
+		}
+		JOptionPane.showMessageDialog(null,
+				"The date selected has no income to be reported.",
+				"Report Generation Failed", 
+				JOptionPane.INFORMATION_MESSAGE);
+		return false;
+	}
+	
+	public static boolean isMonthSelected(String month) {
+		if (month != null) {
+			return true;
+		}
+		JOptionPane.showMessageDialog(null,
+				"Select a month before generating the report!",
+				"Report Generation Failed",
+				JOptionPane.WARNING_MESSAGE);
+		return false;
+	}
 }
