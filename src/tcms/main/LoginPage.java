@@ -256,19 +256,25 @@ public class LoginPage extends JFrame implements ActionListener {
         switch (role) {
             case "admin":
                 userManager.saveUsers(Constants.USERS_CSV);
+                JOptionPane.showMessageDialog(null, "Logging in as admin...", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
                 new AdminPage(user, adminManager, userManager, receptionistManager, tutorManager);
                 frame.dispose();
                 break;
             case "student":
                 userManager.saveUsers(Constants.USERS_CSV);
+                JOptionPane.showMessageDialog(null, "Logging in as student...", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
                 new StudentDashboard(user, userManager, studentManager);
                 frame.dispose();
                 break;
             case "receptionist":
-            	// to-do
+            	JOptionPane.showMessageDialog(null, "Logging in as receptionist...", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
+            	// to - do
+            	frame.dispose();
             	break;
             case "tutor":
-                // to-do
+            	JOptionPane.showMessageDialog(null, "Logging in as tutor...", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
+            	// to - do
+            	frame.dispose();
                 break;
         }
     }

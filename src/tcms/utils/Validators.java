@@ -89,8 +89,10 @@ public class Validators {
 		boolean isValid = hasValidAt && hasDotAfterAt && dotNotAtEnd;
 
 		if (!isValid) {
-			JOptionPane.showMessageDialog(null, "Email format is invalid. Please enter a valid email address.",
-					"Invalid Email", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, 
+					"Email format is invalid. Please enter a valid email address.",
+					"Invalid Email", 
+					JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		return true;
