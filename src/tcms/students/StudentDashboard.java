@@ -371,19 +371,4 @@ public class StudentDashboard extends JFrame implements ActionListener {
         usernameLabel.setText(user.getUsername());
         studentIDLabel.setText(String.valueOf(student.getStudentID()));
     }
-    
-  public static void main(String[] args) {
-    
-       UserManager um = new UserManager();
-        StudentManager sm = new StudentManager();
-        um.loadUsers(Constants.USERS_CSV);
-       sm.loadStudents(Constants.STUDENTS_CSV);
-       User demoUser = um.findUserByUsername("Gracious");   
-
-       if (demoUser != null) {
-           new StudentDashboard(demoUser, um, sm).setVisible(true);
-       } else {
-           System.out.println("Demo user not found. Check the username in users.csv.");
-        }
-    }
 }

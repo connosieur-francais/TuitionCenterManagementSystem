@@ -85,20 +85,4 @@ public class UpcomingClassesPanel extends JPanel {
         if (input == null || input.isEmpty()) return input;
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
-
-  
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Upcoming Classes Test");
-        frame.setSize(400, 400);
-        frame.setLayout(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        ScheduleManager sm = new ScheduleManager();
-        sm.loadSchedule(Constants.CLASSES_CSV);
-
-        UpcomingClassesPanel panel = new UpcomingClassesPanel(1, sm); 
-        frame.add(panel);
-
-        frame.setVisible(true);
-    }
 }

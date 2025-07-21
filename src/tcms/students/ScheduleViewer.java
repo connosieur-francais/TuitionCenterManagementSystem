@@ -102,11 +102,4 @@ public class ScheduleViewer extends JFrame {
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         getContentPane().add(scrollPane);
     }
-
-   
-    public static void main(String[] args) {
-        ScheduleManager sm = new ScheduleManager();
-        sm.loadSchedule(Constants.CLASSES_CSV);
-        new ScheduleViewer(2, sm); 
-    }
 }

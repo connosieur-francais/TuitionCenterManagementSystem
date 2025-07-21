@@ -90,16 +90,4 @@ public class StudentPaymentWindow extends JFrame {
             paymentArea.setForeground(Color.WHITE);
         }
     }
-
-   
-    public static void main(String[] args) {
-        ReceptionistManager receptionistManager = new ReceptionistManager();
-        receptionistManager.loadPayments(Constants.PAYMENTS_CSV); 
-
-        int testStudentID = 2; 
-
-        SwingUtilities.invokeLater(() -> {
-            new StudentPaymentWindow(receptionistManager, testStudentID);
-        });
-    }
 }

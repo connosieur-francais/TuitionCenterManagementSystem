@@ -191,19 +191,4 @@ public class UpdateStudentWindow extends JFrame implements ActionListener {
 			JOptionPane.showMessageDialog(this, "Profile updated successfully.");
 		}
 	}
-
-	public static void main(String[] args) {
-		UserManager um = new UserManager();
-		StudentManager sm = new StudentManager();
-		um.loadUsers(Constants.USERS_CSV);
-		sm.loadStudents(Constants.STUDENTS_CSV);
-
-		User sampleUser = um.findUserByUsername("Gracious");
-		if (sampleUser != null) {
-			UpdateStudentWindow window = new UpdateStudentWindow(sampleUser, um, sm);
-			window.setVisible(true);
-		} else {
-			System.out.println("Test user not found.");
-		}
-	}
 }

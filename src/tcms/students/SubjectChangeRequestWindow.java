@@ -168,24 +168,4 @@ public class SubjectChangeRequestWindow extends JFrame implements ActionListener
             JOptionPane.showMessageDialog(this, "Request deleted.");
         }
     }
-
-    // Main method for testing
-    public static void main(String[] args) {
-        UserManager um = new UserManager();
-        StudentManager sm = new StudentManager();
-        um.loadUsers(Constants.USERS_CSV);
-        sm.loadStudents(Constants.STUDENTS_CSV);
-
-        User user = um.findUserByUsername("Gracious");
-        if (user == null) {
-            System.out.println("User not found.");
-            return;
-        }
-
-        Student student = sm.findStudentByUserID(user.getID());
-        SubjectChangeRequestManager scm = new SubjectChangeRequestManager();
-        scm.loadRequests(Constants.SUBJECT_CHANGE_REQUESTS_CSV);
-
-        new SubjectChangeRequestWindow(student, scm);
-    }
 }
