@@ -125,21 +125,10 @@ public class ReceptionistDashboard extends javax.swing.JFrame {
 					.addContainerGap(131, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(layout);
-
+		
+		setVisible(true);
+		
 		pack();
-	}
-
-	// Main method to run the GUI
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		java.awt.EventQueue.invokeLater(() -> {
-			new ReceptionistDashboard().setVisible(true);
-		});
 	}
 
 	private javax.swing.JPanel jPanel1;

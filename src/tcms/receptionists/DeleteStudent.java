@@ -12,17 +12,6 @@ public class DeleteStudent extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtIC;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				DeleteStudent frame = new DeleteStudent();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
 	public DeleteStudent() {
 		setTitle("Delete Student");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,5 +98,7 @@ public class DeleteStudent extends JFrame {
 			new ReceptionistDashboard().setVisible(true);
 			dispose();
 		});
+		
+		setVisible(true);
 	}
 }

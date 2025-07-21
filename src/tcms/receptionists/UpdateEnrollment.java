@@ -16,20 +16,6 @@ public class UpdateEnrollment extends JFrame {
 	private JComboBox<String> cmbSubject3;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				UpdateEnrollment frame = new UpdateEnrollment();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public UpdateEnrollment() {
@@ -144,5 +130,7 @@ public class UpdateEnrollment extends JFrame {
 			new ReceptionistDashboard().setVisible(true);
 			dispose();
 		});
+		
+		setVisible(true);
 	}
 }

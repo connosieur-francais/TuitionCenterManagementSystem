@@ -15,17 +15,6 @@ public class UpdateProfile extends JFrame {
 	private JTextField txtContact;
 	private JTextField txtPassword;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				UpdateProfile frame = new UpdateProfile();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
 	public UpdateProfile() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 603, 507);
@@ -144,5 +133,7 @@ public class UpdateProfile extends JFrame {
 			new ReceptionistDashboard().setVisible(true);
 			dispose();
 		});
+		
+		setVisible(true);
 	}
 }

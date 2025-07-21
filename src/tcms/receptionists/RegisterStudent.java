@@ -17,17 +17,6 @@ public class RegisterStudent extends JFrame {
 	private JTextArea txtAddress;
 	private JComboBox<String> cmbLevel, cmbSubject1, cmbSubject2, cmbSubject3, cmbMonth;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				RegisterStudent frame = new RegisterStudent();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
 	public RegisterStudent() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 778, 608);
@@ -186,5 +175,7 @@ public class RegisterStudent extends JFrame {
 				dispose();
 			}
 		});
+		
+		setVisible(true);
 	}
 }

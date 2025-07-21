@@ -27,6 +27,7 @@ import tcms.receptionists.ReceptionistDashboard;
 import tcms.receptionists.ReceptionistManager;
 import tcms.students.StudentDashboard;
 import tcms.students.StudentManager;
+import tcms.tutors.TutorDashboard;
 import tcms.tutors.TutorManager;
 import tcms.users.User;
 import tcms.users.UserManager;
@@ -287,7 +288,7 @@ public class LoginPage extends JFrame implements ActionListener {
             	break;
             case "tutor":
             	JOptionPane.showMessageDialog(null, "Logging in as tutor...", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
-            	// to - do
+            	new TutorDashboard(user, userManager, tutorManager, studentManager);
             	frame.dispose();
                 break;
         }

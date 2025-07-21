@@ -12,17 +12,6 @@ public class PaymentPage extends JFrame {
     private JPanel contentPane;
     private JTextField txtPaymentID, txtStudentID, txtSubjectID, txtAmount, txtDate, txtReceiptID;
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                PaymentPage frame = new PaymentPage();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
     public PaymentPage() {
         setTitle("Payment & Receipt");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -137,5 +126,7 @@ public class PaymentPage extends JFrame {
             new ReceptionistDashboard().setVisible(true);
             dispose();
         });
+        
+        setVisible(true);
     }
 }
