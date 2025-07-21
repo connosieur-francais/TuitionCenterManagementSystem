@@ -1,15 +1,29 @@
 package tcms.main;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
 
 import tcms.admin.backend.AdminManager;
 import tcms.admin.frontend.AdminPage;
 import tcms.data.SystemInitializer.ManagerBundle;
+import tcms.receptionists.ReceptionistDashboard;
 import tcms.receptionists.ReceptionistManager;
 import tcms.students.StudentDashboard;
 import tcms.students.StudentManager;
@@ -268,7 +282,7 @@ public class LoginPage extends JFrame implements ActionListener {
                 break;
             case "receptionist":
             	JOptionPane.showMessageDialog(null, "Logging in as receptionist...", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
-            	// to - do
+            	new ReceptionistDashboard();
             	frame.dispose();
             	break;
             case "tutor":
